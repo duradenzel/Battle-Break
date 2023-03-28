@@ -36,6 +36,10 @@ namespace TestDatabase.Controllers
             return View("Login");
         }
 
+        public IActionResult ForgotPassword()
+        {
+            return View("ForgotPassword");
+        }
         public IActionResult RegisterPage()
         {
             return View("Register");
