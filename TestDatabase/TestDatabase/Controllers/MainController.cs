@@ -25,17 +25,14 @@ namespace TestDatabase.Controllers
                 MySqlCommand sqlCom = new("Select `ID`, `Gebruikersnaam` From account", con);
                 MySqlDataReader reader = sqlCom.ExecuteReader();
 
-                int i = 0;
-
                 while (reader.Read())
                 {
                     IDs.Add(reader.GetInt32(0));
                     NamenTemp.Add(reader.GetString(1));
-                    i++;
+                    
                     if (reader.GetString(1) == spelerNaam)
                     {
                         spelerID = reader.GetInt32(0);
-                        spelerPositie = i;
                     }
                 }
             }
@@ -46,14 +43,20 @@ namespace TestDatabase.Controllers
                 MySqlCommand sqlCom = new("Select `Account_ID`, `GewonnenWedstrijden` From statistieken ORDER BY `GewonnenWedstrijden` DESC", con);
                 MySqlDataReader reader = sqlCom.ExecuteReader();
 
+                int i = 0;
+
                 while (reader.Read())
                 {
+
                     Account_IDs.Add(reader.GetInt32(0));
                     GewonnenWedstrijden.Add(reader.GetInt32(1));
+
+                    i++;
 
                     if (reader.GetInt32(0) == spelerID)
                     {
                         spelerOverwinningen = reader.GetInt32(1);
+                        spelerPositie = i;
                     }
                 }
             }
