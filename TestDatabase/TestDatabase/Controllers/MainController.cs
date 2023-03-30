@@ -8,27 +8,16 @@ namespace TestDatabase.Controllers
     {
         public IActionResult Index()
         {
-            ViewData["spelersPlek"] = 12;
-            ViewData["spelersOverwinningen"] = 32;
-
             string connString = "Server=studmysql01.fhict.local;Database=dbi515074;Uid=dbi515074;Pwd=AmineGPT;";
             List<int> Account_IDs = new();
             List<int> GewonnenWedstrijden = new();
             List<int> IDs = new();
-            List<string> Namen = new();
+            List<string> NamenTemp = new();
 
-            using (MySqlConnection con = new(connString))
-            {
-                con.Open();
-                MySqlCommand sqlCom = new("Select `Account_ID`, `GewonnenWedstrijden` From statistieken ORDER BY `GewonnenWedstrijden` DESC LIMIT 3", con);
-                MySqlDataReader reader = sqlCom.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    Account_IDs.Add(reader.GetInt32(0));
-                    GewonnenWedstrijden.Add(reader.GetInt32(1));
-                }
-            }
+            int spelerID = 0;
+            string spelerNaam = "BramvdBallen";
+            int spelerGewonnen = 0;
+            int spelerPositie = 0;
 
             using (MySqlConnection con = new(connString))
             {
@@ -36,25 +25,60 @@ namespace TestDatabase.Controllers
                 MySqlCommand sqlCom = new("Select `ID`, `Gebruikersnaam` From account", con);
                 MySqlDataReader reader = sqlCom.ExecuteReader();
 
+                int i = 0;
+
                 while (reader.Read())
                 {
                     IDs.Add(reader.GetInt32(0));
-                    Namen.Add(reader.GetString(1));
+                    NamenTemp.Add(reader.GetString(1));
+                    i++;
+                    if (reader.GetString(1) == spelerNaam)
+                    {
+                        spelerID = reader.GetInt32(0);
+                        spelerPositie = i;
+                    }
                 }
             }
 
-            List<string> temp = new();
+            using (MySqlConnection con = new(connString))
+            {
+                con.Open();
+                MySqlCommand sqlCom = new("Select `Account_ID`, `GewonnenWedstrijden` From statistieken ORDER BY `GewonnenWedstrijden` DESC", con);
+                MySqlDataReader reader = sqlCom.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Account_IDs.Add(reader.GetInt32(0));
+                    GewonnenWedstrijden.Add(reader.GetInt32(1));
+
+                    if (reader.GetInt32(0) == spelerID)
+                    {
+                        spelerGewonnen = reader.GetInt32(1);
+                    }
+                }
+            }
+
+            
+            
+
+            List<string> Namen = new();
 
             for(int i = 0; i < Account_IDs.Count; i++)
             {
-                if (Account_IDs[i] == IDs[i])
+                for(int j = 0; j < NamenTemp.Count; j++)
                 {
-                    _ = temp.Append(Namen[Account_IDs[i]]);
+                    if (Account_IDs[i] == IDs[j])
+                    {
+                        Namen.Add(NamenTemp[j]);
+                    }
                 }
             }
 
+            ViewData["SpelerNaam"] = spelerNaam;
+            ViewData["spelersPlek"] = spelerPositie;
+            ViewData["spelersOverwinningen"] = spelerGewonnen;
 
-            ViewData["Namen"] = temp;
+            ViewData["Namen"] = Namen;
             ViewData["Account_IDs"] = Account_IDs;
             ViewData["GewonnenWedstrijden"] = GewonnenWedstrijden;
             return View();
