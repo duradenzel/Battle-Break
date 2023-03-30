@@ -1,5 +1,53 @@
 ﻿@{
     ViewData["Title"] = "Main Page";
+    List<int> Account_IDs = (List<int>)(object)ViewData["Account_IDs"];
+    List<int> GewonnenWedstrijden = (List<int>)(object)ViewData["GewonnenWedstrijden"];
+    
 }
 
 <h2>Main page</h2>
+
+<form action="/spel">
+    <select name="spel" id="spel">
+        <option value="voetbal">Voebal</option>
+        <option value="tafeltennis">Tafeltennis</option>
+        <option value="rozenKoekenSpel">Roze koeken spel</option>
+        <option value="stardewValley">Stardew Valley</option>
+    </select>
+    <br>
+    <br>
+    <input type="submit" value="Kies">
+</form>
+
+<figure>
+    <figcaption>Leadboards</figcaption>
+
+    <ul type="none">
+       <li>Tot 21</li> 
+       <ol>
+            <li>@Account_IDs[0] @GewonnenWedstrijden[0] wins</li>
+            <li>@Account_IDs[1] @GewonnenWedstrijden[1] wins</li>
+            <li>@Account_IDs[2] @GewonnenWedstrijden[2] wins</li>
+        </ol>
+        <ol start="@ViewData["spelersPlek"]">
+            <li>Gebruiker @ViewData["spelersOverwinningen"] wins</li>
+        </ol>
+    </ul>
+</figure>
+
+<p>Score: 200</p>
+
+<figure>
+    <figcaption>Match History</figcaption>
+    <ul type="none">
+        <li>Speler - Tegenstander <br> eindscore (spel) <br> date-time </li>
+        <li><br>Heijn - Piet <br> 2-0 (Voetbal) <br> gastren </li>
+    </ul>
+</figure>
+
+<h3>TOURNAMETOS ET LE NEWZ!!!!!</h3>
+<h4>LAS TORNAMETOS DE PINGE PONG (tomarrow)</h4>
+<h4>Piet is ontslagen wegens te veel pingbongen (niews) </h4>
+<h4>las crypto mondenas debrian estar prohibidas (peter) </h4>
+
+<p>@ViewData["test"]</p>
