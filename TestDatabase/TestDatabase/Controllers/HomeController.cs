@@ -31,7 +31,7 @@ namespace TestDatabase.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(string email, string password, string remember)
+        public IActionResult Login(string email, string password/*, string remember*/)
         {
 
             string connString = "Server=studmysql01.fhict.local;Database=dbi515074;Uid=dbi515074;Pwd=AmineGPT;";
@@ -40,7 +40,6 @@ namespace TestDatabase.Controllers
 
             if (userDao.Authenticate(email, password))
             {
-
                 return RedirectToAction("Index", "Main");
             }
             else

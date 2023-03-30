@@ -13,11 +13,11 @@ namespace TestDatabase.Controllers
             List<int> GewonnenWedstrijden = new();
             List<int> IDs = new();
             List<string> NamenTemp = new();
-
-            int spelerID = 0;
-            string spelerNaam = "BramvdBallen";
-            int spelerGewonnen = 0;
-            int spelerPositie = 0;
+            
+            int spelerID = -1;
+            string spelerNaam = "BramvdBallen"; //ingelogde speler is nuu nog hardcoded, moet dynamisch
+            int spelerOverwinningen = -1;
+            int spelerPositie = -1;
 
             using (MySqlConnection con = new(connString))
             {
@@ -53,13 +53,10 @@ namespace TestDatabase.Controllers
 
                     if (reader.GetInt32(0) == spelerID)
                     {
-                        spelerGewonnen = reader.GetInt32(1);
+                        spelerOverwinningen = reader.GetInt32(1);
                     }
                 }
             }
-
-            
-            
 
             List<string> Namen = new();
 
@@ -75,8 +72,8 @@ namespace TestDatabase.Controllers
             }
 
             ViewData["SpelerNaam"] = spelerNaam;
-            ViewData["spelersPlek"] = spelerPositie;
-            ViewData["spelersOverwinningen"] = spelerGewonnen;
+            ViewData["SpelerPositie"] = spelerPositie;
+            ViewData["SpelerOverwinningen"] = spelerOverwinningen;
 
             ViewData["Namen"] = Namen;
             ViewData["Account_IDs"] = Account_IDs;
