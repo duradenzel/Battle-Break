@@ -14,6 +14,8 @@ namespace TestDatabase.Controllers
             string connString = "Server=studmysql01.fhict.local;Database=dbi515074;Uid=dbi515074;Pwd=AmineGPT;";
             List<int> Account_IDs = new();
             List<int> GewonnenWedstrijden = new();
+            List<int> IDs = new();
+            List<string> Namen = new();
 
             using (MySqlConnection con = new(connString))
             {
@@ -28,6 +30,31 @@ namespace TestDatabase.Controllers
                 }
             }
 
+            using (MySqlConnection con = new(connString))
+            {
+                con.Open();
+                MySqlCommand sqlCom = new("Select `ID`, `Gebruikersnaam` From account", con);
+                MySqlDataReader reader = sqlCom.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    IDs.Add(reader.GetInt32(0));
+                    Namen.Add(reader.GetString(1));
+                }
+            }
+
+            List<string> temp = new();
+
+            for(int i = 0; i < Account_IDs.Count; i++)
+            {
+                if (Account_IDs[i] == IDs[i])
+                {
+                    _ = temp.Append(Namen[Account_IDs[i]]);
+                }
+            }
+
+
+            ViewData["Namen"] = temp;
             ViewData["Account_IDs"] = Account_IDs;
             ViewData["GewonnenWedstrijden"] = GewonnenWedstrijden;
             return View();

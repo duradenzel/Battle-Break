@@ -25,9 +25,9 @@
     <ul type="none">
        <li>Tot 21</li> 
        <ol>
-            <li>@Account_IDs[0] @GewonnenWedstrijden[0] wins</li>
-            <li>@Account_IDs[1] @GewonnenWedstrijden[1] wins</li>
-            <li>@Account_IDs[2] @GewonnenWedstrijden[2] wins</li>
+           @for(int i = 0; i < Account_IDs.Count; i++){
+            <li>@Account_IDs[i] @GewonnenWedstrijden[i] wins</li>
+           }
         </ol>
         <ol start="@ViewData["spelersPlek"]">
             <li>Gebruiker @ViewData["spelersOverwinningen"] wins</li>
