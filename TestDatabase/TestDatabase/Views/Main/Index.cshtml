@@ -5,54 +5,115 @@
     List<string> Namen = (List<string>)(object)ViewData["Namen"];
 }
 
-<h2>Main page</h2>
+<head>
+    <link rel="stylesheet" href="~/css/MainDesktop.css" asp-append-version="true" />
+</head>
 
-<div class="flex-container">
+<div class="container">
+
+    <div class="gameSelectorContainer">
+        <form class="game-select" action="/spel">
+            <select name="spel" id="spel">
+                <option value="voetbal">Voebal</option>
+                <option value="tafeltennis">Tafeltennis</option>
+                <option value="rozenKoekenSpel">Roze koeken spel</option>
+                <option value="stardewValley">Stardew Valley</option>
+            </select>
+            <br>
+            <br>
+        </form>
+    </div>
+
+    <div class="personalScoreContainer">
+        <div class="personal-score">
+            <p class="">Score: 200</p>
+        </div>
+    </div>
+
+    <div class="leaderboardContainer">
+        <div class="leaderboard">
+            <div class="leaderboard-title">Leaderboard</div>
+            <div class="leaderboard-wrapper" type="none">
+
+                <ul class="leaderboard-list">
+                    @for (int i = 0; i < Account_IDs.Count; i++)
+                    {
+                        <li>
+                            <img src="@Url.Content("/Assets/medals/"+(i+1)+".png")" /> @Namen[i]
+                            <div id="wins" class="right-align">@GewonnenWedstrijden[i] wins</div>
+                        </li>
+                    }
+                </ul>
+                
+            </div>
+                <ul start="@ViewData["SpelerPositie"]" class="leaderboard-player-score">
+                <li> #@ViewData["SpelerPositie"] @ViewData["spelerNaam"] @ViewData["spelerOverwinningen"] wins</li>
+                </ul>
+        </div>
+    </div>
+
+    <div class="matchHistoryContainer">
+        <figure>
+            <figcaption>Match History</figcaption>
+            <ul type="none">
+                <li>Speler - Tegenstander <br> eindscore (spel) <br> date-time </li>
+                <li><br>Heijn - Piet <br> 2-0 (Voetbal) <br> gastren </li>
+            </ul>
+        </figure>
+    </div>
+
+    <div class="tournamentContainer">
+        <h3>*tournamenten en nieuws</h3>
+    </div>
+
+</div>
+
+    @*<div class="flex-container">
 
 
 
-<form class="flex-item spel-select" action="/spel">
-    <select name="spel" id="spel">
-        <option value="voetbal">Voebal</option>
-        <option value="tafeltennis">Tafeltennis</option>
-        <option value="rozenKoekenSpel">Roze koeken spel</option>
-        <option value="stardewValley">Stardew Valley</option>
-    </select>
-    <br>
-    <br>
+    <form class="flex-item spel-select" action="/spel">
+        <select name="spel" id="spel">
+            <option value="voetbal">voebal</option>
+            <option value="tafeltennis">tafeltennis</option>
+            <option value="rozenkoekenspel">roze koeken spel</option>
+            <option value="stardewvalley">stardew valley</option>
+        </select>
+        <br>
+        <br>
    
-</form>
-<div class="flex-item personal-score"><p>Score: 200</p></div>
+    </form>
+    <div class="flex-item personal-score"><p>score: 200</p></div>
 
-<div class="flex-item leaderboard">
+    <div class="flex-item leaderboard">
     
 
-    <ul class="leaderboard-wrapper" type="none">
-       <li>Tot 21</li> 
-       <ul class="leaderboard-list">     
-           @for (int i = 0; i < 3; i++)
-                {
-                    <li> <img src = "@Url.Content("/Assets/medals/"+(i+1)+".png")" /> @Namen[i]  @GewonnenWedstrijden[i] wins</li>
-                }
+        <ul class="leaderboard-wrapper" type="none">
+           <li>tot 21</li> 
+           <ul class="leaderboard-list">     
+               @for (int i = 0; i < 3; i++)
+                    {
+                        <li> <img src = "@url.content("/assets/medals/"+(i+1)+".png")" /> @namen[i]  @gewonnenwedstrijden[i] wins</li>
+                    }
             
+            </ul>
+            <ul start="@viewdata["spelerpositie"]" class="leaderboard-list">
+                <li> &nbsp; @viewdata["spelerpositie"] @viewdata["spelernaam"] @viewdata["speleroverwinningen"] wins</li>
+            </ul>
         </ul>
-            <ul start="@ViewData["SpelerPositie"]" class="leaderboard-list">
-                <li> &nbsp; @ViewData["SpelerPositie"] @ViewData["spelerNaam"] @ViewData["spelerOverwinningen"] wins</li>
+    </div>
+
+    </div>
+
+    <figure>
+        <figcaption>match history</figcaption>
+        <ul type="none">
+            <li>speler - tegenstander <br> eindscore (spel) <br> date-time </li>
+            <li><br>heijn - piet <br> 2-0 (voetbal) <br> gastren </li>
         </ul>
-    </ul>
-</div>
+    </figure>
 
-</div>
+    <h3>*tournamenten en nieuws</h3>
+    <h4>ping pong tournooi (morgen)</h4>
+    <h4>(niews) </h4>*@
 
-<figure>
-    <figcaption>Match History</figcaption>
-    <ul type="none">
-        <li>Speler - Tegenstander <br> eindscore (spel) <br> date-time </li>
-        <li><br>Heijn - Piet <br> 2-0 (Voetbal) <br> gastren </li>
-    </ul>
-</figure>
-
-<h3>*tournamenten en nieuws</h3>
-<h4>ping pong tournooi (morgen)</h4>
-<h4>(niews) </h4>
-<h4></h4>
