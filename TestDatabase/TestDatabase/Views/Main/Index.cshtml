@@ -30,15 +30,14 @@
     <ul class="leaderboard-wrapper" type="none">
        <li>Tot 21</li> 
        <ul class="leaderboard-list">     
-           @for (int i = 0; i < Account_IDs.Count; i++)
+           @for (int i = 0; i < 3; i++)
                 {
-                    <li> <img src = "@Url.Content("/Assets/medals/"+(i+1)+".png")" /> @Account_IDs[i] @GewonnenWedstrijden[i] wins</li>
-
+                    <li> <img src = "@Url.Content("/Assets/medals/"+(i+1)+".png")" /> @Namen[i]  @GewonnenWedstrijden[i] wins</li>
                 }
             
         </ul>
-        <ul start="@ViewData["spelersPlek"]">
-            <li>Gebruiker @ViewData["spelersOverwinningen"] wins</li>
+            <ul start="@ViewData["spelerPlek"]" class="leaderboard-list">
+            <li> <img src="@Url.Content("/Assets/medals/"+@ViewData["spelerPlek"]+".png")" /> @ViewData["spelerNaam"] @ViewData["spelerOverwinningen"] wins</li>
         </ul>
     </ul>
 </div>
