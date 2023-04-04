@@ -1,0 +1,48 @@
+﻿
+@{
+    //new List<users> = new();
+    int aantalSpelers = 12;
+    spel gekozenSpel = (spel)ViewData["gekozenSpel"];
+    ViewData["Title"] = "Spel";
+    ViewData["test"] = false;
+}
+
+<h1>Spel</h1>
+<p>@gekozenSpel.naam</p>
+<p>@gekozenSpel.regels</p>
+<p>Aantal spelers: @aantalSpelers/@gekozenSpel.minimumSpelers</p>
+
+<select onchange="val()" name="mode" id="mode">
+    <option value="head">Head to Head</option>
+    <option value="team">Teams</option>
+    <br>
+    <br>
+</select>
+
+<div id ="test">
+
+</div>
+
+<input type="submit" value="Verlaat spel" class="btn" onclick="location.href='@Url.Action("Index")'" />
+
+
+
+@*<input type="submit" value="Start spel" class="btn" onclick="location.href='@Url.Action("Index")'" />*@
+
+@section scripts{
+    <script>
+        function val() {
+            d = document.getElementById("mode").value;
+            test = document.getElementById("test");
+
+            if(d == "team"){
+                test.innerHTML = `<label>Aantal teams:</label>
+                                <input type="number" id="aantalTeams" name="aantalTeams" min="2" max="10">
+                                <br>
+                                <br>`
+            } else{
+                test.innerHTML = ""
+            }
+        }
+    </script>
+}
