@@ -7,7 +7,11 @@
 
 <h2>Main page</h2>
 
-<form action="/spel">
+<div class="flex-container">
+
+
+
+<form class="flex-item spel-select" action="/spel">
     <select name="spel" id="spel">
         <option value="voetbal">Voebal</option>
         <option value="tafeltennis">Tafeltennis</option>
@@ -16,26 +20,30 @@
     </select>
     <br>
     <br>
-    <input type="submit" value="Kies">
+   
 </form>
+<div class="flex-item personal-score"><p>Score: 200</p></div>
 
-<figure>
-    <figcaption>Leadboards</figcaption>
+<div class="flex-item leaderboard">
+    
 
-    <ul type="none">
+    <ul class="leaderboard-wrapper" type="none">
        <li>Tot 21</li> 
-       <ol>
-            <li>@Account_IDs[0] @GewonnenWedstrijden[0] wins</li>
-            <li>@Account_IDs[1] @GewonnenWedstrijden[1] wins</li>
-            <li>@Account_IDs[2] @GewonnenWedstrijden[2] wins</li>
-        </ol>
-        <ol start="@ViewData["spelersPlek"]">
-            <li>Gebruiker @ViewData["spelersOverwinningen"] wins</li>
-        </ol>
-    </ul>
-</figure>
+       <ul class="leaderboard-list">     
+           @for (int i = 0; i < Account_IDs.Count; i++)
+                {
+                    <li> <img src = "@Url.Content("/Assets/medals/"+(i+1)+".png")" /> @Account_IDs[i] @GewonnenWedstrijden[i] wins</li>
 
-<p>Score: 200</p>
+                }
+            
+        </ul>
+        <ul start="@ViewData["spelersPlek"]">
+            <li>Gebruiker @ViewData["spelersOverwinningen"] wins</li>
+        </ul>
+    </ul>
+</div>
+
+</div>
 
 <figure>
     <figcaption>Match History</figcaption>
