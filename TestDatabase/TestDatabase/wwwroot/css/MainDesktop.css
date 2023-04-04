@@ -1,0 +1,136 @@
+﻿
+.container {
+    display: grid;
+    grid-template-columns: 30vw 10vw 3vw 57vw;
+    grid-template-rows: 30vh 5vh 15vh 20vh 5vh 25vh;
+    margin: 0;
+    padding: 0;
+}
+
+.gameSelectorContainer {
+    grid-column: 1;
+    grid-row: 1;
+    border: 1px solid purple;
+
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+.personalScoreContainer {
+    grid-column: 2;
+    grid-row: 1;
+    border: 1px solid purple;
+
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+.leaderboardContainer {
+    grid-column: 1 / span 2;
+    grid-row: 3 / span 5;
+    border: 1px solid purple;
+    height: 80%;
+}
+.matchHistoryContainer {
+    grid-column: 4;
+    grid-row: 1 / span 4;
+    border: 1px solid purple;
+}
+.tournamentContainer {
+    grid-column: 4;
+    grid-row: 6;
+    border: 1px solid purple;
+}
+
+
+.game-select {
+    width: 80%;
+}
+
+#spel {
+    /*  background-image: url(/Assets/ping-pong-graphic.png);
+        background-size: contain;
+        background-repeat: no-repeat;*/
+    justify-self: center;
+    align-self: center;
+    width: 100%;
+    border-radius: 100px;
+    height: 95px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    margin-top: 6%;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    opacity: 0.90;
+}
+
+.personal-score {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    opacity: 0.90;
+}
+
+    .personal-score > p {
+        color: red;
+        text-align: center;
+        line-height: 99px;
+    }
+
+
+.leaderboard-wrapper > li:nth-child(1) {
+    font-size: 20px;
+}
+
+.leaderboard {
+    height: 80%;
+    padding: 5%;
+}
+
+.leaderboard-wrapper {
+    background-color: white;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    padding: 10px;
+    height: 80%;
+    overflow-y: scroll;
+}
+.leaderboard-player-score {
+    list-style: none;
+    background-color: #ffff;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    font-size: 22px;
+    padding: 10px;
+}
+.leaderboard-list > li {
+    margin-bottom: 10px;
+    list-style: none;
+    background-color: #dadada;
+    border-radius: 5px;
+    font-size: 22px;
+    padding: 10px;
+    margin-left: -30px;
+    display: flex;
+    justify-content: space-between;
+}
+
+    .leaderboard-list > li > img {
+        width: 22px;
+        height: 22px;
+    }
+
+#wins {
+    display: flex;
+    justify-content: flex-end;
+}
+.right-align {
+    margin-left: auto;
+}
