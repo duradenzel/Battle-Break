@@ -36,8 +36,8 @@
                 }
             
         </ul>
-            <ul start="@ViewData["spelerPlek"]" class="leaderboard-list">
-            <li> <img src="@Url.Content("/Assets/medals/"+@ViewData["spelerPlek"]+".png")" /> @ViewData["spelerNaam"] @ViewData["spelerOverwinningen"] wins</li>
+            <ul start="@ViewData["SpelerPositie"]" class="leaderboard-list">
+                <li> &nbsp; @ViewData["SpelerPositie"] @ViewData["spelerNaam"] @ViewData["spelerOverwinningen"] wins</li>
         </ul>
     </ul>
 </div>
