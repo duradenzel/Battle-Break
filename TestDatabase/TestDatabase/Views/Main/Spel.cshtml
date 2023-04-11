@@ -1,0 +1,60 @@
+﻿@{
+    int aantalSpelers = 12;
+    spel gekozenSpel = (spel)ViewData["gekozenSpel"];
+    ViewData["Title"] = "Spel";
+    ViewData["test"] = false;
+    
+}
+
+<h1>Spel</h1>
+<p>@gekozenSpel.naam</p>
+<p>@gekozenSpel.regels</p>
+<p>Aantal spelers: @aantalSpelers/@gekozenSpel.minimumSpelers</p>
+
+<select onchange="mode()" name="mode" id="mode">
+    <option value="head">Head to Head</option>
+    <option value="team">Teams</option>
+    <br>
+    <br>
+</select>
+
+<div id ="aantalTeams"></div>
+
+@*<input type="submit" value=""*@
+
+
+<input type="submit" value="Kies" class="btn" onclick="sendData()" />
+
+<input type="submit" value="Verlaat spel" class="btn" onclick="location.href='@Url.Action("Index")'" />
+
+
+
+@*<input type="submit" value="Start spel" class="btn" onclick="location.href='@Url.Action("Index")'" />*@
+
+@section scripts{
+    @{
+        spel spel = new spel();
+    };
+    <script>
+        function mode() {
+            val = document.getElementById("mode").value;
+            aantalTeams = document.getElementById("aantalTeams");
+
+            if(val == "team"){
+                aantalTeams.innerHTML = `<label>Aantal teams:</label>
+                                        <input onchange="teams()" id="aantalTeams" type="number" name="aantalTeams" min="2">
+                                        <br>
+                                        <br>`
+            } else{
+                aantalTeams.innerHTML = ""
+            }
+        }
+        function teams(){
+            aantalTeams = document.getElementsByName("aantalTeams")[0].value;
+        }
+        function sendData(){
+            console.log(spel);
+        }
+
+    </script>
+}

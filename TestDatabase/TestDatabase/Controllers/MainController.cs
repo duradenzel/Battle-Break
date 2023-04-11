@@ -1,11 +1,14 @@
 ﻿using System.Data;
 using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
+using TestDatabase.Models;
 
 namespace TestDatabase.Controllers
 {
     public class MainController : Controller
     {
+        string connString = "Server=studmysql01.fhict.local;Database=dbi515074;Uid=dbi515074;Pwd=AmineGPT;";
+
         public IActionResult Index()
         {
             
@@ -83,6 +86,40 @@ namespace TestDatabase.Controllers
             ViewData["Namen"] = Namen;
             ViewData["Account_IDs"] = Account_IDs;
             ViewData["GewonnenWedstrijden"] = GewonnenWedstrijden;
+            return View();
+        }
+
+        public IActionResult Spel(string gekozenSpel)
+        {
+            List<spel> spellen = new();
+            using (MySqlConnection con = new(connString))
+            {
+                con.Open();
+                MySqlCommand sqlCom = new("Select * From `spel`", con);
+                MySqlDataReader reader = sqlCom.ExecuteReader();
+                
+
+                while (reader.Read())
+                {
+                    spel s = new()
+                    {
+                        naam = reader.GetString(1),
+                        minimumSpelers = reader.GetInt32(2),
+                        regels = reader.GetString(3),
+                        winConiditie = reader.GetString(4)
+                    };
+                    spellen.Add(s);
+                }
+            }
+            
+            foreach(var spel in spellen)
+            {
+                if(gekozenSpel.ToLower() == spel.naam.ToLower())
+                {
+                    ViewData["gekozenSpel"] = spel;
+                }
+            }
+
             return View();
         }
     }

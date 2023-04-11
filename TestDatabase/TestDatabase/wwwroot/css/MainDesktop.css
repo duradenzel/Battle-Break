@@ -1,0 +1,270 @@
+﻿
+.container {
+    display: grid;
+    grid-template-columns: 5vw 25vw 10vw 1vw 59vw;
+    grid-template-rows: 30vh 2vh 38vh 2vh 28vh;
+    margin: 0;
+    padding: 0;
+}
+
+.gameSelectorContainer {
+    grid-column: 2;
+    grid-row: 1;
+    /*border: 1px solid purple;*/
+
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+.personalScoreContainer {
+    grid-column: 3;
+    grid-row: 1;
+    /*border: 1px solid purple;*/
+
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+.leaderboardContainer {
+    grid-column: 2 / span 2;
+    grid-row: 3 / span 3;
+    /*border: 1px solid purple;*/
+}
+.matchHistoryContainer {
+    grid-column: 5;
+    grid-row: 1 / span 3;
+    /*border: 1px solid purple;*/
+}
+.tournamentContainer {
+    grid-column: 5;
+    grid-row: 5;
+    /*border: 1px solid purple;*/
+    display: flex;
+}
+
+
+.game-select {
+    width: 80%;
+
+}
+
+.game-select-button {
+    justify-self: center;
+    align-self: center;
+    width: 100%;
+    border-radius: 100px;
+    height: 95px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    opacity: 0.90;
+}
+
+#spel {
+    /*  background-image: url(/Assets/ping-pong-graphic.png);
+        background-size: contain;
+        background-repeat: no-repeat;*/
+
+}
+
+.personal-score {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    opacity: 0.90;
+}
+
+    .personal-score > p {
+        font-size: 22px;
+        text-align: center;
+        line-height: 99px;
+    }
+
+
+.leaderboard-wrapper > li:nth-child(1) {
+    font-size: 20px;
+}
+
+.leaderboard {
+    height: 80%;
+    padding-bottom: 4%;
+}
+
+.MatchHistory {
+    height: 95%;
+    padding: 5%;
+}
+
+
+.leaderboard-box {
+    background-color: #ffffff;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.leaderboard-content {
+    text-align: center;
+    margin: 10px;
+}
+
+.leaderboard-title {
+    font-size: 32px;
+}
+
+
+
+
+.leaderboard-wrapper {
+    background-color: white;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    padding: 10px;
+    height: 95%;
+    overflow-y: scroll;
+}
+
+.leaderboard-player-score-wrapper {
+    background-color: #ffffff;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.leaderboard-player-score-content {
+    margin: 10px;
+}
+
+.leaderboard-player-score {
+    margin-bottom: 10px;
+    list-style: none;
+    font-size: 22px;
+    display: flex;
+    justify-content: space-between;
+}
+.space {
+
+}
+
+.leaderboard-list > li {
+    margin-bottom: 10px;
+    list-style: none;
+    border-radius: 25px;
+    font-size: 22px;
+    padding: 10px;
+    margin-left: -30px;
+    display: flex;
+    justify-content: space-between;
+    background: linear-gradient(to right bottom, rgba(16, 129, 197, 0.08), rgba(0, 145, 199, 0.08), rgba(0, 160, 196, 0.08), rgba(50, 174, 192, 0.08), rgba(89, 186, 187, 0.08));
+}
+
+    .leaderboard-list > li > img {
+        width: 22px;
+        height: 22px;
+    }
+
+#wins {
+    display: flex;
+    justify-content: flex-end;
+}
+.right-align {
+    margin-left: auto;
+}
+
+
+
+.MatchHistory-box {
+    background-color: #ffffff;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.MatchHistory-content {
+    text-align: center;
+    margin: 10px;
+}
+.MatchHistory-title {
+    font-size: 32px;
+}
+.MatchHistory-wrapper {
+    background-color: white;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 10px;
+    height: 95%;
+    overflow-y: scroll;
+}
+.MatchHistory-list > li {
+    margin-bottom: 10px;
+    list-style: none;
+    border-radius: 25px;
+    font-size: 22px;
+    padding: 10px;
+    margin-left: -30px;
+    display: flex;
+    justify-content: space-between;
+    background: linear-gradient(to right bottom, rgba(16, 129, 197, 0.08), rgba(0, 145, 199, 0.08), rgba(0, 160, 196, 0.08), rgba(50, 174, 192, 0.08), rgba(89, 186, 187, 0.08));
+}
+.magic {
+    font-weight: 500;
+    background: linear-gradient(to right bottom, #1081c5, #0091c7, #00a0c4, #32aec0, #59babb);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200%;
+    animation: background-pan 2s linear infinite;
+}
+.magicSelect {
+    font-size: 22px;
+    font-weight: 700;
+    background: linear-gradient(to right bottom, #1081c5, #0091c7, #00a0c4, #32aec0, #59babb);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200%;
+    animation: background-pan 2s linear infinite;
+    display: flex;
+    justify-content: center;
+    margin-left: -40px;
+}
+
+@keyframes background-pan {
+    from {
+        background-position: 0% center
+    }
+
+    to {
+        background-position: -200% center;
+    }
+}
+
+.tournamentNewsWrapper {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    height: 95%;
+    margin: 5%;
+    width: 90%;
+    align-self: center;
+}
+
+.tournamentTitle {
+    font-size: 32px;
+    text-align: center;
+    margin: 10px;
+}
