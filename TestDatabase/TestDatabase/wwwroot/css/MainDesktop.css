@@ -10,7 +10,7 @@
 .gameSelectorContainer {
     grid-column: 2;
     grid-row: 1;
-    border: 1px solid purple;
+    /*border: 1px solid purple;*/
 
     justify-content: center;
     align-items: center;
@@ -19,7 +19,7 @@
 .personalScoreContainer {
     grid-column: 3;
     grid-row: 1;
-    border: 1px solid purple;
+    /*border: 1px solid purple;*/
 
     justify-content: center;
     align-items: center;
@@ -28,17 +28,18 @@
 .leaderboardContainer {
     grid-column: 2 / span 2;
     grid-row: 3 / span 3;
-    border: 1px solid purple;
+    /*border: 1px solid purple;*/
 }
 .matchHistoryContainer {
     grid-column: 5;
     grid-row: 1 / span 3;
-    border: 1px solid purple;
+    /*border: 1px solid purple;*/
 }
 .tournamentContainer {
     grid-column: 5;
     grid-row: 5;
-    border: 1px solid purple;
+    /*border: 1px solid purple;*/
+    display: flex;
 }
 
 
@@ -90,7 +91,7 @@
 
 .leaderboard {
     height: 80%;
-    padding: 5%;
+    padding-bottom: 4%;
 }
 
 .MatchHistory {
@@ -252,4 +253,18 @@
     }
 }
 
+.tournamentNewsWrapper {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    height: 95%;
+    margin: 5%;
+    width: 90%;
+    align-self: center;
+}
 
+.tournamentTitle {
+    font-size: 32px;
+    text-align: center;
+    margin: 10px;
+}
