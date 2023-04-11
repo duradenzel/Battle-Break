@@ -114,10 +114,49 @@ namespace TestDatabase.Controllers
                 if(gekozenSpel.ToLower() == spel.naam.ToLower())
                 {
                     ViewData["gekozenSpel"] = spel;
+                    ViewData["gekozenSpelID"] = 1;
                 }
             }
 
             return View();
         }
+
+        public IActionResult Wedstrijd(int ID)
+        {
+            ViewData["ID"] = ID;
+            return View();
+        }
+
+        public int sendData(int Spel_ID, int User_ID, int Gewonnen)
+        {
+            int ID = -1;
+            using (MySqlConnection con = new(connString))
+            {
+                con.Open();
+                MySqlDataReader reader;
+                
+                using (var cmd = new MySqlCommand())
+                {
+                    cmd.CommandText = $"INSERT INTO wedstrijd (Spel_ID, Account_ID, Gewonnen) VALUES ({Spel_ID},{User_ID},{Gewonnen})";
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = con;
+
+                    reader = cmd.ExecuteReader();
+                }
+                con.Close();
+
+                con.Open();
+
+                MySqlCommand sqlCom = new("Select * From `wedstrijd`", con);
+                reader = sqlCom.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    ID = reader.GetInt32("ID");
+                }
+            }
+            return ID;
+        }
     }
 }
+

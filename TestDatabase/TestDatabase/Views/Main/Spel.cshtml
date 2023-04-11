@@ -1,9 +1,10 @@
 ﻿@{
     int aantalSpelers = 12;
     spel gekozenSpel = (spel)ViewData["gekozenSpel"];
+    int gekozenSpelID = (int)ViewData["gekozenSpelID"];
+    int userID = 12;
+    int gewonnen = 1;
     ViewData["Title"] = "Spel";
-    ViewData["test"] = false;
-    
 }
 
 <h1>Spel</h1>
@@ -11,30 +12,34 @@
 <p>@gekozenSpel.regels</p>
 <p>Aantal spelers: @aantalSpelers/@gekozenSpel.minimumSpelers</p>
 
+<form>
+    <div class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value">-</div>
+    <input type="number" id="number" value="2" />
+    <div class="value-button" id="increase" onclick="increaseValue()" value="Increase Value">+</div>
+</form>
+
+@*<label>Aantal spelers:</label>
+<input onchange="spelers()" id="aantalSpelers" type="number" name="aantalSpelers" min="2">
+<p>/@gekozenSpel.minimumSpelers</p>
+<br>*@
+
+<div id="test"></div>
+<br>
+
 <select onchange="mode()" name="mode" id="mode">
     <option value="head">Head to Head</option>
     <option value="team">Teams</option>
-    <br>
-    <br>
 </select>
+<br>
+<br>
 
 <div id ="aantalTeams"></div>
 
-@*<input type="submit" value=""*@
-
-
-<input type="submit" value="Kies" class="btn" onclick="sendData()" />
+<input type="submit" value="Kies" class="btn" onclick="sendData(@gekozenSpelID,@userID,@gewonnen)" />
 
 <input type="submit" value="Verlaat spel" class="btn" onclick="location.href='@Url.Action("Index")'" />
 
-
-
-@*<input type="submit" value="Start spel" class="btn" onclick="location.href='@Url.Action("Index")'" />*@
-
 @section scripts{
-    @{
-        spel spel = new spel();
-    };
     <script>
         function mode() {
             val = document.getElementById("mode").value;
@@ -45,15 +50,62 @@
                                         <input onchange="teams()" id="aantalTeams" type="number" name="aantalTeams" min="2">
                                         <br>
                                         <br>`
-            } else{
+            } else {
                 aantalTeams.innerHTML = ""
             }
         }
+
         function teams(){
             aantalTeams = document.getElementsByName("aantalTeams")[0].value;
         }
-        function sendData(){
-            console.log(spel);
+
+        function sendData(spelID,userID, gewonnen){
+            
+            $.ajax({
+                url: '/Main/sendData',
+                data: { Spel_ID: spelID, User_ID: userID, Gewonnen: gewonnen},
+                type: 'GET',
+                success: function (returned_data) {
+                    console.log(returned_data)
+                    location.href = "wedstrijd?ID=" + returned_data
+                },
+                error: function (returned_data) {
+                    console.log(returned_data)
+                }
+            });
+        }
+
+        function spelers(){
+            val = document.getElementById("aantalSpelers").value;
+            console.log(val);
+
+            test = document.getElementById("test");
+
+            test.innerHTML += `<input id="te" type="text" name="aantalSpelers">`
+        }
+
+        function increaseValue() {
+            var value = parseInt(document.getElementById('number').value, 10);
+            value = isNaN(value) ? 0 : value;
+            value++;
+            document.getElementById('number').value = value;
+
+            test.innerHTML += `<input id="te" type="text" name="aantalSpelers">`
+        }
+
+        function decreaseValue() {
+            var value = parseInt(document.getElementById('number').value, 10);
+            value = isNaN(value) ? 0 : value;
+            value < 3 ? value = 3 : '';
+            value--;
+            document.getElementById('number').value = value;
+
+            test.innerHTML = ``
+
+            for(let i = 0; i < value; i++){
+                test.innerHTML += `<input id="te" type="text" name="aantalSpelers">`
+            }
+
         }
 
     </script>

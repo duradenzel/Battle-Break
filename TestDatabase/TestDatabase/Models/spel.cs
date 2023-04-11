@@ -10,10 +10,8 @@ namespace TestDatabase.Models
         public string regels;
         public string winConiditie;
 
-        string connString = "Server=studmysql01.fhict.local;Database=dbi515074;Uid=dbi515074;Pwd=AmineGPT;";
- 
 
-    public spel()
+        public spel()
         {
 
         }
@@ -26,20 +24,5 @@ namespace TestDatabase.Models
             this.winConiditie = winConiditie;
         }
 
-        public string sendData()
-        {
-            string returnstring = "ni";
-            using (MySqlConnection con = new(connString))
-            {
-                con.Open();
-                MySqlCommand sqlCom = new("Select `ID`, `Gebruikersnaam` From account", con);
-                MySqlDataReader reader = sqlCom.ExecuteReader();
-                while (reader.Read())
-                {
-                    returnstring += reader.GetString(1);
-                }
-            }
-            return returnstring;
-        }
     }
 }
