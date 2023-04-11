@@ -34,31 +34,6 @@ namespace TestDatabase.Controllers
             return View("Register");
         }
 
-        public IActionResult Privacy() {
-            if (User.Identity.IsAuthenticated)
-            {
-                var emailClaim = User.FindFirst(ClaimTypes.Name)?.Value;
-                var userTypeClaim = User.FindFirst(ClaimTypes.Role)?.Value;
-
-                if (emailClaim != null && userTypeClaim != null)
-                {
-                    ViewBag.Email = emailClaim;
-                    ViewBag.UserType = userTypeClaim;
-                }
-                else
-                {
-                    // Handle the case where the user is authenticated but the claims are missing
-                    ViewBag.ErrorMessage = "Error: User claims not found.";
-                }
-            }
-            else
-            {
-                // Handle the case where the user is not authenticated
-                return RedirectToAction("Login", "Account");
-            }
-            return View();
-        }
-
         [HttpPost]
         public async Task<IActionResult> Login(string email, string password, string remember)
         {
@@ -86,7 +61,7 @@ namespace TestDatabase.Controllers
                 }
                 else if (userType == "Gebruiker")
                 {
-                    return RedirectToAction("Privacy", "Home");
+                    return RedirectToAction("Index", "Main");
                 }
                 else
                 {
