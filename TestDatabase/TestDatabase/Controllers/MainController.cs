@@ -8,6 +8,8 @@ namespace TestDatabase.Controllers
     {
         public IActionResult Index()
         {
+            
+
             string connString = "Server=studmysql01.fhict.local;Database=dbi515074;Uid=dbi515074;Pwd=AmineGPT;";
             List<int> Account_IDs = new();
             List<int> GewonnenWedstrijden = new();

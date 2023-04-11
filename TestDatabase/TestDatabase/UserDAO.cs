@@ -1,5 +1,8 @@
 ﻿using MySql.Data.MySqlClient;
+
 using System.Diagnostics;
+using Microsoft.AspNetCore.Http;
+
 
 namespace TestDatabase
 {
@@ -12,13 +15,50 @@ namespace TestDatabase
             _connString = connString;
         }
 
-        public bool Authenticate(string email, string password)
+        //public bool Authenticate(string email, string password)
+        //{
+        //    try
+        //    {
+        //        using (MySqlConnection conn = new MySqlConnection(_connString))
+        //        {
+        //            string query = "SELECT Wachtwoord FROM account WHERE Email = @Email";
+
+        //            using (MySqlCommand command = new MySqlCommand(query, conn))
+        //            {
+        //                command.Parameters.AddWithValue("@Email", email);
+        //                conn.Open();
+
+        //                using (MySqlDataReader reader = command.ExecuteReader())
+        //                {
+        //                    if (reader.Read())
+        //                    {
+        //                        string passwordHash = reader.GetString("Wachtwoord");
+
+        //                        if (BCrypt.Net.BCrypt.Verify(password, passwordHash))
+        //                        {
+
+        //                            return true;
+        //                        }
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Debug.Write("Error during authentication: " + ex.Message);
+        //    }
+
+        //    return false;
+        //}
+
+        public (bool, string) Authenticate(string email, string password)
         {
             try
             {
                 using (MySqlConnection conn = new MySqlConnection(_connString))
                 {
-                    string query = "SELECT Wachtwoord FROM account WHERE Email = @Email";
+                    string query = "SELECT Wachtwoord, Type FROM account WHERE Email = @Email";
 
                     using (MySqlCommand command = new MySqlCommand(query, conn))
                     {
@@ -33,7 +73,8 @@ namespace TestDatabase
 
                                 if (BCrypt.Net.BCrypt.Verify(password, passwordHash))
                                 {
-                                    return true;
+                                    string type = reader.GetString("Type");
+                                    return (true, type);
                                 }
                             }
                         }
@@ -45,7 +86,7 @@ namespace TestDatabase
                 Debug.Write("Error during authentication: " + ex.Message);
             }
 
-            return false;
+            return (false, null);
         }
 
         public bool Register(string username, string fullname, string email, string password)
@@ -85,8 +126,11 @@ namespace TestDatabase
             }
 
             return false;
-        }   
+        }
 
+        
     }
+
+
 }
 

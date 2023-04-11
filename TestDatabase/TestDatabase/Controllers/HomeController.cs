@@ -6,16 +6,16 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Http;
+
 
 namespace TestDatabase.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController()
         {
-            _logger = logger;
 
         }
 
@@ -34,17 +34,64 @@ namespace TestDatabase.Controllers
             return View("Register");
         }
 
-        [HttpPost]
-        public IActionResult Login(string email, string password/*, string remember*/)
-        {
+        public IActionResult Privacy() {
+            if (User.Identity.IsAuthenticated)
+            {
+                var emailClaim = User.FindFirst(ClaimTypes.Name)?.Value;
+                var userTypeClaim = User.FindFirst(ClaimTypes.Role)?.Value;
 
+                if (emailClaim != null && userTypeClaim != null)
+                {
+                    ViewBag.Email = emailClaim;
+                    ViewBag.UserType = userTypeClaim;
+                }
+                else
+                {
+                    // Handle the case where the user is authenticated but the claims are missing
+                    ViewBag.ErrorMessage = "Error: User claims not found.";
+                }
+            }
+            else
+            {
+                // Handle the case where the user is not authenticated
+                return RedirectToAction("Login", "Account");
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(string email, string password, string remember)
+        {
             string connString = "Server=studmysql01.fhict.local;Database=dbi515074;Uid=dbi515074;Pwd=AmineGPT;";
             UserDAO userDao = new UserDAO(connString);
 
+            var (authResult, userType) = userDao.Authenticate(email, password);
 
-            if (userDao.Authenticate(email, password))
-            {
-                return RedirectToAction("Index", "Main");
+                if (authResult)
+                {            
+                    var claims = new List<Claim>{
+                        new Claim(ClaimTypes.Email, email),
+                        new Claim(ClaimTypes.Role, userType)
+                    };
+
+                var identity = new ClaimsIdentity(claims, "login");
+                var principal = new ClaimsPrincipal(identity);
+
+                await HttpContext.SignInAsync(principal);
+
+
+                if (userType == "Admin")
+                {                   
+                   return RedirectToAction("Index", "Main");
+                }
+                else if (userType == "Gebruiker")
+                {
+                    return RedirectToAction("Privacy", "Home");
+                }
+                else
+                {
+                    return RedirectToAction("Error", "Home");
+                }
             }
             else
             {
@@ -52,6 +99,22 @@ namespace TestDatabase.Controllers
                 return View();
             }
         }
+
+        //public IActionResult Login(string email, string password, string remember)
+        //{
+        //    string connString = "Server=studmysql01.fhict.local;Database=dbi515074;Uid=dbi515074;Pwd=AmineGPT;";
+        //    UserDAO userDao = new UserDAO(connString);
+
+        //    if (userDao.Authenticate(email, password))
+        //    {
+        //        return RedirectToAction("Index", "Main");
+        //    }
+        //    else
+        //    {
+        //        ViewBag.ErrorMessage = "Incorrect email or password";
+        //        return View();
+        //    }
+        //}
 
         [HttpPost]
         public IActionResult Register(string username, string fullname, string email, string password)
@@ -68,38 +131,36 @@ namespace TestDatabase.Controllers
 
 
 
-        private bool ValidateRememberMeToken()
+        public string GetUserType(string email)
         {
-            if (HttpContext.Request.Cookies.TryGetValue("RememberMeToken", out string token) &&
-                HttpContext.Request.Cookies.TryGetValue("RememberMeEmail", out string email))
+            string connString = "Server=studmysql01.fhict.local;Database=dbi515074;Uid=dbi515074;Pwd=AmineGPT;";
+            UserDAO userDao = new UserDAO(connString);
+            try
             {
-                string connString = "Server=studmysql01.fhict.local;Database=dbi515074;Uid=dbi515074;Pwd=AmineGPT;";
-
                 using (MySqlConnection conn = new MySqlConnection(connString))
                 {
-                    string query = "SELECT COUNT(*) FROM AuthTokens WHERE Token = @Token AND Email = @Email";
+                    string query = "SELECT Type FROM account WHERE Email = @Email";
 
                     using (MySqlCommand command = new MySqlCommand(query, conn))
                     {
-                        command.Parameters.AddWithValue("@Token", token);
                         command.Parameters.AddWithValue("@Email", email);
                         conn.Open();
 
-                        int count = Convert.ToInt32(command.ExecuteScalar());
-                        if (count > 0)
-                        {
-                            var claims = new List<Claim> { new Claim(ClaimTypes.Name, email) };
-                            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                            var authProperties = new AuthenticationProperties { IsPersistent = true, ExpiresUtc = DateTime.UtcNow.AddDays(30) };
-                            HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity), authProperties).Wait();
+                        object result = command.ExecuteScalar();
 
-                            return true;
+                        if (result != null)
+                        {
+                            return result.ToString();
                         }
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                Debug.Write("Error retrieving user type: " + ex.Message);
+            }
 
-            return false;
+            return null;
         }
 
 
