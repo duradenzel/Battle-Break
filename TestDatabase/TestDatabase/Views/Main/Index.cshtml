@@ -7,9 +7,16 @@
 
 <head>
     <link rel="stylesheet" href="~/css/MainDesktop.css" asp-append-version="true" />
+    <script src="~/js/site.js" asp-append-version="true"></script>
 </head>
 
+
 <div class="container">
+    <div class="hamburgerNavigator">
+
+
+    </div>
+
 
     <div class="gameSelectorContainer">
             <form class="game-select-button" action="/spel">
@@ -224,52 +231,4 @@
 
 </div>
 
-    @*<div class="flex-container">
-
-
-
-    <form class="flex-item spel-select" action="/spel">
-        <select name="spel" id="spel">
-            <option value="voetbal">voebal</option>
-            <option value="tafeltennis">tafeltennis</option>
-            <option value="rozenkoekenspel">roze koeken spel</option>
-            <option value="stardewvalley">stardew valley</option>
-        </select>
-        <br>
-        <br>
-   
-    </form>
-    <div class="flex-item personal-score"><p>score: 200</p></div>
-
-    <div class="flex-item leaderboard">
-    
-
-        <ul class="leaderboard-wrapper" type="none">
-           <li>tot 21</li> 
-           <ul class="leaderboard-list">     
-               @for (int i = 0; i < 3; i++)
-                    {
-                        <li> <img src = "@url.content("/assets/medals/"+(i+1)+".png")" /> @namen[i]  @gewonnenwedstrijden[i] wins</li>
-                    }
-            
-            </ul>
-            <ul start="@viewdata["spelerpositie"]" class="leaderboard-list">
-                <li> &nbsp; @viewdata["spelerpositie"] @viewdata["spelernaam"] @viewdata["speleroverwinningen"] wins</li>
-            </ul>
-        </ul>
-    </div>
-
-    </div>
-
-    <figure>
-        <figcaption>match history</figcaption>
-        <ul type="none">
-            <li>speler - tegenstander <br> eindscore (spel) <br> date-time </li>
-            <li><br>heijn - piet <br> 2-0 (voetbal) <br> gastren </li>
-        </ul>
-    </figure>
-
-    <h3>*tournamenten en nieuws</h3>
-    <h4>ping pong tournooi (morgen)</h4>
-    <h4>(niews) </h4>*@
 
