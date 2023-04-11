@@ -12,58 +12,115 @@
 <div class="container">
 
     <div class="gameSelectorContainer">
-        <form class="game-select" action="/spel">
-            <select name="spel" id="spel">
-                <option value="voetbal">Voebal</option>
-                <option value="tafeltennis">Tafeltennis</option>
-                <option value="rozenKoekenSpel">Roze koeken spel</option>
-                <option value="stardewValley">Stardew Valley</option>
-            </select>
-            <br>
-            <br>
-        </form>
+            <form class="game-select-button" action="/spel">
+                <select class="game-select-button" name="spel" id="spel">
+                    <option value="voetbal">Voebal</option>
+                    <option value="tafeltennis">Tafeltennis</option>
+                    <option value="rozenKoekenSpel">Roze koeken spel</option>
+                    <option value="stardewValley">Stardew Valley</option>
+                </select>
+                <br>
+                <br>
+            </form>
     </div>
 
     <div class="personalScoreContainer">
         <div class="personal-score">
-            <p class="">Score: 200</p>
+            <p class="magic">200 BP</p>
         </div>
     </div>
 
     <div class="leaderboardContainer">
         <div class="leaderboard">
-            <div class="leaderboard-title">Leaderboard</div>
+            
+            <div class="leaderboard-box">
+                <div class="leaderboard-content">
+                    <div class="leaderboard-title">
+                        <span class="magic">Leaderboard</span>
+                    </div>
+                </div>
+            </div>
+
             <div class="leaderboard-wrapper" type="none">
 
                 <ul class="leaderboard-list">
                     @for (int i = 0; i < Account_IDs.Count; i++)
                     {
                         <li>
-                            <img src="@Url.Content("/Assets/medals/"+(i+1)+".png")" /> @Namen[i]
-                            <div id="wins" class="right-align">@GewonnenWedstrijden[i] wins</div>
+                            <img src="@Url.Content("/Assets/medals/"+(i+1)+".png")" />
+                            <span class="magic">@Namen[i]</span>
+                            <div id="wins" class="right-align">
+                                <span class="magic">@GewonnenWedstrijden[i] wins</span>
+                            </div>
                         </li>
                     }
                 </ul>
                 
             </div>
-                <ul start="@ViewData["SpelerPositie"]" class="leaderboard-player-score">
-                <li> #@ViewData["SpelerPositie"] @ViewData["spelerNaam"] @ViewData["spelerOverwinningen"] wins</li>
-                </ul>
+            <div class="leaderboard-player-score-wrapper">
+                <div class="leaderboard-player-score-content">
+                    <ul start="@ViewData["SpelerPositie"]" class="leaderboard-player-score">
+                        <li class="space">
+                            <span class="magic">#@ViewData["SpelerPositie"] </span>
+                            <span class="magic">@ViewData["spelerNaam"]</span>
+                            <span class="magic">@ViewData["spelerOverwinningen"] wins</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 
     <div class="matchHistoryContainer">
-        <figure>
-            <figcaption>Match History</figcaption>
-            <ul type="none">
-                <li>Speler - Tegenstander <br> eindscore (spel) <br> date-time </li>
-                <li><br>Heijn - Piet <br> 2-0 (Voetbal) <br> gastren </li>
-            </ul>
-        </figure>
+        <div class="MatchHistory">
+
+            <div class="MatchHistory-box">
+                <div class="MatchHistory-content">
+                    <div class="MatchHistory-title">
+                        <span class="magic">Match History</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="MatchHistory-wrapper" type="none">
+
+                <ul class="MatchHistory-list">
+                    <span class="magicSelect">
+                        Tafeltennis <br />
+                    </span>
+                    <li>
+                        <span class="magic">
+                            Piet
+                        </span>
+                        <span class="magic">
+                            
+                            2 - 1
+                        </span>
+                        <span class="magic">
+                            Heijn
+                        </span>
+                    </li>
+                    @for (int i = 0; i < Account_IDs.Count; i++)
+                    {
+                        <li>
+                            <span class="magic">
+                                @Namen[i]
+                            </span>
+                            <span class="magic">
+                                <span id="wins" class="right-align">@GewonnenWedstrijden[i] wins</span>
+                            </span>
+                        </li>
+                    }
+                </ul>
+
+            </div>
+        </div>
     </div>
 
     <div class="tournamentContainer">
-        <h3>*tournamenten en nieuws</h3>
+        <div >
+
+        </div>
     </div>
 
 </div>
