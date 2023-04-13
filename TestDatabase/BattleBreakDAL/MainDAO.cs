@@ -1,5 +1,4 @@
-﻿using BattleBreak.Models;
-using System.Data.SqlClient;
+﻿using System.Data.SqlClient;
 
 namespace BattleBreakDAL
 {
@@ -10,9 +9,9 @@ namespace BattleBreakDAL
 
         public MainDAO() { }
 
-        public async Task<List<PlayerStats>> GetLeaderboardStats()
+        public async Task<List<PlayerStatsDTO>> GetLeaderboardStats()
         {
-            List<PlayerStats> leaderboardStats = new List<PlayerStats>();
+            List<PlayerStatsDTO> leaderboardStats = new List<PlayerStatsDTO>();
 
             try
             {
@@ -25,7 +24,7 @@ namespace BattleBreakDAL
                         {
                             while (reader.Read())
                             {
-                                PlayerStats stats = new PlayerStats
+                                PlayerStatsDTO stats = new PlayerStatsDTO
                                 {
                                     GespeeldeWedstrijden = (int)reader["GespeeldeWedstrijden"],
                                     GewonnenWedstrijden = (int)reader["GewonnenWedstrijden"],
@@ -43,6 +42,21 @@ namespace BattleBreakDAL
             }
             return leaderboardStats;
 
+        }
+        public string DALsendData()
+        {
+            string returnstring = "ni";
+            using (SqlConnection con = new(_connString))
+            {
+                con.Open();
+                SqlCommand sqlCom = new("Select `ID`, `Gebruikersnaam` From account", con);
+                SqlDataReader reader = sqlCom.ExecuteReader();
+                while (reader.Read())
+                {
+                    returnstring += reader.GetString(1);
+                }
+            }
+            return returnstring;
         }
     }
 

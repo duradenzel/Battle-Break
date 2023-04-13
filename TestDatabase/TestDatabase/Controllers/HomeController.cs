@@ -42,22 +42,23 @@ namespace TestDatabase.Controllers
 
             var (authResult, userType) = userDao.Authenticate(email, password);
 
-                if (authResult)
-                {            
-                    var claims = new List<Claim>{
-                        new Claim(ClaimTypes.Email, email),
-                        new Claim(ClaimTypes.Role, userType)
-                    };
+            if (authResult)
+            {
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Email, email),
+                    new Claim(ClaimTypes.Role, userType)
+                };
 
                 var identity = new ClaimsIdentity(claims, "login");
                 var principal = new ClaimsPrincipal(identity);
 
                 await HttpContext.SignInAsync(principal);
 
-
+                
                 if (userType == "Admin")
                 {                   
-                   return RedirectToAction("Index", "Main");
+                    return RedirectToAction("Index", "Main");
                 }
                 else if (userType == "Gebruiker")
                 {

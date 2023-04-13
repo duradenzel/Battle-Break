@@ -4,7 +4,6 @@ using MySql.Data.MySqlClient;
 using TestDatabase.Models;
 using BattleBreakBLL;
 using BattleBreakDAL;
-using BattleBreak.Models;
 
 namespace TestDatabase.Controllers
 {
@@ -21,7 +20,7 @@ namespace TestDatabase.Controllers
 
         public async Task<IActionResult> GetLeaderboard()
         {
-            List<PlayerStats> leaderboardStats = await _mainService.GetLeaderboardStats();
+            List<PlayerStatsDTO> leaderboardStats = await _mainService.GetLeaderboardStats();
             if (leaderboardStats != null) { 
                 return View(leaderboardStats);
             }
@@ -109,7 +108,7 @@ namespace TestDatabase.Controllers
 
         public IActionResult Spel(string gekozenSpel)
         {
-            List<spel> spellen = new();
+            List<Spel> spellen = new();
             using (MySqlConnection con = new(connString))
             {
                 con.Open();
@@ -119,7 +118,7 @@ namespace TestDatabase.Controllers
 
                 while (reader.Read())
                 {
-                    spel s = new()
+                    Spel s = new()
                     {
                         naam = reader.GetString(1),
                         minimumSpelers = reader.GetInt32(2),

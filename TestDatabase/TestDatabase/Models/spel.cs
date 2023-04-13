@@ -1,9 +1,10 @@
 ﻿using MySql.Data.MySqlClient;
 using System.Drawing;
+using BattleBreakBLL;
 
 namespace TestDatabase.Models
 {
-    public class spel
+    public class Spel
     {
         public string naam;
         public int minimumSpelers;
@@ -13,12 +14,12 @@ namespace TestDatabase.Models
         string connString = "Server=studmysql01.fhict.local;Database=dbi515074;Uid=dbi515074;Pwd=AmineGPT;";
  
 
-    public spel()
+    public Spel()
         {
 
         }
 
-        public spel(string naam, int minimumSpelers, string regels, string winConiditie)
+        public Spel(string naam, int minimumSpelers, string regels, string winConiditie)
         {
             this.naam = naam;
             this.minimumSpelers = minimumSpelers;
@@ -28,18 +29,8 @@ namespace TestDatabase.Models
 
         public string sendData()
         {
-            string returnstring = "ni";
-            using (MySqlConnection con = new(connString))
-            {
-                con.Open();
-                MySqlCommand sqlCom = new("Select `ID`, `Gebruikersnaam` From account", con);
-                MySqlDataReader reader = sqlCom.ExecuteReader();
-                while (reader.Read())
-                {
-                    returnstring += reader.GetString(1);
-                }
-            }
-            return returnstring;
+            SpelLogic spelLogic = new();
+            return spelLogic.LogicsendData();
         }
     }
 }

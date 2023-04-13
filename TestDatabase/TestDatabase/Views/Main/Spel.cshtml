@@ -1,6 +1,6 @@
 ﻿@{
     int aantalSpelers = 12;
-    spel gekozenSpel = (spel)ViewData["gekozenSpel"];
+    Spel gekozenSpel = (Spel)ViewData["gekozenSpel"];
     ViewData["Title"] = "Spel";
     ViewData["test"] = false;
     
@@ -33,7 +33,7 @@
 
 @section scripts{
     @{
-        spel spel = new spel();
+        Spel spel = new Spel();
     };
     <script>
         function mode() {

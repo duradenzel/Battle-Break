@@ -1,5 +1,4 @@
 ﻿using BattleBreakDAL;
-using BattleBreak.Models;
 
 namespace BattleBreakBLL
 {
@@ -12,9 +11,9 @@ namespace BattleBreakBLL
             _mainDAO = mainDAO;
         }
 
-        public async Task<List<PlayerStats>> GetLeaderboardStats() {
+        public async Task<List<PlayerStatsDTO>> GetLeaderboardStats() {
         
-            List<PlayerStats> leaderboardStats = await _mainDAO.GetLeaderboardStats();
+            List<PlayerStatsDTO> leaderboardStats = await _mainDAO.GetLeaderboardStats();
             return leaderboardStats;
         }
     }
