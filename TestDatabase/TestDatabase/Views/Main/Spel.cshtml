@@ -23,8 +23,9 @@
 <p>/@gekozenSpel.minimumSpelers</p>
 <br>*@
 
-<div id="test"></div>
+<div id="test"><input id="te" type="text" name="aantalSpelers"><input id="te" type="text" name="aantalSpelers"></div>
 <br>
+
 
 <select onchange="mode()" name="mode" id="mode">
     <option value="head">Head to Head</option>
@@ -42,7 +43,7 @@
 @section scripts{
     <script>
         function mode() {
-            val = document.getElementById("mode").value;
+            var val = document.getElementById("mode").value;
             aantalTeams = document.getElementById("aantalTeams");
 
             if(val == "team"){
@@ -60,10 +61,16 @@
         }
 
         function sendData(spelID,userID, gewonnen){
-            
+            var spelers = [];
+            for (var i = 0; i < document.getElementsByName("aantalSpelers").length; i++){
+                spelers.push(document.getElementsByName("aantalSpelers")[i].value)
+            }
+
+            spelers1 = spelers.join(',');
+
             $.ajax({
                 url: '/Main/sendData',
-                data: { Spel_ID: spelID, User_ID: userID, Gewonnen: gewonnen},
+                data: { Spel_ID: spelID, User_ID: userID, Gewonnen: gewonnen, User_IDs: spelers1},
                 type: 'GET',
                 success: function (returned_data) {
                     console.log(returned_data)
@@ -73,15 +80,10 @@
                     console.log(returned_data)
                 }
             });
-        }
 
-        function spelers(){
-            val = document.getElementById("aantalSpelers").value;
-            console.log(val);
-
-            test = document.getElementById("test");
-
-            test.innerHTML += `<input id="te" type="text" name="aantalSpelers">`
+            //test = document.getElementsByName("aantalSpelers")[0].value;
+            
+            //console.log(spelers);
         }
 
         function increaseValue() {

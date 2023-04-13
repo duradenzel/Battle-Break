@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
 using TestDatabase.Models;
@@ -127,23 +128,30 @@ namespace TestDatabase.Controllers
             return View();
         }
 
-        public int sendData(int Spel_ID, int User_ID, int Gewonnen)
+        public int sendData(int Spel_ID, int User_ID, int Gewonnen, string User_IDs)
         {
-            int ID = -1;
+            string[] User_IDList = User_IDs.Split(',');
+
+            int ID = int.Parse(User_IDList[1]);
+            
             using (MySqlConnection con = new(connString))
             {
-                con.Open();
                 MySqlDataReader reader;
-                
-                using (var cmd = new MySqlCommand())
-                {
-                    cmd.CommandText = $"INSERT INTO wedstrijd (Spel_ID, Account_ID, Gewonnen) VALUES ({Spel_ID},{User_ID},{Gewonnen})";
-                    cmd.CommandType = CommandType.Text;
-                    cmd.Connection = con;
 
-                    reader = cmd.ExecuteReader();
+                for (int i = 0; i < User_IDList.Length; i++)
+                {
+                    con.Open();
+                   
+                    using (var cmd = new MySqlCommand())
+                    {
+                        cmd.CommandText = $"INSERT INTO wedstrijd (ID, Spel_ID, Account_ID, Gewonnen) VALUES (101, {Spel_ID},{User_IDList[i]},{Gewonnen})";
+                        cmd.CommandType = CommandType.Text;
+                        cmd.Connection = con;
+                    
+                        reader = cmd.ExecuteReader();
+                    }
+                    con.Close();
                 }
-                con.Close();
 
                 con.Open();
 
