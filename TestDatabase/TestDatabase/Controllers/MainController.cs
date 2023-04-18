@@ -142,13 +142,37 @@ namespace TestDatabase.Controllers
         public IActionResult Wedstrijd(int ID)
         {
             ViewData["ID"] = ID;
-            return View();
+            List<WedstrijdModel> wedstrijden = new();
+
+            using(MySqlConnection con = new(connString))
+            {
+                MySqlDataReader reader;
+
+                con.Open();
+                MySqlCommand cmd = new($"Select * from `wedstrijd` where `ID` = {ID} ", con);
+                reader = cmd.ExecuteReader();
+                
+                while (reader.Read())
+                {
+                    WedstrijdModel w = new()
+                    {
+                        ID = reader.GetInt32(0),
+                        Spel_ID = reader.GetInt32(1),
+                        Account_ID = reader.GetInt32(2),
+                        Gewonnen = reader.GetInt32(3),
+                        Punten = reader.GetInt32(4)
+                    };
+                    wedstrijden.Add(w);
+                }
+                con.Close();    
+            }
+            
+            return View(wedstrijden);
         }
 
         public int sendData(int Spel_ID, int User_ID, int Gewonnen, string User_IDs)
         {
-            //Set ID to -1 so that it will return an error if unchanged
-            int ID = -1;
+            int ID = 0;
 
             //Convert string of UIDs to String Array
             string[] User_IDList = User_IDs.Split(',');
@@ -179,7 +203,7 @@ namespace TestDatabase.Controllers
                         try{
                             using (var cmd = new MySqlCommand())
                             {
-                                cmd.CommandText = $"INSERT INTO wedstrijd (ID, Spel_ID, Account_ID, Gewonnen) VALUES ({ID},{Spel_ID},{User_IDList[i]},{Gewonnen})";
+                                cmd.CommandText = $"INSERT INTO wedstrijd (ID, Spel_ID, Account_ID, Gewonnen, Punten) VALUES ({ID},{Spel_ID},{User_IDList[i]},{Gewonnen}, 2)";
                                 cmd.CommandType = CommandType.Text;
                                 cmd.Connection = con;
 
