@@ -1,4 +1,5 @@
-﻿using BattleBreak.Models;
+﻿using BattleBreakDAL.DTOS;
+using MySql.Data.MySqlClient;
 using System.Data.SqlClient;
 
 namespace BattleBreakDAL
@@ -10,27 +11,26 @@ namespace BattleBreakDAL
 
         public MainDAO() { }
 
-        public async Task<List<PlayerStats>> GetLeaderboardStats()
+        public async Task<List<LeaderboardDTO>> GetLeaderboardStats()
         {
-            List<PlayerStats> leaderboardStats = new List<PlayerStats>();
+            List<LeaderboardDTO> leaderboardStats = new List<LeaderboardDTO>();
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(_connString))
+                using (MySqlConnection connection = new MySqlConnection(_connString))
                 {
                     connection.Open();
-                    using (SqlCommand command = new SqlCommand("SELECT statistieken.GespeeldeWedstrijden, statistieken.GewonnenWedstrijden, account.Email FROM statistieken INNER JOIN account ON statistieken.Account_ID = account.ID;", connection))
+                    using (MySqlCommand command = new MySqlCommand("SELECT statistieken.GespeeldeWedstrijden, statistieken.GewonnenWedstrijden, account.Email FROM statistieken INNER JOIN account ON statistieken.Account_ID = account.ID;", connection))
                     {
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        using (MySqlDataReader reader = command.ExecuteReader())
                         {
-                            while (reader.Read())
+                            while (await reader.ReadAsync())
                             {
-                                PlayerStats stats = new PlayerStats
-                                {
-                                    GespeeldeWedstrijden = (int)reader["GespeeldeWedstrijden"],
-                                    GewonnenWedstrijden = (int)reader["GewonnenWedstrijden"],
-                                    AccountEmail = (string)reader["Email"]
-                                };
+                                LeaderboardDTO stats = new LeaderboardDTO();
+                                stats.AccountEmail = reader.GetString(reader.GetOrdinal("Email"));
+                                stats.GewonnenWedstrijden = reader.GetInt32(reader.GetOrdinal("GewonnenWedstrijden"));
+                                stats.GespeeldeWedstrijden = reader.GetInt32(reader.GetOrdinal("GespeeldeWedstrijden"));
+
                                 leaderboardStats.Add(stats);
                             }
                         }

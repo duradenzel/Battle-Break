@@ -4,7 +4,8 @@ using MySql.Data.MySqlClient;
 using TestDatabase.Models;
 using BattleBreakBLL;
 using BattleBreakDAL;
-using BattleBreak.Models;
+using BattleBreakBLL.Models;
+using BattleBreakDAL.DTOS;
 
 namespace TestDatabase.Controllers
 {
@@ -21,16 +22,17 @@ namespace TestDatabase.Controllers
 
         public async Task<IActionResult> GetLeaderboard()
         {
-            List<PlayerStats> leaderboardStats = await _mainService.GetLeaderboardStats();
-            if (leaderboardStats != null) { 
-                return View(leaderboardStats);
-            }
+           
             return View();
         }
 
         public async Task<IActionResult> Index()
         {
-            return View();
+
+           List<LeaderboardDTO> leaderboardStats = await _mainService.GetLeaderboardStats();
+            return View(leaderboardStats);
+            
+            
             //string connString = "Server=studmysql01.fhict.local;Database=dbi515074;Uid=dbi515074;Pwd=AmineGPT;";
             //List<int> Account_IDs = new();
             //List<int> GewonnenWedstrijden = new();

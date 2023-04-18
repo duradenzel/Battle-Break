@@ -52,17 +52,16 @@
             <div class="leaderboard-wrapper" type="none">
 
                 <ul class="leaderboard-list">
-                  @*  @for (int i = 0; i < Account_IDs.Count; i++)
+                     @foreach(var item in @Model)
                     {
-                        <li>
-                            <img src="@Url.Content("/Assets/medals/"+(i+1)+".png")" />
-                            <span class="magic">@Namen[i]</span>
-                            <div id="wins" class="right-align">
-                                <span class="magic">@GewonnenWedstrijden[i] wins</span>
-                            </div>
-                        </li>
-                    }*@
-                    
+                    <li>
+                   @* <img src="@Url.Content("/Assets/medals/"+(i+1)+".png")" />*@
+                            <span class="magic">@item.AccountEmail</span>
+                    <div id="wins" class="right-align">
+                    <span class="magic">@item.GewonnenWedstrijden wins</span>
+                    </div>
+                    </li>
+                    }  
                 </ul>
                 
             </div>
@@ -237,21 +236,21 @@
 
 @section scripts{
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            console.log("Dom loaded");
-            $.ajax({
-                url: '/Main/GetLeaderboard',
-                type: 'GET',
-                success: function (result) {
-                    console.log("succeeded fetching results");
+        //document.addEventListener('DOMContentLoaded', function () {
+        //    console.log("Dom loaded");
+        //    $.ajax({
+        //        url: '/Main/GetLeaderboard',
+        //        type: 'GET',
+        //        success: function (result) {
+        //            console.log("succeeded fetching results");
 
-                    $('.leaderboard-list').html(result);
-                },
-                error: function (err) {
-                    alert("Failed getting leaderboard");
-                }
-            });
-        }, false);
+        //            $('.leaderboard-list').html(result);
+        //        },
+        //        error: function (err) {
+        //            alert("Failed getting leaderboard");
+        //        }
+        //    });
+        //}, false);
 
     function loadLeaderBoard(){
           
