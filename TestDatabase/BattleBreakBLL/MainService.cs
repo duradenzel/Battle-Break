@@ -1,5 +1,7 @@
-﻿using BattleBreakDAL;
-using BattleBreak.Models;
+﻿using BattleBreakBLL.Models;
+using BattleBreakDAL;
+
+using BattleBreakDAL.DTOS;
 
 namespace BattleBreakBLL
 {
@@ -12,10 +14,23 @@ namespace BattleBreakBLL
             _mainDAO = mainDAO;
         }
 
-        public async Task<List<PlayerStats>> GetLeaderboardStats() {
-        
-            List<PlayerStats> leaderboardStats = await _mainDAO.GetLeaderboardStats();
-            return leaderboardStats;
+        public async Task<List<LeaderboardModel>> GetLeaderboardStats()
+        {
+            List<LeaderboardDTO> leaderboardDTOs = await _mainDAO.GetLeaderboardStats();
+            List<LeaderboardModel> leaderboardModels = new List<LeaderboardModel>();
+
+            foreach (var dto in leaderboardDTOs)
+            {
+                leaderboardModels.Add(new LeaderboardModel
+                {
+                    GespeeldeWedstrijden = dto.GespeeldeWedstrijden,
+                    GewonnenWedstrijden = dto.GewonnenWedstrijden,
+                    AccountEmail = dto.AccountEmail
+                });
+            }
+
+            return leaderboardModels;
         }
+
     }
 }
