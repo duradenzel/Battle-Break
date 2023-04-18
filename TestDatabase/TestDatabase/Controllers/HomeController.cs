@@ -38,9 +38,9 @@ namespace TestDatabase.Controllers
         public async Task<IActionResult> Login(string email, string password, string remember)
         {
             string connString = "Server=studmysql01.fhict.local;Database=dbi515074;Uid=dbi515074;Pwd=AmineGPT;";
-            UserDAO userDao = new UserDAO(connString);
+            UserLogic userDao = new UserLogic(connString);
 
-            var (authResult, userType) = userDao.Authenticate(email, password);
+            var (authResult, userType) = userDao.LogicAuthenticate(email, password, connString);
 
             if (authResult)
             {
@@ -96,9 +96,9 @@ namespace TestDatabase.Controllers
         public IActionResult Register(string username, string fullname, string email, string password)
         {
             string connString = "Server=studmysql01.fhict.local;Database=dbi515074;Uid=dbi515074;Pwd=AmineGPT;";
-            UserDAO userDao = new UserDAO(connString);
+            UserLogic userDao = new UserLogic(connString);
 
-            if (userDao.Register(username, fullname, email, password))
+            if (userDao.LogicRegister(username, fullname, email, password))
             {
                 return RedirectToAction("Index", "Main");
             }
@@ -110,7 +110,7 @@ namespace TestDatabase.Controllers
         public string GetUserType(string email)
         {
             string connString = "Server=studmysql01.fhict.local;Database=dbi515074;Uid=dbi515074;Pwd=AmineGPT;";
-            UserDAO userDao = new UserDAO(connString);
+            UserLogic userDao = new UserLogic(connString);
             try
             {
                 using (MySqlConnection conn = new MySqlConnection(connString))

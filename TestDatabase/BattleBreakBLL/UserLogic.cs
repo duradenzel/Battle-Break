@@ -1,16 +1,15 @@
 ﻿using MySql.Data.MySqlClient;
-
 using System.Diagnostics;
 using Microsoft.AspNetCore.Http;
-
+using BattleBreakDAL;
 
 namespace TestDatabase
 {
-    public class UserDAO
+    public class UserLogic
     {
         private readonly string _connString;
 
-        public UserDAO(string connString)
+        public UserLogic(string connString)
         {
             _connString = connString;
         }
@@ -52,44 +51,13 @@ namespace TestDatabase
         //    return false;
         //}
 
-        public (bool, string) Authenticate(string email, string password)
+        public (bool, string) LogicAuthenticate(string email, string password, string connString)
         {
-            try
-            {
-                using (MySqlConnection conn = new MySqlConnection(_connString))
-                {
-                    string query = "SELECT Wachtwoord, Type FROM account WHERE Email = @Email";
-
-                    using (MySqlCommand command = new MySqlCommand(query, conn))
-                    {
-                        command.Parameters.AddWithValue("@Email", email);
-                        conn.Open();
-
-                        using (MySqlDataReader reader = command.ExecuteReader())
-                        {
-                            if (reader.Read())
-                            {
-                                string passwordHash = reader.GetString("Wachtwoord");
-
-                                if (BCrypt.Net.BCrypt.Verify(password, passwordHash))
-                                {
-                                    string type = reader.GetString("Type");
-                                    return (true, type);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.Write("Error during authentication: " + ex.Message);
-            }
-
-            return (false, null);
+            UserDAO UDAO = new UserDAO(connString);
+            return UDAO.DALAuthenticate(email, password);
         }
 
-        public bool Register(string username, string fullname, string email, string password)
+        public bool LogicRegister(string username, string fullname, string email, string password)
         {
             try
             {
