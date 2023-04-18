@@ -52,7 +52,7 @@
             <div class="leaderboard-wrapper" type="none">
 
                 <ul class="leaderboard-list">
-                     @foreach(var item in @Model)
+                    @foreach (var item in @Model.LeaderboardModels)
                     {
                     <li>
                    @* <img src="@Url.Content("/Assets/medals/"+(i+1)+".png")" />*@
