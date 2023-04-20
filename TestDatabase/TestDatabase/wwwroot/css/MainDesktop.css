@@ -10,7 +10,6 @@
 .hamburgerNavigator {
     grid-column: 1;
     grid-row: 1 / span 5;
-    border: 1px solid purple;
     position: relative;
 }
 
@@ -21,8 +20,6 @@
 .gameSelectorContainer {
     grid-column: 2;
     grid-row: 1;
-    border: 1px solid purple;
-
     justify-content: center;
     align-items: center;
     display: flex;
@@ -30,8 +27,6 @@
 .personalScoreContainer {
     grid-column: 3;
     grid-row: 1;
-    border: 1px solid purple;
-
     justify-content: center;
     align-items: center;
     display: flex;
@@ -39,17 +34,16 @@
 .leaderboardContainer {
     grid-column: 2 / span 2;
     grid-row: 3 / span 3;
-    border: 1px solid purple;
+    
 }
 .matchHistoryContainer {
     grid-column: 5;
     grid-row: 1 / span 3;
-    border: 1px solid purple;
+
 }
 .tournamentContainer {
     grid-column: 5;
     grid-row: 5;
-    border: 1px solid purple;
     display: flex;
 }
 

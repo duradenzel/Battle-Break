@@ -11,5 +11,8 @@ namespace BattleBreakBLL.Models
         public int GespeeldeWedstrijden { get; set; }
         public int GewonnenWedstrijden { get; set; }
         public string AccountEmail { get; set; }
+        public string VolledigeNaam { get; set; }
+
+
     }
 }

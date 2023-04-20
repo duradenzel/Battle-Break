@@ -20,7 +20,7 @@ namespace BattleBreakDAL
                 using (MySqlConnection connection = new MySqlConnection(_connString))
                 {
                     connection.Open();
-                    using (MySqlCommand command = new MySqlCommand("SELECT statistieken.GespeeldeWedstrijden, statistieken.GewonnenWedstrijden, account.Email FROM statistieken INNER JOIN account ON statistieken.Account_ID = account.ID;", connection))
+                    using (MySqlCommand command = new MySqlCommand("SELECT statistieken.GespeeldeWedstrijden, statistieken.GewonnenWedstrijden, account.Email, account.VolledigeNaam FROM statistieken INNER JOIN account ON statistieken.Account_ID = account.ID;", connection))
                     {
                         using (MySqlDataReader reader = command.ExecuteReader())
                         {
@@ -30,6 +30,8 @@ namespace BattleBreakDAL
                                 stats.AccountEmail = reader.GetString(reader.GetOrdinal("Email"));
                                 stats.GewonnenWedstrijden = reader.GetInt32(reader.GetOrdinal("GewonnenWedstrijden"));
                                 stats.GespeeldeWedstrijden = reader.GetInt32(reader.GetOrdinal("GespeeldeWedstrijden"));
+                                stats.VolledigeNaam = reader.GetString(reader.GetOrdinal("VolledigeNaam"));
+
 
                                 leaderboardStats.Add(stats);
                             }

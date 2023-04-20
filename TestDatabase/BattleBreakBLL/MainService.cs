@@ -25,7 +25,8 @@ namespace BattleBreakBLL
                 {
                     GespeeldeWedstrijden = dto.GespeeldeWedstrijden,
                     GewonnenWedstrijden = dto.GewonnenWedstrijden,
-                    AccountEmail = dto.AccountEmail
+                    AccountEmail = dto.AccountEmail,
+                    VolledigeNaam = dto.VolledigeNaam
                 });
             }
 
