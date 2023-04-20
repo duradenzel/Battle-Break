@@ -9,8 +9,6 @@ namespace TestDatabase.Controllers
 {
     public class MainController : Controller
     {
-        string connString = "Server=studmysql01.fhict.local;Database=dbi515074;Uid=dbi515074;Pwd=AmineGPT;";
-
         private readonly MainService _mainService;
 
         public MainController()
@@ -109,7 +107,7 @@ namespace TestDatabase.Controllers
         public IActionResult Spel(string gekozenSpel)
         {
             List<Spel> spellen = new();
-            using (MySqlConnection con = new(connString))
+            using (MySqlConnection con = new())
             {
                 con.Open();
                 MySqlCommand sqlCom = new("Select * From `spel`", con);

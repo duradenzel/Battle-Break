@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,11 +13,11 @@ namespace BattleBreakDAL
 {
     public class UserDAO
     {
-        private readonly string _connString;
+        private readonly string _connString = "Server=studmysql01.fhict.local;Database=dbi515074;Uid=dbi515074;Pwd=AmineGPT;";
 
-        public UserDAO(string connString)
+        public UserDAO()
         {
-            _connString = connString;
+
         }
 
         //public bool Authenticate(string email, string password)
@@ -130,7 +132,5 @@ namespace BattleBreakDAL
 
             return false;
         }
-
-
     }
 }
