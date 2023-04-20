@@ -1,11 +1,4 @@
-﻿@{
-    ViewData["Title"] = "Main Page";
-    List<int> Account_IDs = (List<int>)(object)ViewData["Account_IDs"];
-    List<int> GewonnenWedstrijden = (List<int>)(object)ViewData["GewonnenWedstrijden"];
-    List<string> Namen = (List<string>)(object)ViewData["Namen"];
-    
-}
-
+﻿
 <head>
     <link rel="stylesheet" href="~/css/MainDesktop.css" asp-append-version="true" />
     <script src="~/js/site.js" asp-append-version="true"></script>
@@ -52,7 +45,7 @@
             <div class="leaderboard-wrapper" type="none">
 
                 <ul class="leaderboard-list">
-                    @foreach (var item in @Model.LeaderboardModels)
+                    @foreach (var item in @Model.Leaderboard)
                     {
                     <li>
                    @* <img src="@Url.Content("/Assets/medals/"+(i+1)+".png")" />*@
@@ -96,102 +89,21 @@
                     <span class="magicSelect">
                         Tafeltennis <br />
                     </span>
-                    <li>
-                        <span class="magic">
-                            John
-                        </span>
-                        <span class="magic">
+                    @foreach (var match in @Model.MatchHistory){
+                        <li>
+                            <span class="magic">
+                                @match.Player1
+                            </span>
+                            <span class="magic">
 
-                            3 - 0
-                        </span>
-                        <span class="magic">
-                            Smith
-                        </span>
-                    </li>
-                    <li>
-                        <span class="magic">
-                            Sarah
-                        </span>
-                        <span class="magic">
+                                @match.Player1_Points - @match.Player2_Points
+                            </span>
+                            <span class="magic">
+                                @match.Player2
 
-                            1 - 2
-                        </span>
-                        <span class="magic">
-                            Thompson
-                        </span>
-                    </li>
-                    <li>
-                        <span class="magic">
-                            Michael
-                        </span>
-                        <span class="magic">
-
-                            2 - 1
-                        </span>
-                        <span class="magic">
-                            Lee
-                        </span>
-                    </li>
-                    <li>
-                        <span class="magic">
-                            Jessica
-                        </span>
-                        <span class="magic">
-
-                            3 - 0
-                        </span>
-                        <span class="magic">
-                            Chen
-                        </span>
-                    </li>
-                    <li>
-                        <span class="magic">
-                            David
-                        </span>
-                        <span class="magic">
-
-                            2 - 1
-                        </span>
-                        <span class="magic">
-                            Kim
-                        </span>
-                    </li>
-                    <li>
-                        <span class="magic">
-                            Emily
-                        </span>
-                        <span class="magic">
-
-                            3 - 0
-                        </span>
-                        <span class="magic">
-                            Nguyen
-                        </span>
-                    </li>
-                    <li>
-                        <span class="magic">
-                            Alex
-                        </span>
-                        <span class="magic">
-
-                            2 - 1
-                        </span>
-                        <span class="magic">
-                            Johnson
-                        </span>
-                    </li>
-                    <li>
-                        <span class="magic">
-                            Samantha
-                        </span>
-                        <span class="magic">
-
-                            3 - 0
-                        </span>
-                        <span class="magic">
-                            Brown
-                        </span>
-                    </li>
+                            </span>
+                        </li>
+                    }
                 </ul>
 
             </div>

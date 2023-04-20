@@ -32,5 +32,26 @@ namespace BattleBreakBLL
             return leaderboardModels;
         }
 
+        public async Task<List<MatchHistoryModel>> GetMatchHistory()
+        {
+            List<MatchHistoryDTO> matchHistoryDTOs = await _mainDAO.GetMatchHistory();
+            List<MatchHistoryModel> matchHistoryModels = new List<MatchHistoryModel>();
+
+            foreach (var dto in matchHistoryDTOs)
+            {
+                matchHistoryModels.Add(new MatchHistoryModel
+                {
+                    Game_ID = dto.Game_ID,
+                    Match_ID = dto.Match_ID,
+                    Player1 = dto.Player1,
+                    Player1_Points = dto.Player1_Points,
+                    Player2 = dto.Player2,
+                    Player2_Points = dto.Player2_Points
+                });
+            }
+
+            return matchHistoryModels;
+        }
+
     }
 }

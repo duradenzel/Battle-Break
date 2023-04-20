@@ -31,8 +31,8 @@ namespace TestDatabase.Controllers
         {
 
             List<LeaderboardModel> leaderboardStats = await _mainService.GetLeaderboardStats();
-
-            var viewModel = new MainViewModel(leaderboardStats);      
+            List<MatchHistoryModel> matchHistory = await _mainService.GetMatchHistory();
+            var viewModel = new MainViewModel(leaderboardStats, matchHistory);      
 
             
             return View(viewModel);

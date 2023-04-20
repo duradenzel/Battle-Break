@@ -4,10 +4,13 @@ namespace TestDatabase.ViewModels
 {
     public class MainViewModel
     {
-        public List<LeaderboardModel> LeaderboardModels { get; set; }
+        public List<LeaderboardModel> Leaderboard { get; set; }
+        public List<MatchHistoryModel> MatchHistory { get; set; }
 
-        public MainViewModel(List<LeaderboardModel> leaderboardModels) {
-            LeaderboardModels = leaderboardModels;
+        public MainViewModel(List<LeaderboardModel> leaderboardModels, List<MatchHistoryModel> matchHistoryModels)
+        {
+            Leaderboard = leaderboardModels;
+            MatchHistory = matchHistoryModels;
         }
     }
 }
