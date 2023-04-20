@@ -1,27 +1,54 @@
-﻿@{
-    ViewData["Title"] = "Main Page";
-    List<int> Account_IDs = (List<int>)(object)ViewData["Account_IDs"];
-    List<int> GewonnenWedstrijden = (List<int>)(object)ViewData["GewonnenWedstrijden"];
-    List<string> Namen = (List<string>)(object)ViewData["Namen"];
-}
-
+﻿
 <head>
     <link rel="stylesheet" href="~/css/MainDesktop.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/sidebar.css" asp-append-version="true" />
+    <script src="~/js/site.js" asp-append-version="true"></script>
 </head>
 
+
 <div class="container">
+    <div class="hamburgerNavigator">
+        <aside class="sidebar">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/Main/Index">
+                        <i class="fas fa-home"></i>
+                        Home
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Main/spel?gekozenspel=fortnite">
+                        <i class="fas fa-user"></i>
+                        Game
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-cog"></i>
+                        Settings
+                    </a>
+                </li>
+                <!-- Add more sidebar items as needed -->
+            </ul>
+        </aside>
+
+    </div>
+
 
     <div class="gameSelectorContainer">
-            <form class="game-select-button" action="/spel">
-                <select class="game-select-button" name="spel" id="spel">
-                    <option value="voetbal">Voebal</option>
-                    <option value="tafeltennis">Tafeltennis</option>
-                    <option value="rozenKoekenSpel">Roze koeken spel</option>
-                    <option value="stardewValley">Stardew Valley</option>
-                </select>
-                <br>
-                <br>
-            </form>
+        <form class="game-select-button" action="/spel">
+            <select class="game-select-button" name="spel" id="spel">
+                <option value="fortnite">fortnite</option>
+                <option value="tafeltennis">Tafeltennis</option>
+                <option value="rozenKoekenSpel">Roze koeken spel</option>
+                <option value="stardew Valley">Stardew Valley</option>
+            </select>
+        </form>
+        <div>
+            <a class="game-select-button" onclick="redirectToSelectedPage()">
+                Select
+            </a>
+        </div>
     </div>
 
     <div class="personalScoreContainer">
@@ -44,16 +71,16 @@
             <div class="leaderboard-wrapper" type="none">
 
                 <ul class="leaderboard-list">
-                    @for (int i = 0; i < Account_IDs.Count; i++)
+                    @foreach (var item in @Model.Leaderboard)
                     {
-                        <li>
-                            <img src="@Url.Content("/Assets/medals/"+(i+1)+".png")" />
-                            <span class="magic">@Namen[i]</span>
-                            <div id="wins" class="right-align">
-                                <span class="magic">@GewonnenWedstrijden[i] wins</span>
-                            </div>
-                        </li>
-                    }
+                    <li>
+                   @* <img src="@Url.Content("/Assets/medals/"+(i+1)+".png")" />*@
+                            <span class="magic">@item.VolledigeNaam</span>
+                    <div id="wins" class="right-align">
+                    <span class="magic">@item.GewonnenWedstrijden wins</span>
+                    </div>
+                    </li>
+                    }  
                 </ul>
                 
             </div>
@@ -88,102 +115,24 @@
                     <span class="magicSelect">
                         Tafeltennis <br />
                     </span>
-                    <li>
-                        <span class="magic">
-                            John
-                        </span>
-                        <span class="magic">
+                    @foreach (var match in @Model.MatchHistory){
+                        if(match.Game_ID == 1){
+                        
+                        <li>
+                            <span class="magic">
+                                @match.Player1
+                            </span>
+                            <span class="magic">
 
-                            3 - 0
-                        </span>
-                        <span class="magic">
-                            Smith
-                        </span>
-                    </li>
-                    <li>
-                        <span class="magic">
-                            Sarah
-                        </span>
-                        <span class="magic">
+                                @match.Player1_Points - @match.Player2_Points
+                            </span>
+                            <span class="magic">
+                                @match.Player2
 
-                            1 - 2
-                        </span>
-                        <span class="magic">
-                            Thompson
-                        </span>
-                    </li>
-                    <li>
-                        <span class="magic">
-                            Michael
-                        </span>
-                        <span class="magic">
-
-                            2 - 1
-                        </span>
-                        <span class="magic">
-                            Lee
-                        </span>
-                    </li>
-                    <li>
-                        <span class="magic">
-                            Jessica
-                        </span>
-                        <span class="magic">
-
-                            3 - 0
-                        </span>
-                        <span class="magic">
-                            Chen
-                        </span>
-                    </li>
-                    <li>
-                        <span class="magic">
-                            David
-                        </span>
-                        <span class="magic">
-
-                            2 - 1
-                        </span>
-                        <span class="magic">
-                            Kim
-                        </span>
-                    </li>
-                    <li>
-                        <span class="magic">
-                            Emily
-                        </span>
-                        <span class="magic">
-
-                            3 - 0
-                        </span>
-                        <span class="magic">
-                            Nguyen
-                        </span>
-                    </li>
-                    <li>
-                        <span class="magic">
-                            Alex
-                        </span>
-                        <span class="magic">
-
-                            2 - 1
-                        </span>
-                        <span class="magic">
-                            Johnson
-                        </span>
-                    </li>
-                    <li>
-                        <span class="magic">
-                            Samantha
-                        </span>
-                        <span class="magic">
-
-                            3 - 0
-                        </span>
-                        <span class="magic">
-                            Brown
-                        </span>
-                    </li>
+                            </span>
+                        </li>
+                        }
+                    }
                 </ul>
 
             </div>
@@ -224,52 +173,35 @@
 
 </div>
 
-    @*<div class="flex-container">
 
 
+@section scripts{
+    <script>
+        //document.addEventListener('DOMContentLoaded', function () {
+        //    console.log("Dom loaded");
+        //    $.ajax({
+        //        url: '/Main/GetLeaderboard',
+        //        type: 'GET',
+        //        success: function (result) {
+        //            console.log("succeeded fetching results");
 
-    <form class="flex-item spel-select" action="/spel">
-        <select name="spel" id="spel">
-            <option value="voetbal">voebal</option>
-            <option value="tafeltennis">tafeltennis</option>
-            <option value="rozenkoekenspel">roze koeken spel</option>
-            <option value="stardewvalley">stardew valley</option>
-        </select>
-        <br>
-        <br>
-   
-    </form>
-    <div class="flex-item personal-score"><p>score: 200</p></div>
+        //            $('.leaderboard-list').html(result);
+        //        },
+        //        error: function (err) {
+        //            alert("Failed getting leaderboard");
+        //        }
+        //    });
+        //}, false);
 
-    <div class="flex-item leaderboard">
-    
+    function loadLeaderBoard(){
+          
+    }
 
-        <ul class="leaderboard-wrapper" type="none">
-           <li>tot 21</li> 
-           <ul class="leaderboard-list">     
-               @for (int i = 0; i < 3; i++)
-                    {
-                        <li> <img src = "@url.content("/assets/medals/"+(i+1)+".png")" /> @namen[i]  @gewonnenwedstrijden[i] wins</li>
-                    }
-            
-            </ul>
-            <ul start="@viewdata["spelerpositie"]" class="leaderboard-list">
-                <li> &nbsp; @viewdata["spelerpositie"] @viewdata["spelernaam"] @viewdata["speleroverwinningen"] wins</li>
-            </ul>
-        </ul>
-    </div>
+    function redirectToSelectedPage() {
+        var selectedOption = document.getElementById('spel').value;
+        var url = '/Main/spel?gekozenspel=' + selectedOption;
+        window.location.href = url;
+    }
 
-    </div>
-
-    <figure>
-        <figcaption>match history</figcaption>
-        <ul type="none">
-            <li>speler - tegenstander <br> eindscore (spel) <br> date-time </li>
-            <li><br>heijn - piet <br> 2-0 (voetbal) <br> gastren </li>
-        </ul>
-    </figure>
-
-    <h3>*tournamenten en nieuws</h3>
-    <h4>ping pong tournooi (morgen)</h4>
-    <h4>(niews) </h4>*@
-
+    </script>
+}

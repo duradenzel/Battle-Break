@@ -7,11 +7,19 @@
     padding: 0;
 }
 
+.hamburgerNavigator {
+    grid-column: 1;
+    grid-row: 1 / span 5;
+    position: relative;
+}
+
+
+
+
+
 .gameSelectorContainer {
     grid-column: 2;
     grid-row: 1;
-    /*border: 1px solid purple;*/
-
     justify-content: center;
     align-items: center;
     display: flex;
@@ -19,8 +27,6 @@
 .personalScoreContainer {
     grid-column: 3;
     grid-row: 1;
-    /*border: 1px solid purple;*/
-
     justify-content: center;
     align-items: center;
     display: flex;
@@ -28,17 +34,16 @@
 .leaderboardContainer {
     grid-column: 2 / span 2;
     grid-row: 3 / span 3;
-    /*border: 1px solid purple;*/
+    
 }
 .matchHistoryContainer {
     grid-column: 5;
     grid-row: 1 / span 3;
-    /*border: 1px solid purple;*/
+
 }
 .tournamentContainer {
     grid-column: 5;
     grid-row: 5;
-    /*border: 1px solid purple;*/
     display: flex;
 }
 
@@ -48,12 +53,39 @@
 
 }
 
+/* Media query for mobile devices */
+@media (max-width: 767px) {
+    .container {
+        grid-template-columns: 2fr; /* Change grid template to single column for mobile devices */
+        grid-template-rows: auto; /* Change grid template rows to 'auto' to allow items to stack */
+    }
+
+    .gameSelectorContainer {
+        grid-column: 1;
+        padding: 5%;
+    }
+    .personalScoreContainer {
+        grid-column: 2;
+    }
+    .leaderboardContainer{
+        grid-column: 1 / span 2;
+        padding: 5%;
+        height: 50%;    
+    }
+    .hamburgerNavigator, .matchHistoryContainer, .tournamentContainer {
+        grid-column: 1 / span 2; /* Remove grid column styling for mobile devices */
+        grid-row: unset; /* Remove grid row styling for mobile devices */
+    }
+
+}
+
+
 .game-select-button {
     justify-self: center;
     align-self: center;
-    width: 100%;
+    width: 84%;
     border-radius: 100px;
-    height: 95px;
+    height: 91px;
     text-align: center;
     font-size: 20px;
     font-weight: 500;
@@ -63,10 +95,9 @@
 }
 
 #spel {
-    /*  background-image: url(/Assets/ping-pong-graphic.png);
-        background-size: contain;
-        background-repeat: no-repeat;*/
-
+    background-image: url("https://cdn.discordapp.com/attachments/1080115571699503107/1080136452320546927/startchangegame.png");
+    background-size: contain;
+    background-repeat: no-repeat;
 }
 
 .personal-score {
@@ -124,10 +155,6 @@
 
 .leaderboard-wrapper {
     background-color: white;
-    border-top-left-radius: 0px;
-    border-top-right-radius: 10px;
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
     padding: 10px;
     height: 95%;
     overflow-y: scroll;
@@ -204,7 +231,7 @@
 .MatchHistory-wrapper {
     background-color: white;
     border-top-left-radius: 0px;
-    border-top-right-radius: 10px;
+    border-top-right-radius: 0px;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     padding: 10px;

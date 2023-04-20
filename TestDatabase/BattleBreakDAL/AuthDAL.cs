@@ -1,24 +1,27 @@
 ﻿using MySql.Data.MySqlClient;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace TestDatabase
+
+namespace BattleBreakDAL
 {
-    public class UserDAO
+    public class AuthDAL
     {
-        private readonly string _connString;
+        private readonly string _connString = "Server=studmysql01.fhict.local;Database=dbi515074;Uid=dbi515074;Pwd=AmineGPT;";
 
-        public UserDAO(string connString)
-        {
-            _connString = connString;
-        }
+        public AuthDAL() { }
 
-        public bool Authenticate(string email, string password)
+        public (bool, string) Authenticate(string email, string password)
         {
             try
             {
                 using (MySqlConnection conn = new MySqlConnection(_connString))
                 {
-                    string query = "SELECT Wachtwoord FROM account WHERE Email = @Email";
+                    string query = "SELECT Wachtwoord, Type FROM account WHERE Email = @Email";
 
                     using (MySqlCommand command = new MySqlCommand(query, conn))
                     {
@@ -33,7 +36,8 @@ namespace TestDatabase
 
                                 if (BCrypt.Net.BCrypt.Verify(password, passwordHash))
                                 {
-                                    return true;
+                                    string type = reader.GetString("Type");
+                                    return (true, type);
                                 }
                             }
                         }
@@ -45,7 +49,7 @@ namespace TestDatabase
                 Debug.Write("Error during authentication: " + ex.Message);
             }
 
-            return false;
+            return (false, null);
         }
 
         public bool Register(string username, string fullname, string email, string password)
@@ -85,8 +89,38 @@ namespace TestDatabase
             }
 
             return false;
-        }   
+        }
+
+        public string GetUserType(string email)
+        {
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(_connString))
+                {
+                    string query = "SELECT Type FROM account WHERE Email = @Email";
+
+                    using (MySqlCommand command = new MySqlCommand(query, conn))
+                    {
+                        command.Parameters.AddWithValue("@Email", email);
+                        conn.Open();
+
+                        object result = command.ExecuteScalar();
+
+                        if (result != null)
+                        {
+                            return result.ToString();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.Write("Error retrieving user type: " + ex.Message);
+            }
+
+            return null;
+        }
+
 
     }
 }
-

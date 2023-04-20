@@ -6,18 +6,16 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Http;
+using BattleBreakBLL;
 
 namespace TestDatabase.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly AuthService _authService = new AuthService();
 
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-
-        }
+        public HomeController(){}
 
 
         public IActionResult Index()
@@ -35,31 +33,29 @@ namespace TestDatabase.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(string email, string password/*, string remember*/)
+        public async Task<IActionResult> Login(string email, string password, string remember)
         {
+           
+            var (authResult, userType) = _authService.Authenticate(email, password);
 
-            string connString = "Server=studmysql01.fhict.local;Database=dbi515074;Uid=dbi515074;Pwd=AmineGPT;";
-            UserDAO userDao = new UserDAO(connString);
-
-
-            if (userDao.Authenticate(email, password))
+            if (authResult)
             {
+                if (userType == "Admin") {
+                    return RedirectToAction("Index", "Main");
+                }
                 return RedirectToAction("Index", "Main");
+                
             }
-            else
-            {
-                ViewBag.ErrorMessage = "Incorrect email or password";
-                return View();
-            }
+            ViewBag.ErrorMessage = "Incorrect email or password";
+            return View();
         }
+
+        
 
         [HttpPost]
         public IActionResult Register(string username, string fullname, string email, string password)
         {
-            string connString = "Server=studmysql01.fhict.local;Database=dbi515074;Uid=dbi515074;Pwd=AmineGPT;";
-            UserDAO userDao = new UserDAO(connString);
-
-            if (userDao.Register(username, fullname, email, password))
+            if (_authService.Register(username, fullname, email, password))
             {
                 return RedirectToAction("Index", "Main");
             }
@@ -68,38 +64,9 @@ namespace TestDatabase.Controllers
 
 
 
-        private bool ValidateRememberMeToken()
+        public string GetUserType(string email)
         {
-            if (HttpContext.Request.Cookies.TryGetValue("RememberMeToken", out string token) &&
-                HttpContext.Request.Cookies.TryGetValue("RememberMeEmail", out string email))
-            {
-                string connString = "Server=studmysql01.fhict.local;Database=dbi515074;Uid=dbi515074;Pwd=AmineGPT;";
-
-                using (MySqlConnection conn = new MySqlConnection(connString))
-                {
-                    string query = "SELECT COUNT(*) FROM AuthTokens WHERE Token = @Token AND Email = @Email";
-
-                    using (MySqlCommand command = new MySqlCommand(query, conn))
-                    {
-                        command.Parameters.AddWithValue("@Token", token);
-                        command.Parameters.AddWithValue("@Email", email);
-                        conn.Open();
-
-                        int count = Convert.ToInt32(command.ExecuteScalar());
-                        if (count > 0)
-                        {
-                            var claims = new List<Claim> { new Claim(ClaimTypes.Name, email) };
-                            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                            var authProperties = new AuthenticationProperties { IsPersistent = true, ExpiresUtc = DateTime.UtcNow.AddDays(30) };
-                            HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity), authProperties).Wait();
-
-                            return true;
-                        }
-                    }
-                }
-            }
-
-            return false;
+            return _authService.GetUserType(email);
         }
 
 
