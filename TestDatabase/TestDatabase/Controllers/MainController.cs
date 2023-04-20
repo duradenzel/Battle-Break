@@ -62,10 +62,10 @@ namespace TestDatabase.Controllers
                     spellen.Add(s);
                 }
             }
-            
-            foreach(var spel in spellen)
+
+            foreach (var spel in spellen)
             {
-                if(gekozenSpel.ToLower() == spel.naam.ToLower())
+                if (gekozenSpel.ToLower() == spel.naam.ToLower())
                 {
                     ViewData["gekozenSpel"] = spel;
                 }
