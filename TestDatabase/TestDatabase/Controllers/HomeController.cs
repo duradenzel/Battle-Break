@@ -66,34 +66,7 @@ namespace TestDatabase.Controllers
 
         public string GetUserType(string email)
         {
-            string connString = "Server=studmysql01.fhict.local;Database=dbi515074;Uid=dbi515074;Pwd=AmineGPT;";
-            UserDAO userDao = new UserDAO(connString);
-            try
-            {
-                using (MySqlConnection conn = new MySqlConnection(connString))
-                {
-                    string query = "SELECT Type FROM account WHERE Email = @Email";
-
-                    using (MySqlCommand command = new MySqlCommand(query, conn))
-                    {
-                        command.Parameters.AddWithValue("@Email", email);
-                        conn.Open();
-
-                        object result = command.ExecuteScalar();
-
-                        if (result != null)
-                        {
-                            return result.ToString();
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.Write("Error retrieving user type: " + ex.Message);
-            }
-
-            return null;
+            return _authService.GetUserType(email);
         }
 
 
