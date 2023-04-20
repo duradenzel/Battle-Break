@@ -1,11 +1,16 @@
 ﻿@{
     ViewData["Title"] = "Wedstrijd";
-    //List<int> account_ids = (List<int>)(object)ViewData["account_ids"];
+    List<string> namen = (List<string>)(object)ViewData["namen"];
 }
 
 <h1>Wedstrijd</h1>
 
 @ViewData["ID"]
+
+@foreach(var naam in namen)
+{
+    <p>@naam</p>
+}
 
 @foreach(var item in @Model)
 {

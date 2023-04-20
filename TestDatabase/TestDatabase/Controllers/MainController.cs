@@ -143,14 +143,15 @@ namespace TestDatabase.Controllers
         {
             ViewData["ID"] = ID;
             List<WedstrijdModel> wedstrijden = new();
+            List<string> namen = new();
 
             using(MySqlConnection con = new(connString))
             {
                 MySqlDataReader reader;
 
                 con.Open();
-                MySqlCommand cmd = new($"Select * from `wedstrijd` where `ID` = {ID} ", con);
-                reader = cmd.ExecuteReader();
+                MySqlCommand wedstrijdCMD = new($"Select * from `wedstrijd` where `ID` = {ID} ", con);
+                reader = wedstrijdCMD.ExecuteReader();
                 
                 while (reader.Read())
                 {
@@ -164,9 +165,17 @@ namespace TestDatabase.Controllers
                     };
                     wedstrijden.Add(w);
                 }
-                con.Close();    
+                con.Close();
+
+                con.Open();
+                MySqlCommand accountCMD = new($"Select `Gebruikersnaam` From `Account` Where `ID` IN (Select `Account_ID` From `Wedstrijd` where `ID` = {ID})", con);
+                reader = accountCMD.ExecuteReader();
+                while (reader.Read())
+                {
+                    namen.Add(reader.GetString(0));
+                }
             }
-            
+            ViewData["namen"] = namen;
             return View(wedstrijden);
         }
 

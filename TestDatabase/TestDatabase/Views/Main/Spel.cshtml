@@ -18,14 +18,8 @@
     <div class="value-button" id="increase" onclick="increaseValue()" value="Increase Value">+</div>
 </form>
 
-@*<label>Aantal spelers:</label>
-<input onchange="spelers()" id="aantalSpelers" type="number" name="aantalSpelers" min="2">
-<p>/@gekozenSpel.minimumSpelers</p>
-<br>*@
-
 <div id="test"><input id="te" type="text" name="aantalSpelers"><input id="te" type="text" name="aantalSpelers"></div>
 <br>
-
 
 <select onchange="mode()" name="mode" id="mode">
     <option value="head">Head to Head</option>
@@ -80,10 +74,6 @@
                     console.log(returned_data)
                 }
             });
-
-            //test = document.getElementsByName("aantalSpelers")[0].value;
-            
-            //console.log(spelers);
         }
 
         function increaseValue() {
