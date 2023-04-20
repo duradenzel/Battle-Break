@@ -18,7 +18,7 @@ namespace TestDatabase.Controllers
 
         public MainController()
         {
-            _mainService = new MainService(new MainDAO());
+            _mainService = new MainService();
         }
 
         public async Task<IActionResult> GetLeaderboard()

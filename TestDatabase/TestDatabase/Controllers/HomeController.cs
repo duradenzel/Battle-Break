@@ -7,17 +7,15 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Http;
-
+using BattleBreakBLL;
 
 namespace TestDatabase.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly AuthService _authService = new AuthService();
 
-        public HomeController()
-        {
-
-        }
+        public HomeController(){}
 
 
         public IActionResult Index()
@@ -37,67 +35,27 @@ namespace TestDatabase.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(string email, string password, string remember)
         {
-            string connString = "Server=studmysql01.fhict.local;Database=dbi515074;Uid=dbi515074;Pwd=AmineGPT;";
-            UserDAO userDao = new UserDAO(connString);
+           
+            var (authResult, userType) = _authService.Authenticate(email, password);
 
-            var (authResult, userType) = userDao.Authenticate(email, password);
-
-                if (authResult)
-                {            
-                    var claims = new List<Claim>{
-                        new Claim(ClaimTypes.Email, email),
-                        new Claim(ClaimTypes.Role, userType)
-                    };
-
-                var identity = new ClaimsIdentity(claims, "login");
-                var principal = new ClaimsPrincipal(identity);
-
-                await HttpContext.SignInAsync(principal);
-
-
-                if (userType == "Admin")
-                {                   
-                   return RedirectToAction("Index", "Main");
-                }
-                else if (userType == "Gebruiker")
-                {
+            if (authResult)
+            {
+                if (userType == "Admin") {
                     return RedirectToAction("Index", "Main");
                 }
-                else
-                {
-                    return RedirectToAction("Error", "Home");
-                }
+                return RedirectToAction("Index", "Main");
+                
             }
-            else
-            {
-                ViewBag.ErrorMessage = "Incorrect email or password";
-                return View();
-            }
+            ViewBag.ErrorMessage = "Incorrect email or password";
+            return View();
         }
 
-        //public IActionResult Login(string email, string password, string remember)
-        //{
-        //    string connString = "Server=studmysql01.fhict.local;Database=dbi515074;Uid=dbi515074;Pwd=AmineGPT;";
-        //    UserDAO userDao = new UserDAO(connString);
-
-        //    if (userDao.Authenticate(email, password))
-        //    {
-        //        return RedirectToAction("Index", "Main");
-        //    }
-        //    else
-        //    {
-        //        ViewBag.ErrorMessage = "Incorrect email or password";
-        //        return View();
-        //    }
-        //}
+        
 
         [HttpPost]
         public IActionResult Register(string username, string fullname, string email, string password)
         {
-            string connString = "Server=studmysql01.fhict.local;Database=dbi515074;Uid=dbi515074;Pwd=AmineGPT;";
-            UserDAO userDao = new UserDAO(connString);
-
-            if (userDao.Register(username, fullname, email, password))
+            if (_authService.Register(username, fullname, email, password))
             {
                 return RedirectToAction("Index", "Main");
             }

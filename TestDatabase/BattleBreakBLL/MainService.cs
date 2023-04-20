@@ -7,16 +7,13 @@ namespace BattleBreakBLL
 {
     public class MainService
     {
-        private readonly MainDAO _mainDAO;
+        private readonly MainDAL _mainDAL = new MainDAL();
 
-        public MainService(MainDAO mainDAO)
-        {
-            _mainDAO = mainDAO;
-        }
+        public MainService(){}
 
         public async Task<List<LeaderboardModel>> GetLeaderboardStats()
         {
-            List<LeaderboardDTO> leaderboardDTOs = await _mainDAO.GetLeaderboardStats();
+            List<LeaderboardDTO> leaderboardDTOs = await _mainDAL.GetLeaderboardStats();
             List<LeaderboardModel> leaderboardModels = new List<LeaderboardModel>();
 
             foreach (var dto in leaderboardDTOs)
@@ -35,7 +32,7 @@ namespace BattleBreakBLL
 
         public async Task<List<MatchHistoryModel>> GetMatchHistory()
         {
-            List<MatchHistoryDTO> matchHistoryDTOs = await _mainDAO.GetMatchHistory();
+            List<MatchHistoryDTO> matchHistoryDTOs = await _mainDAL.GetMatchHistory();
             List<MatchHistoryModel> matchHistoryModels = new List<MatchHistoryModel>();
 
             foreach (var dto in matchHistoryDTOs)

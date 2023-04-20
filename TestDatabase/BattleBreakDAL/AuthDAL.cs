@@ -1,56 +1,19 @@
 ﻿using MySql.Data.MySqlClient;
-
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
-using Microsoft.AspNetCore.Http;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 
-namespace TestDatabase
+namespace BattleBreakDAL
 {
-    public class UserDAO
+    public class AuthDAL
     {
-        private readonly string _connString;
+        private readonly string _connString = "Server=studmysql01.fhict.local;Database=dbi515074;Uid=dbi515074;Pwd=AmineGPT;";
 
-        public UserDAO(string connString)
-        {
-            _connString = connString;
-        }
-
-        //public bool Authenticate(string email, string password)
-        //{
-        //    try
-        //    {
-        //        using (MySqlConnection conn = new MySqlConnection(_connString))
-        //        {
-        //            string query = "SELECT Wachtwoord FROM account WHERE Email = @Email";
-
-        //            using (MySqlCommand command = new MySqlCommand(query, conn))
-        //            {
-        //                command.Parameters.AddWithValue("@Email", email);
-        //                conn.Open();
-
-        //                using (MySqlDataReader reader = command.ExecuteReader())
-        //                {
-        //                    if (reader.Read())
-        //                    {
-        //                        string passwordHash = reader.GetString("Wachtwoord");
-
-        //                        if (BCrypt.Net.BCrypt.Verify(password, passwordHash))
-        //                        {
-
-        //                            return true;
-        //                        }
-        //                    }
-        //                }
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Debug.Write("Error during authentication: " + ex.Message);
-        //    }
-
-        //    return false;
-        //}
+        public AuthDAL() { }
 
         public (bool, string) Authenticate(string email, string password)
         {
@@ -128,9 +91,6 @@ namespace TestDatabase
             return false;
         }
 
-        
+
     }
-
-
 }
-

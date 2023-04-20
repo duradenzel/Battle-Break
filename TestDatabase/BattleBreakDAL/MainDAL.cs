@@ -4,12 +4,12 @@ using System.Data.SqlClient;
 
 namespace BattleBreakDAL
 {
-    public class MainDAO
+    public class MainDAL
     {
         private readonly string _connString = "Server=studmysql01.fhict.local;Database=dbi515074;Uid=dbi515074;Pwd=AmineGPT;";
 
 
-        public MainDAO() { }
+        public MainDAL() { }
 
         public async Task<List<LeaderboardDTO>> GetLeaderboardStats()
         {
@@ -84,6 +84,43 @@ namespace BattleBreakDAL
             return matchHistory;
 
         }
+
+        public async Task<List<TourneyInfoDTO>> GetTourneyInfo()
+        {
+            List<TourneyInfoDTO> tourneyList = new List<TourneyInfoDTO>();
+
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(_connString))
+                {
+                    connection.Open();
+                    using (MySqlCommand command = new MySqlCommand("SELECT * from tournooi", connection))
+                    {
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (await reader.ReadAsync())
+                            {
+                                TourneyInfoDTO tourney = new TourneyInfoDTO();
+                                tourney.TourneyId = reader.GetInt32(reader.GetOrdinal("ID"));
+                                tourney.TourneyName = reader.GetString(reader.GetOrdinal("TourneyName"));
+                                tourney.TourneyDate = reader.GetDateTime(reader.GetOrdinal("Datum"));
+
+
+
+                                tourneyList.Add(tourney);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions here
+            }
+            return tourneyList;
+
+        }
+
     }
 
     
