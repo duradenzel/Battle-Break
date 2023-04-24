@@ -20,6 +20,7 @@ namespace TestDatabase.Controllers
         }
 
 
+
         public IActionResult Index()
         {
             return View("Login");
@@ -40,8 +41,8 @@ namespace TestDatabase.Controllers
 
             if (userDao.Authenticate(email, password))
             {
-
-                return RedirectToAction("Index", "Main");
+                
+                return RedirectToAction("AdminPage", "Admin");
             }
             else
             {

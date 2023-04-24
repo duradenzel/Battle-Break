@@ -6,6 +6,7 @@ namespace TestDatabase.Controllers
 {
     public class MainController : Controller
     {
+
         public IActionResult Index()
         {
             ViewData["spelersPlek"] = 12;

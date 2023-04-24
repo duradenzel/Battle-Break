@@ -12,6 +12,7 @@ namespace TestDatabase
             _connString = connString;
         }
 
+
         public bool Authenticate(string email, string password)
         {
             try
@@ -29,6 +30,7 @@ namespace TestDatabase
                         {
                             if (reader.Read())
                             {
+
                                 string passwordHash = reader.GetString("Wachtwoord");
 
                                 if (BCrypt.Net.BCrypt.Verify(password, passwordHash))
@@ -86,6 +88,13 @@ namespace TestDatabase
 
             return false;
         }   
+
+        public bool MakeAdmin()
+        {
+
+
+            return true;
+        }
 
     }
 }
