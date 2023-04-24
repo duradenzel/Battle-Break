@@ -1,53 +1,207 @@
-﻿@{
-    ViewData["Title"] = "Main Page";
-    List<int> Account_IDs = (List<int>)(object)ViewData["Account_IDs"];
-    List<int> GewonnenWedstrijden = (List<int>)(object)ViewData["GewonnenWedstrijden"];
-    
+﻿
+<head>
+    <link rel="stylesheet" href="~/css/MainDesktop.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/sidebar.css" asp-append-version="true" />
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</head>
+
+
+<div class="container">
+    <div class="hamburgerNavigator">
+        <aside class="sidebar">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/Main/Index">
+                        <i class="fas fa-home"></i>
+                        Home
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Main/spel?gekozenspel=fortnite">
+                        <i class="fas fa-user"></i>
+                        Game
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-cog"></i>
+                        Settings
+                    </a>
+                </li>
+                <!-- Add more sidebar items as needed -->
+            </ul>
+        </aside>
+
+    </div>
+
+
+    <div class="gameSelectorContainer">
+        <form class="game-select-button" action="/spel">
+            <select class="game-select-button" name="spel" id="spel">
+                <option value="fortnite">fortnite</option>
+                <option value="tafeltennis">Tafeltennis</option>
+                <option value="rozenKoekenSpel">Roze koeken spel</option>
+                <option value="stardew Valley">Stardew Valley</option>
+            </select>
+        </form>
+        <div>
+            <a class="game-select-button" onclick="redirectToSelectedPage()">
+                Select
+            </a>
+        </div>
+    </div>
+
+    <div class="personalScoreContainer">
+        <div class="personal-score">
+            <p class="magic">200 BP</p>
+        </div>
+    </div>
+
+    <div class="leaderboardContainer">
+        <div class="leaderboard">
+            
+            <div class="leaderboard-box">
+                <div class="leaderboard-content">
+                    <div class="leaderboard-title">
+                        <span class="magic">Leaderboard</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="leaderboard-wrapper" type="none">
+
+                <ul class="leaderboard-list">
+                    @foreach (var item in @Model.Leaderboard)
+                    {
+                    <li>
+                   @* <img src="@Url.Content("/Assets/medals/"+(i+1)+".png")" />*@
+                            <span class="magic">@item.VolledigeNaam</span>
+                    <div id="wins" class="right-align">
+                    <span class="magic">@item.GewonnenWedstrijden wins</span>
+                    </div>
+                    </li>
+                    }  
+                </ul>
+                
+            </div>
+            <div class="leaderboard-player-score-wrapper">
+                <div class="leaderboard-player-score-content">
+                    <ul start="@ViewData["SpelerPositie"]" class="leaderboard-player-score">
+                        <li class="space">
+                            <span class="magic">#@ViewData["SpelerPositie"] </span>
+                            <span class="magic">@ViewData["spelerNaam"]</span>
+                            <span class="magic">@ViewData["spelerOverwinningen"] wins</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="matchHistoryContainer">
+        <div class="MatchHistory">
+
+            <div class="MatchHistory-box">
+                <div class="MatchHistory-content">
+                    <div class="MatchHistory-title">
+                        <span class="magic">Match History</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="MatchHistory-wrapper" type="none">
+
+                <ul class="MatchHistory-list">
+                    <span class="magicSelect">
+                        Tafeltennis <br />
+                    </span>
+                    @foreach (var match in @Model.MatchHistory){
+                        if(match.Game_ID == 1){
+                        
+                        <li>
+                            <span class="magic">
+                                @match.Player1
+                            </span>
+                            <span class="magic">
+
+                                @match.Player1_Points - @match.Player2_Points
+                            </span>
+                            <span class="magic">
+                                @match.Player2
+
+                            </span>
+                        </li>
+                        }
+                    }
+                </ul>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="tournamentContainer">
+        <div class="tournamentNewsWrapper">
+            <div class="tournamentTitle">
+                <span class="magic">
+                    Tournament - News
+                </span> 
+                <div class="tournamentAnnouncement">
+                    <ul class="MatchHistory-list">
+                        <li>
+                            <span class="magic">
+                                11/04/2023
+                            </span>
+
+                            <span class="magic">
+                                🏓Tafeltennis Tournament
+                            </span>
+                        </li>
+                        <li>
+                            <span class="magic">
+                                12/04/2023
+                            </span>
+
+                            <span class="magic">
+                                🏃‍♂️20m Sprint Tournament
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+@section scripts{
+    <script>
+        //document.addEventListener('DOMContentLoaded', function () {
+        //    console.log("Dom loaded");
+        //    $.ajax({
+        //        url: '/Main/GetLeaderboard',
+        //        type: 'GET',
+        //        success: function (result) {
+        //            console.log("succeeded fetching results");
+
+        //            $('.leaderboard-list').html(result);
+        //        },
+        //        error: function (err) {
+        //            alert("Failed getting leaderboard");
+        //        }
+        //    });
+        //}, false);
+
+    function loadLeaderBoard(){
+          
+    }
+
+    function redirectToSelectedPage() {
+        var selectedOption = document.getElementById('spel').value;
+        var url = '/Main/spel?gekozenspel=' + selectedOption;
+        window.location.href = url;
+    }
+
+    </script>
 }
-
-<h2>Main page</h2>
-
-<form action="/spel">
-    <select name="spel" id="spel">
-        <option value="voetbal">Voebal</option>
-        <option value="tafeltennis">Tafeltennis</option>
-        <option value="rozenKoekenSpel">Roze koeken spel</option>
-        <option value="stardewValley">Stardew Valley</option>
-    </select>
-    <br>
-    <br>
-    <input type="submit" value="Kies">
-</form>
-
-<figure>
-    <figcaption>Leadboards</figcaption>
-
-    <ul type="none">
-       <li>Tot 21</li> 
-       <ol>
-            <li>@Account_IDs[0] @GewonnenWedstrijden[0] wins</li>
-            <li>@Account_IDs[1] @GewonnenWedstrijden[1] wins</li>
-            <li>@Account_IDs[2] @GewonnenWedstrijden[2] wins</li>
-        </ol>
-        <ol start="@ViewData["spelersPlek"]">
-            <li>Gebruiker @ViewData["spelersOverwinningen"] wins</li>
-        </ol>
-    </ul>
-</figure>
-
-<p>Score: 200</p>
-
-<figure>
-    <figcaption>Match History</figcaption>
-    <ul type="none">
-        <li>Speler - Tegenstander <br> eindscore (spel) <br> date-time </li>
-        <li><br>Heijn - Piet <br> 2-0 (Voetbal) <br> gastren </li>
-    </ul>
-</figure>
-
-<h3>TOURNAMETOS ET LE NEWZ!!!!!</h3>
-<h4>LAS TORNAMETOS DE PINGE PONG (tomarrow)</h4>
-<h4>Piet is ontslagen wegens te veel pingbongen (niews) </h4>
-<h4>las crypto mondenas debrian estar prohibidas (peter) </h4>
-
-<p>@ViewData["test"]</p>

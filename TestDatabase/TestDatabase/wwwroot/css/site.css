@@ -31,7 +31,6 @@ section {
 
 
 #logo {
-    
     margin-left: auto;
     margin-right: auto;
     display: block;
@@ -142,3 +141,47 @@ button {
         .register p a:hover {
             text-decoration: underline;
         }
+
+
+/* Main - Index */
+
+
+
+
+
+/*
+
+.flex-container {
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: stretch;
+    align-items: flex-start;
+}
+.flex-item{
+    border: 1px solid red;
+}
+
+.flex-item:nth-child(1) {
+    order: 0;
+    flex: 1 1 auto;
+    align-self: stretch;
+
+}
+
+.flex-item:nth-child(2) {
+    order: 0;
+    flex: 1 1 auto;
+    align-self: stretch;
+}
+
+.flex-item:nth-child(3) {
+    order: 2;
+    flex: 0 1 100%;
+    align-self: stretch;
+}*/
+
+
+
