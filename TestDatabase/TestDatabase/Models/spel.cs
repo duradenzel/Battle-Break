@@ -26,5 +26,3 @@ namespace TestDatabase.Models
 
     }
 }
-
-//test

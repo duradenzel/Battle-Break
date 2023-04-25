@@ -120,8 +120,5 @@ namespace BattleBreakDAL
             return tourneyList;
 
         }
-
     }
-
-    
 }

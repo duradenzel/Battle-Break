@@ -30,7 +30,7 @@
 
 <div id ="aantalTeams"></div>
 
-<input type="submit" value="Kies" class="btn" onclick="sendData(@gekozenSpelID,@userID,@gewonnen)" />
+<input type="submit" value="Kies" class="btn" onclick="sendData(@gekozenSpelID,@userID)" />
 
 <input type="submit" value="Verlaat spel" class="btn" onclick="location.href='@Url.Action("Index")'" />
 
@@ -54,7 +54,7 @@
             aantalTeams = document.getElementsByName("aantalTeams")[0].value;
         }
 
-        function sendData(spelID,userID, gewonnen){
+        function sendData(spelID, userID){
             var spelers = [];
             for (var i = 0; i < document.getElementsByName("aantalSpelers").length; i++){
                 spelers.push(document.getElementsByName("aantalSpelers")[i].value)
@@ -64,7 +64,7 @@
 
             $.ajax({
                 url: '/Main/sendData',
-                data: { Spel_ID: spelID, User_ID: userID, Gewonnen: gewonnen, User_IDs: spelers1},
+                data: { Spel_ID: spelID, User_ID: userID, User_IDs: spelers1},
                 type: 'GET',
                 success: function (returned_data) {
                     console.log(returned_data)
