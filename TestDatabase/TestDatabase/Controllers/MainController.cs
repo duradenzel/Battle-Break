@@ -116,7 +116,7 @@ namespace TestDatabase.Controllers
             ViewData["namen"] = namen;
             return View(wedstrijden);
         }
-
+         
         public int sendData(int Spel_ID, int User_ID, int Gewonnen, string User_IDs)
         {
             int ID = 0;
