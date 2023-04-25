@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewData["Title"] = "AdminPage";
+}
+
+<h1>View</h1>
+<ul>
+    
+</ul>
+<button>
+    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="AccountList">Accounts</a>
+</button>
+<button>
+    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Games">Games</a>
+</button>
+
+<script>
+    function redirectToAnotherPage() {
+        // Replace the URL below with the URL of the page you want to redirect to
+        window.location.href = "https://localhost:7098/Admin/accountList";
+    }
+
+    function redirectToAnotherPage2() {
+        // Replace the URL below with the URL of the page you want to redirect to
+        window.location.href = "https://localhost:7098/Admin/accountList";
+    }
+</script>

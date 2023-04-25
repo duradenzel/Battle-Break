@@ -32,6 +32,7 @@ namespace BattleBreakDAL
                         {
                             if (reader.Read())
                             {
+
                                 string passwordHash = reader.GetString("Wachtwoord");
 
                                 if (BCrypt.Net.BCrypt.Verify(password, passwordHash))
@@ -121,6 +122,13 @@ namespace BattleBreakDAL
             return null;
         }
 
+
+        public bool MakeAdmin()
+        {
+
+
+            return true;
+        }
 
     }
 }
