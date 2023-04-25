@@ -10,7 +10,6 @@
 .hamburgerNavigator {
     grid-column: 1;
     grid-row: 1 / span 5;
-    position: relative;
 }
 
 
@@ -56,8 +55,8 @@
 /* Media query for mobile devices */
 @media (max-width: 767px) {
     .container {
-        grid-template-columns: 2fr; /* Change grid template to single column for mobile devices */
-        grid-template-rows: auto; /* Change grid template rows to 'auto' to allow items to stack */
+        grid-template-columns: 2fr;
+        grid-template-rows: auto;
     }
 
     .gameSelectorContainer {
@@ -73,8 +72,8 @@
         height: 50%;    
     }
     .hamburgerNavigator, .matchHistoryContainer, .tournamentContainer {
-        grid-column: 1 / span 2; /* Remove grid column styling for mobile devices */
-        grid-row: unset; /* Remove grid row styling for mobile devices */
+        grid-column: 1 / span 2; 
+        grid-row: unset;
     }
 
 }
@@ -95,7 +94,7 @@
 }
 
 #spel {
-    background-image: url("https://cdn.discordapp.com/attachments/1080115571699503107/1080136452320546927/startchangegame.png");
+    /*background-image: url("https://cdn.discordapp.com/attachments/1080115571699503107/1080136452320546927/startchangegame.png");*/
     background-size: contain;
     background-repeat: no-repeat;
 }
