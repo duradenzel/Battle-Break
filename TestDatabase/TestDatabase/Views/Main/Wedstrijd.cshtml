@@ -1,5 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Wedstrijd";
+    int i = 0;
 }
 
 <h1>Wedstrijd</h1>
@@ -7,6 +8,12 @@
 @foreach(var account in Model.AccountList)
 {
     <p>@account.User_Name</p>
+    <p id="score" name="score">Score: 0</p>
+    <input type="button" value="Add Point" class="btn btn-primary" onclick="updateScore(@i)" />
+    i++;
+    <br>
+    <br>
+    <br>
 }
 
 @foreach(var item in Model.MatchList)
@@ -16,3 +23,16 @@
 
 
 
+@section scripts{
+    <script>
+        var scores = [];
+        for (var i = 0; i < document.getElementsByName("score").length; i++) {
+            scores.push(0);
+        }
+
+        function updateScore(i) {
+            scores[i] = scores[i] + 1;
+            document.getElementsByName("score")[i].textContent = "Score: " + scores[i];
+        }
+    </script>
+}
