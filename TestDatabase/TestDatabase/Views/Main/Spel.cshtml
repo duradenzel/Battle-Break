@@ -1,5 +1,5 @@
 ﻿@{
-    int aantalSpelers = 4;
+    int aantalSpelers = 0;
     spel gekozenSpel = (spel)ViewData["gekozenSpel"];
     int gekozenSpelID = (int)ViewData["gekozenSpelID"];
     int userID = 12;
@@ -7,9 +7,31 @@
     ViewData["Title"] = "Spel";
 }
 
+
+<div class="game-wrapper">
+    <h2 class="game-name">@gekozenSpel.naam</h2>
+    <p>@gekozenSpel.regels</p>
+    <div class="game-players">
+        <p class="game-usercount">Aantal spelers: @aantalSpelers/@gekozenSpel.minimumSpelers</p>
+        <ul class="game-players-ul">
+            @for (int i = 0; i < 8; i++)
+            {
+                <li class="game-players-li">
+                    Open
+                </li>
+            }
+        </ul>
+
+        <div class="game-ctas">
+            <button>Invite a friend</button>
+            <button>Leave game</button>
+        </div>
+    </div>
+</div>
+
+
 <h1>Spel</h1>
 <p>@gekozenSpel.naam</p>
-<p>@gekozenSpel.regels</p>
 <p>Aantal spelers: @aantalSpelers/@gekozenSpel.minimumSpelers</p>
 
 <form>
