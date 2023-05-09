@@ -50,6 +50,5 @@ namespace BattleBreakBLL
 
             return matchHistoryModels;
         }
-
     }
 }

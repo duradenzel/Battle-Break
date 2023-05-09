@@ -1,20 +1,17 @@
 ﻿@{
     ViewData["Title"] = "Wedstrijd";
-    List<string> namen = (List<string>)(object)ViewData["namen"];
 }
 
 <h1>Wedstrijd</h1>
 
-@ViewData["ID"]
-
-@foreach(var naam in namen)
+@foreach(var account in Model.AccountList)
 {
-    <p>@naam</p>
+    <p>@account.User_Name</p>
 }
 
-@foreach(var item in @Model)
+@foreach(var item in Model.MatchList)
 {
-    <p>@item.Spel_ID, @item.Account_ID</p>
+    <p>@item.Game_ID, @item.Account_ID</p>
 }
 
 
