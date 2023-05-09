@@ -1,13 +1,15 @@
 ﻿.sidebar {
     width: 70px; /* Set the width of the sidebar as needed */
     background-color: #f8f9fa; /* Set the background color of the sidebar */
-    padding: 20px;
     position: fixed;
     top: 0;
     left: 0;
     bottom: 0;
     border-bottom-right-radius: 10px;
     border-top-right-radius: 10px;
+}
+.nav-link active{
+    margin-left: 0px;
 }
 
 .sidebar ul.nav {
@@ -16,13 +18,31 @@
     margin: 0;
 }
 
+.sidebar.hidden {
+    width: 10px;
+    overflow: hidden;
+    transition: width 0.3s ease;
+}
+
+.sidebar.reveal {
+    width: 70px;
+}
+
 .sidebar .nav-link {
     display: flex;
     align-items: center;
+    justify-content: center;
+    margin-top: 150px;
     color: #333;
     text-decoration: none;
-    padding: 8px 16px;
     transition: background-color 0.3s ease;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.sidebar .nav-link i {
+    font-size: 24px; /* Set the desired font size for the icons */
 }
 
 .sidebar .nav-link:hover {
@@ -30,6 +50,5 @@
 }
 
 .main-content {
-    margin-left: 250px; /* Set the left margin to match the width of the sidebar */
-    padding: 20px;
+
 }

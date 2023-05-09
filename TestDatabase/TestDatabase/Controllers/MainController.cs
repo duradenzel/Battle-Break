@@ -85,7 +85,7 @@ namespace TestDatabase.Controllers
             return View(matchViewModel);
         }
 
-        public int sendData(int Game_ID, int User_ID, string User_IDs)
+        public int sendData(int Spel_ID, int User_ID, int Gewonnen, string User_IDs)
         {
             int Won = 0;
             return _matchService.SendData(Game_ID, User_IDs, Won, 2);
