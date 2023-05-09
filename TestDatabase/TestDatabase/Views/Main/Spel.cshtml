@@ -1,4 +1,8 @@
-﻿@{
+﻿<head>
+    <link rel="stylesheet" href="~/css/Game.css" asp-append-version="true" />
+</head>
+
+@{
     int aantalSpelers = 4;
     spel gekozenSpel = (spel)ViewData["gekozenSpel"];
     int gekozenSpelID = (int)ViewData["gekozenSpelID"];
@@ -7,32 +11,73 @@
     ViewData["Title"] = "Spel";
 }
 
-<h1>Spel</h1>
-<p>@gekozenSpel.naam</p>
-<p>@gekozenSpel.regels</p>
-<p>Aantal spelers: @aantalSpelers/@gekozenSpel.minimumSpelers</p>
+@Html.Partial("Navbar")
+<div class="gridder">
+    <div class="container">
+        <h1 class="title">Spel</h1>
+        <div class="game-info">
+            <p class="game-name">@gekozenSpel.naam</p>
+            <p class="game-rules">@gekozenSpel.regels</p>
+            <p class="player-count">Aantal spelers: <span id="player-count">@aantalSpelers</span>/<span id="minimum-players">@gekozenSpel.minimumSpelers</span></p>
+        </div>
 
-<form>
-    <div class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value">-</div>
-    <input type="number" id="number" value="2" />
-    <div class="value-button" id="increase" onclick="increaseValue()" value="Increase Value">+</div>
-</form>
+        <form class="player-count-form">
+            <label for="number" class="player-count-label">Aantal spelers:</label>
+            <div class="value-buttons">
+                <div class="value-button decrease" onclick="decreaseValue()" value="Decrease Value">-</div>
+                <input type="number" id="number" value="2" min="2" class="player-count-input" />
+                <div class="value-button increase" onclick="increaseValue()" value="Increase Value">+</div>
+            </div>
+        </form>
 
-<div id="test"><input id="te" type="text" name="aantalSpelers"><input id="te" type="text" name="aantalSpelers"></div>
-<br>
+        <div class="mode-selection">
+            <label for="mode" class="mode-label">Kies een modus:</label>
+            <select onchange="mode()" name="mode" id="mode" class="mode-select">
+                <option value="head">Head to Head</option>
+                <option value="team">Teams</option>
+            </select>
+        </div>
 
-<select onchange="mode()" name="mode" id="mode">
-    <option value="head">Head to Head</option>
-    <option value="team">Teams</option>
-</select>
-<br>
-<br>
+        <div id="aantalTeams"></div>
 
-<div id ="aantalTeams"></div>
+        <div class="buttons-container">
+            <input type="submit" value="Kies" class="btn choose-btn" onclick="sendData(@gekozenSpelID,@userID)" />
+            <input type="submit" value="Verlaat spel" class="btn leave-btn" onclick="location.href='@Url.Action("Index")'" />
+        </div>
+    </div>
+</div>
 
-<input type="submit" value="Kies" class="btn" onclick="sendData(@gekozenSpelID,@userID)" />
 
-<input type="submit" value="Verlaat spel" class="btn" onclick="location.href='@Url.Action("Index")'" />
+
+@*    <div class="container">
+        <h1>Spel</h1>
+        <p>@gekozenSpel.naam</p>
+        <p>@gekozenSpel.regels</p>
+        <p>Aantal spelers: @aantalSpelers/@gekozenSpel.minimumSpelers</p>
+
+        <form>
+            <div class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value">-</div>
+            <input type="number" id="number" value="2" />
+            <div class="value-button" id="increase" onclick="increaseValue()" value="Increase Value">+</div>
+        </form>
+
+        <div id="test"><input id="te" type="text" name="aantalSpelers"><input id="te" type="text" name="aantalSpelers"></div>
+        <br>
+
+        <select onchange="mode()" name="mode" id="mode">
+            <option value="head">Head to Head</option>
+            <option value="team">Teams</option>
+        </select>
+        <br>
+        <br>
+
+        <div id ="aantalTeams"></div>
+
+        <input type="submit" value="Kies" class="btn" onclick="sendData(@gekozenSpelID,@userID)" />
+
+        <input type="submit" value="Verlaat spel" class="btn" onclick="location.href='@Url.Action("Index")'" />
+    </div>*@
+
 
 @section scripts{
     <script>

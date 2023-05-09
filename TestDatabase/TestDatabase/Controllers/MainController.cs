@@ -55,10 +55,10 @@ namespace TestDatabase.Controllers
                 {
                     spel s = new()
                     {
-                        naam = reader.GetString(2),
-                        minimumSpelers = reader.GetInt32(3),
-                        regels = reader.GetString(4),
-                        winConiditie = reader.GetString(5)
+                        naam = reader.GetString(1),
+                        minimumSpelers = reader.GetInt32(2),
+                        regels = reader.GetString(3),
+                        winConiditie = reader.GetString(4)
                     };
                     spellen.Add(s);
                 }
