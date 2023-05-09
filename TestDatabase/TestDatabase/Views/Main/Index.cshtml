@@ -1,56 +1,21 @@
 ﻿<head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <link rel="stylesheet" href="~/css/MainDesktop.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/sidebar.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/font-awesome/css/all.css" />
     <script src=" https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/navbar.js" asp-append-version="true"></script>
 </head>
 
 
 <div class="container">
-
-    <div class="hamburgerNavigator">
-        <aside class="sidebar hidden">
-            <ul class="nav flex-column">
-                <li class="nav-item">
-
-                    <a class="nav-link active" href="/Main/Index">
-                        <i class="fa-solid fa-house" style="color: #1081c5;"></i>
-
-                      
-                      
-                      
-                      
-                      
-                      
-                      
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/Main/spel?gekozenspel=fortnite">
-                        <i class="fa-solid fa-gamepad" style="color: #1081c5;"></i>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="fa-solid fa-user" style="color: #1081c5;"></i>
-                    </a>
-                </li>
-                <!-- Add more sidebar items as needed -->
-            </ul>
-        </aside>
-    </div>
-
-
+    @Html.Partial("Navbar")
 
     <div class="gameSelectorContainer">
         <form class="game-select-button" action="/spel">
             <select class="game-select-button" name="spel" id="spel">
                 <option value="fortnite">fortnite</option>
                 <option value="tafeltennis">Tafeltennis</option>
-@*                <option value="rozenKoekenSpel">Roze koeken spel</option>
-*@                <option value="stardew Valley">Stardew Valley</option>
+                <option value="stardew Valley">Stardew Valley</option>
             </select>
         </form>
         <div>
@@ -179,28 +144,4 @@
             </div>
         </div>
     </div>
-
 </div>
-
-
-
-@section scripts{
-    <script>
-
-        $('.hamburgerNavigator').on('click', function () {
-            $('.sidebar').toggleClass('reveal'); // Toggle reveal class on sidebar
-        });
-
-
-        function loadLeaderBoard(){
-          
-        }
-
-        function redirectToSelectedPage() {
-            var selectedOption = document.getElementById('spel').value;
-            var url = '/Main/spel?gekozenspel=' + selectedOption;
-            window.location.href = url;
-        }
-
-    </script>
-}
