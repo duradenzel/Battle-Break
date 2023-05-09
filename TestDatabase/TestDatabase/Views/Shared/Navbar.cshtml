@@ -1,0 +1,31 @@
+﻿<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/MainDesktop.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/font-awesome/css/all.css" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</head>
+
+<div class="hamburgerNavigator">
+    <aside class="sidebar hidden">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link active" href="@Url.Action("Index", "Main")">
+                    <i class="fa-solid fa-house" style="color: #1081c5;"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("Spel", "Main", new { gekozenspel = "fortnite" })">
+                    <i class="fa-solid fa-gamepad" style="color: #1081c5;"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="fa-solid fa-user" style="color: #1081c5;"></i>
+                </a>
+            </li>
+            <!-- Add more sidebar items as needed -->
+        </ul>
+    </aside>
+</div>
+
