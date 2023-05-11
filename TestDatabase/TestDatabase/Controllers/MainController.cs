@@ -42,7 +42,7 @@ namespace TestDatabase.Controllers
         }  
            
 
-        public IActionResult Spel(string gekozenSpel)
+        public IActionResult Game(string gekozenSpel)
         {
             List<GameModel> gameModels = _gameService.GetGames();
             GameModel ChosenGame = new();
