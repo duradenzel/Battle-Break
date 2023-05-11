@@ -17,7 +17,36 @@ namespace BattleBreakDAL
 
         public MatchDAL() { }
 
-        public List<MatchDTO> GetMatches(int ID)
+        public List<MatchDTO> GetMatchWithID(int ID)
+        {
+            List<MatchDTO> matchList = new();
+
+            using (MySqlConnection con = new(_connString))
+            {
+                con.Open();
+                MySqlCommand command = new($"SELECT * FROM `match` WHERE `ID` = {ID} ", con);
+                MySqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    MatchDTO match = new()
+                    {
+                        Match_ID = reader.GetInt32("ID"),
+                        Game_ID = reader.GetInt32("game_ID"),
+                        Account_ID = reader.GetInt32("account_ID"),
+                        Won = reader.GetInt32("won"),
+                        Points = reader.GetInt32("points"),
+                    };
+
+                    matchList.Add(match);
+                }
+                con.Close();
+            }
+
+            return matchList;
+        }
+
+        public List<MatchDTO> GetMatches()
         {
             List<MatchDTO> matchList = new();
 
@@ -25,18 +54,18 @@ namespace BattleBreakDAL
             using (MySqlConnection con = new(_connString))
             {
                 con.Open();
-                MySqlCommand command = new($"Select * from `wedstrijd` where `ID` = {ID} ", con);
+                MySqlCommand command = new($"SELECT * FROM `match`", con);
                 MySqlDataReader reader = command.ExecuteReader();
 
                 while (reader.Read())
                 {
                     MatchDTO match = new()
                     {
-                        Match_ID = reader.GetInt32(0),
-                        Game_ID = reader.GetInt32(1),
-                        Account_ID = reader.GetInt32(2),
-                        Won = reader.GetInt32(3),
-                        Points = reader.GetInt32(4),
+                        Match_ID = reader.GetInt32("ID"),
+                        Game_ID = reader.GetInt32("game_ID"),
+                        Account_ID = reader.GetInt32("account_ID"),
+                        Won = reader.GetInt32("won"),
+                        Points = reader.GetInt32("points"),
                     };
 
                     matchList.Add(match);
@@ -54,19 +83,19 @@ namespace BattleBreakDAL
             using(MySqlConnection con = new(_connString))
             {
                 con.Open();
-                MySqlCommand command = new($"Select * From `Account` Where `ID` IN (Select `Account_ID` From `Wedstrijd` where `ID` = {ID})", con);
+                MySqlCommand command = new($"SELECT * FROM `account` WHERE `ID` IN (SELECT `account_ID` FROM `match` WHERE `ID` = {ID})", con);
                 MySqlDataReader reader = command.ExecuteReader();
 
                 while (reader.Read())
                 {
                     AccountDTO account = new()
                     {
-                        Account_ID = reader.GetInt32(0),
-                        User_Name = reader.GetString(1),
-                        Full_Name = reader.GetString(2),
-                        Email = reader.GetString(3),
-                        Password = reader.GetString(4),
-                        Type = reader.GetString(5),
+                        Account_ID = reader.GetInt32("ID"),
+                        User_Name = reader.GetString("username"),
+                        Full_Name = reader.GetString("full_name"),
+                        Email = reader.GetString("email"),
+                        Password = reader.GetString("password"),
+                        Type = reader.GetString("type"),
                     };
                     accountList.Add(account);
                 }
@@ -85,12 +114,12 @@ namespace BattleBreakDAL
                 MySqlDataReader reader;
 
                 con.Open();
-                MySqlCommand getIdCom = new("Select `ID` from `wedstrijd` ORDER BY `ID` ASC", con);
+                MySqlCommand getIdCom = new("SELECT `ID` FROM `match` ORDER BY `ID` ASC", con);
                 reader = getIdCom.ExecuteReader();
 
                 while (reader.Read())
                 {
-                    ID = reader.GetInt32(0);
+                    ID = reader.GetInt32("ID");
                 }
                 con.Close();
             }
@@ -107,7 +136,7 @@ namespace BattleBreakDAL
 
                 using (var cmd = new MySqlCommand())
                 {
-                    cmd.CommandText = $"INSERT INTO wedstrijd (ID, Spel_ID, Account_ID, Gewonnen, Punten) VALUES ({ID},1,{User_ID},{Won},{Score})";
+                    cmd.CommandText = $"INSERT INTO `match` (ID, game_ID, account_ID, won, points) VALUES ({ID},1,{User_ID},{Won},{Score})";
                     cmd.CommandType = CommandType.Text;
                     cmd.Connection = con;
 

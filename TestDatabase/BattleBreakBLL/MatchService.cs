@@ -17,10 +17,29 @@ namespace BattleBreakBLL
 
         public MatchService() { }
 
-        public List<MatchModel> GetMatches(int ID)
+        public List<MatchModel> GetMatchWithID(int ID)
         {
             List<MatchModel> matchModels = new();
-            List<MatchDTO> matchDTOs = _matchDAL.GetMatches(ID);
+            List<MatchDTO> matchDTOs = _matchDAL.GetMatchWithID(ID);
+
+            foreach (var dto in matchDTOs)
+            {
+                matchModels.Add(new MatchModel
+                {
+                    Match_ID = dto.Match_ID,
+                    Game_ID = dto.Game_ID,
+                    Account_ID = dto.Account_ID,
+                    Won = dto.Won,
+                    Points = dto.Points,
+                });
+            }
+            return matchModels;
+        }
+
+        public List<MatchModel> GetMatches()
+        {
+            List<MatchModel> matchModels = new();
+            List<MatchDTO> matchDTOs = _matchDAL.GetMatches();
 
             foreach (var dto in matchDTOs)
             {

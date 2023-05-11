@@ -21,11 +21,11 @@ namespace BattleBreakDAL
             {
                 using (MySqlConnection conn = new MySqlConnection(_connString))
                 {
-                    string query = "SELECT Wachtwoord, Type FROM account WHERE Email = @Email";
+                    string query = "SELECT `password`, `type` FROM `account` WHERE `email` = @email";
 
                     using (MySqlCommand command = new MySqlCommand(query, conn))
                     {
-                        command.Parameters.AddWithValue("@Email", email);
+                        command.Parameters.AddWithValue("@email", email);
                         conn.Open();
 
                         using (MySqlDataReader reader = command.ExecuteReader())
@@ -33,11 +33,11 @@ namespace BattleBreakDAL
                             if (reader.Read())
                             {
 
-                                string passwordHash = reader.GetString("Wachtwoord");
+                                string passwordHash = reader.GetString("password");
 
                                 if (BCrypt.Net.BCrypt.Verify(password, passwordHash))
                                 {
-                                    string type = reader.GetString("Type");
+                                    string type = reader.GetString("type");
                                     return (true, type);
                                 }
                             }
@@ -53,7 +53,7 @@ namespace BattleBreakDAL
             return (false, null);
         }
 
-        public bool Register(string username, string fullname, string email, string password)
+        public bool Register(string username, string full_name, string email, string password)
         {
             try
             {
@@ -62,14 +62,14 @@ namespace BattleBreakDAL
                     string salt = BCrypt.Net.BCrypt.GenerateSalt();
                     string passwordHash = BCrypt.Net.BCrypt.HashPassword(password, salt);
 
-                    string query = "INSERT INTO account (Gebruikersnaam, VolledigeNaam, Email, Wachtwoord) VALUES (@Gebruikersnaam, @VolledigeNaam, @Email, @Wachtwoord)";
+                    string query = "INSERT INTO `account` (username, full_name, email, password) VALUES (@username, @full_name, @email, @password)";
 
                     using (MySqlCommand command = new MySqlCommand(query, conn))
                     {
-                        command.Parameters.AddWithValue("@Gebruikersnaam", username);
-                        command.Parameters.AddWithValue("@VolledigeNaam", fullname);
-                        command.Parameters.AddWithValue("@Email", email);
-                        command.Parameters.AddWithValue("@Wachtwoord", passwordHash);
+                        command.Parameters.AddWithValue("@username", username);
+                        command.Parameters.AddWithValue("@full_name", full_name);
+                        command.Parameters.AddWithValue("@email", email);
+                        command.Parameters.AddWithValue("@password", passwordHash);
                         conn.Open();
                         int result = command.ExecuteNonQuery();
                         if (result > 0)
@@ -98,11 +98,11 @@ namespace BattleBreakDAL
             {
                 using (MySqlConnection conn = new MySqlConnection(_connString))
                 {
-                    string query = "SELECT Type FROM account WHERE Email = @Email";
+                    string query = "SELECT `type` FROM `account` WHERE email = @email";
 
                     using (MySqlCommand command = new MySqlCommand(query, conn))
                     {
-                        command.Parameters.AddWithValue("@Email", email);
+                        command.Parameters.AddWithValue("@email", email);
                         conn.Open();
 
                         object result = command.ExecuteScalar();

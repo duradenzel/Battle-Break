@@ -19,6 +19,7 @@ namespace TestDatabase.Controllers
 
         private readonly MainService _mainService;
         private readonly MatchService _matchService = new();
+        private readonly GameService _gameService = new();
 
         public MainController()
         {
@@ -43,42 +44,24 @@ namespace TestDatabase.Controllers
 
         public IActionResult Spel(string gekozenSpel)
         {
-            List<spel> spellen = new();
-            using (MySqlConnection con = new(connString))
+            List<GameModel> gameModels = _gameService.GetGames();
+            GameModel ChosenGame = new();
+
+
+            foreach(var game in gameModels)
             {
-                con.Open();
-                MySqlCommand sqlCom = new("Select * From `spel`", con);
-                MySqlDataReader reader = sqlCom.ExecuteReader();
-                
-                //Adds all known spellen to a list of spellen
-                while (reader.Read())
+                if (gekozenSpel.ToLower() == game.Name.ToLower())
                 {
-                    spel s = new()
-                    {
-                        naam = reader.GetString(1),
-                        minimumSpelers = reader.GetInt32(2),
-                        regels = reader.GetString(3),
-                        winConiditie = reader.GetString(4)
-                    };
-                    spellen.Add(s);
-                }
-            }
-            
-            foreach(var spel in spellen)
-            {
-                if (gekozenSpel.ToLower() == spel.naam.ToLower())
-                {
-                    ViewData["gekozenSpel"] = spel;
-                    ViewData["gekozenSpelID"] = 1;
+                    ChosenGame = game;
                 }
             }
 
-            return View();
+            return View(ChosenGame);
         }
 
         public IActionResult Wedstrijd(int ID)
         {
-            List<MatchModel> matches = _matchService.GetMatches(ID);
+            List<MatchModel> matches = _matchService.GetMatchWithID(ID);
             List<AccountModel> accounts = _matchService.GetAccounts(ID);
             MatchViewModel matchViewModel = new(matches, accounts);
 

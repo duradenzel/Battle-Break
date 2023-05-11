@@ -4,8 +4,8 @@
 
 @{
     int aantalSpelers = 0;
-    spel gekozenSpel = (spel)ViewData["gekozenSpel"];
-    int gekozenSpelID = (int)ViewData["gekozenSpelID"];
+    //gameModel gekozenSpel = (gameModel)ViewData["gekozenSpel"];
+    //int gekozenSpelID = (int)ViewData["gekozenSpelID"];
     int userID = 12;
     int gewonnen = 1;
     ViewData["Title"] = "Spel";
@@ -13,10 +13,10 @@
 
 
 <div class="game-wrapper">
-    <h2 class="game-name">@gekozenSpel.naam</h2>
-    <p>@gekozenSpel.regels</p>
+    <h2 class="game-name">@Model.Name</h2>
+    <p>@Model.Rules</p>
     <div class="game-players">
-        <p class="game-usercount">Aantal spelers: @aantalSpelers/@gekozenSpel.minimumSpelers</p>
+        <p class="game-usercount">Aantal spelers: @aantalSpelers/@Model.Minimum_Players</p>
         <ul class="game-players-ul">
             @for (int i = 0; i < 8; i++)
             {
@@ -31,9 +31,9 @@
     <div class="container">
         <h1 class="title">Spel</h1>
         <div class="game-info">
-            <p class="game-name">@gekozenSpel.naam</p>
-            <p class="game-rules">@gekozenSpel.regels</p>
-            <p class="player-count">Aantal spelers: <span id="player-count">@aantalSpelers</span>/<span id="minimum-players">@gekozenSpel.minimumSpelers</span></p>
+            <p class="game-name">@Model.Name</p>
+            <p class="game-rules">@Model.Rules</p>
+            <p class="player-count">Aantal spelers: <span id="player-count">@aantalSpelers</span>/<span id="minimum-players">@Model.Minimum_Players</span></p>
         </div>
 
         <form class="player-count-form">
@@ -56,7 +56,7 @@
         <div id="aantalTeams"></div>
 
         <div class="buttons-container">
-            <input type="submit" value="Kies" class="btn choose-btn" onclick="sendData(@gekozenSpelID,@userID)" />
+            <input type="submit" value="Kies" class="btn choose-btn" onclick="sendData(@Model.ID,@userID)" />
             <input type="submit" value="Verlaat spel" class="btn leave-btn" onclick="location.href='@Url.Action("Index")'" />
         </div>
     </div>
