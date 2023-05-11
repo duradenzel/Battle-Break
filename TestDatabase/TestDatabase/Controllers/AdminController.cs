@@ -82,7 +82,10 @@ namespace TestDatabase.Controllers
             return View();
         }
 
-
+        public IActionResult Template()
+        {
+            return View();
+        }
     }
 
 }
