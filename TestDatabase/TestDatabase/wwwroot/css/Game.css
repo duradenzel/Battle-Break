@@ -78,3 +78,44 @@ select {
     .btn:hover {
         background-color: #1f89e8;
     }
+
+
+.game-wrapper {
+    border-radius: 10px;
+    margin: 20px 0px;
+    background-color: #f4f4f4;
+    padding: 10px;
+    color: #000;
+    column-span: 2;
+}
+
+.game-name {
+    text-align: left;
+    color: #000;
+}
+
+.game-players {
+    margin-top: 50px;
+}
+
+.game-players-ul {
+    list-style: none;
+}
+
+.game-players-li {
+    height: 50px;
+    background-color: #e4e4e4;
+    margin: 5px 0px;
+    line-height: 50px;
+    padding-left: 10px;
+    width: 93%;
+}
+
+.game-ctas {
+    display: flex;
+}
+
+    .game-ctas > button {
+        width: 200px;
+        margin: 10px 30px;
+    }

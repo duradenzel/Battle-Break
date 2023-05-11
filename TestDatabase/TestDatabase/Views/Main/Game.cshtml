@@ -10,26 +10,33 @@
     int gewonnen = 1;
     ViewData["Title"] = "Game";
 }
-
-
-<div class="game-wrapper">
-    <h2 class="game-name">@Model.Name</h2>
-    <p>@Model.Rules</p>
-    <div class="game-players">
-        <p class="game-usercount">Aantal spelers: @aantalSpelers/@Model.Minimum_Players</p>
-        <ul class="game-players-ul">
-            @for (int i = 0; i < 8; i++)
-            {
-                <li class="game-players-li">
-                    Open
-                </li>
-            }
-        </ul>
-
 @Html.Partial("Navbar")
+
+
+
 <div class="gridder">
     <div class="container">
-        <h1 class="title">Game</h1>
+
+
+        <div class="game-wrapper">
+            <h2 class="game-name">@Model.Name</h2>
+            <p>@Model.Rules</p>
+            <div class="game-players">
+                <p class="game-usercount">Aantal spelers: @aantalSpelers/@Model.Minimum_Players</p>
+                <ul class="game-players-ul">
+                    @for (int i = 0; i < 8; i++)
+                    {
+                        <li class="game-players-li">
+                            Open
+                        </li>
+                    }
+                </ul>
+
+            </div>
+        </div>
+
+
+        @*<h1 class="title">Game</h1>
         <div class="game-info">
             <p class="game-name">@Model.Name</p>
             <p class="game-rules">@Model.Rules</p>
@@ -58,7 +65,7 @@
         <div class="buttons-container">
             <input type="submit" value="Choose" class="btn choose-btn" onclick="sendData(@Model.ID,@userID)" />
             <input type="submit" value="Leave Game" class="btn leave-btn" onclick="location.href='@Url.Action("Index")'" />
-        </div>
+        </div>*@
     </div>
 </div>
 
