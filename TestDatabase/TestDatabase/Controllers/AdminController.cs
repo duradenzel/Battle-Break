@@ -17,8 +17,8 @@ namespace TestDatabase.Controllers
         public IActionResult GameAdd(int ID, string name, int minimum_players, string rules, string win_condition)
         {
 
-                GameService gamedal = new GameService();
-                gamedal.GamesAddL(ID, name, minimum_players, rules, win_condition);
+            GameService gamedal = new GameService();
+            gamedal.GamesAddL(ID, name, minimum_players, rules, win_condition);
 
             return RedirectToAction("Games");
             
@@ -107,16 +107,16 @@ namespace TestDatabase.Controllers
         public IActionResult DeleteGame(int ID)
         {
 
-            
-                GameService gameservice = new GameService();
-                gameservice.DeleteGameL(ID);
+
+            GameService gameservice = new GameService();
+            gameservice.DeleteGameL(ID);
 
             return RedirectToAction("Games");
+        }
             
         public IActionResult Template()
         {
             return View();
         }
     }
-
 }

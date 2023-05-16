@@ -18,7 +18,7 @@ namespace BattleBreakDAL
 
         public List<GameDTO> GetGames()
         {
-            List<GameDTO > gameList = new List<GameDTO>();
+            List<GameDTO> gameList = new List<GameDTO>();
 
             using (MySqlConnection con = new(_connString))
             {
@@ -67,7 +67,7 @@ namespace BattleBreakDAL
             }
 
             return gameDTO;
-
+        }
         public void GameAddD(int ID, string name, int minimum_players, string rules, string win_condition)
         {
             // return the create view
@@ -107,7 +107,7 @@ namespace BattleBreakDAL
                 }
             }
         }
-        public  void DeleteGameD(int ID)
+        public void DeleteGameD(int ID)
         {
             string connString = "Server=studmysql01.fhict.local;Database=dbi515074;Uid=dbi515074;Pwd=AmineGPT;";
             using (MySqlConnection connection = new MySqlConnection(connString))
@@ -123,3 +123,4 @@ namespace BattleBreakDAL
         }
     }
 }
+
