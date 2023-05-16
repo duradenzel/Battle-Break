@@ -15,7 +15,7 @@ namespace BattleBreakBLL
         {
             TemplateDAL templateDAL = new();
             List<TemplateModel> templateModel = new();
-            List<TemplateDTO> templateDTO = new();
+            List<TemplateDTO> templateDTO = templateDAL.GetTemplates();
 
             foreach(TemplateDTO dto in templateDTO)
             {
