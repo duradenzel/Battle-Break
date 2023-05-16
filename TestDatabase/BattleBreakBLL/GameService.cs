@@ -25,14 +25,29 @@ namespace BattleBreakBLL
                 {
                     ID = dto.ID,
                     name = dto.name,
-                    minimum_players = dto.minimum_Players,
+                    minimum_players = dto.minimum_players,
                     rules = dto.rules,
-                    win_condition = dto.win_Condition,
+                    win_condition = dto.win_condition,
                 });
             }
             return gameModels;
         }
 
+        public GameModel GetGameWithID(int ID) {
+            
+            GameDTO gameDTO = _gameDAL.GetGameWithID(ID);
+
+            GameModel gameModel = new()
+            {
+                ID = gameDTO.ID,
+                name = gameDTO.name,
+                minimum_players = gameDTO.minimum_players,
+                rules = gameDTO.rules,
+                win_condition = gameDTO.win_condition,
+            };
+
+            return gameModel;
+        }
         public void GamesAddL(int ID, string name, int minimum_players, string rules, string win_condition)
         {
             GameDAL gamedal = new GameDAL();

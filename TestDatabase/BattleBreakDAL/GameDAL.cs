@@ -32,9 +32,9 @@ namespace BattleBreakDAL
                     {
                         ID = reader.GetInt32("ID"),
                         name = reader.GetString("name"),
-                        minimum_Players = reader.GetInt32("minimum_players"),
+                        minimum_players = reader.GetInt32("minimum_players"),
                         rules = reader.GetString("rules"),
-                        win_Condition = reader.GetString("win_condition"),
+                        win_condition = reader.GetString("win_condition"),
                     };
 
                     gameList.Add(game);
@@ -45,6 +45,28 @@ namespace BattleBreakDAL
             return gameList;
         }
 
+        public GameDTO GetGameWithID(int ID)
+        {
+            GameDTO gameDTO = new();
+
+            using (MySqlConnection con = new(_connString))
+            {
+                con.Open();
+                MySqlCommand command = new($"SELECT * FROM `game` where `ID` = {ID}", con);
+                MySqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    gameDTO.ID = reader.GetInt32("ID");
+                    gameDTO.name = reader.GetString("name");
+                    gameDTO.minimum_players = reader.GetInt32("minimum_players");
+                    gameDTO.rules = reader.GetString("rules");
+                    gameDTO.win_condition = reader.GetString("win_condition");
+                }
+                con.Close();
+            }
+
+            return gameDTO;
 
         public void GameAddD(int ID, string name, int minimum_players, string rules, string win_condition)
         {
@@ -65,7 +87,7 @@ namespace BattleBreakDAL
                 }
             }
         }
-        public  void GameChangeD(int ID, string name, int minimum_players, string rules, string win_condition)
+        public void GameChangeD(int ID, string name, int minimum_players, string rules, string win_condition)
         {
 
             string connString = "Server=studmysql01.fhict.local;Database=dbi515074;Uid=dbi515074;Pwd=AmineGPT;";

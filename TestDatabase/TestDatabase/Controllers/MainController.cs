@@ -63,7 +63,8 @@ namespace TestDatabase.Controllers
         {
             List<MatchModel> matches = _matchService.GetMatchWithID(ID);
             List<AccountModel> accounts = _matchService.GetAccounts(ID);
-            MatchViewModel matchViewModel = new(matches, accounts);
+            GameModel gameModel = _gameService.GetGameWithID(matches[0].Game_ID);
+            MatchViewModel matchViewModel = new(matches, accounts, gameModel);
 
             return View(matchViewModel);
         }
