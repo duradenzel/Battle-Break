@@ -5,23 +5,24 @@
 
 <h1>Match</h1>
 
+<p><b>@Model.Game.Name</b></p>
+@*<h2>@Model.MatchList[1].Match_ID</h2>*@
+
+
 @foreach(var account in Model.AccountList)
 {
     <p>@account.User_Name</p>
     <p id="score" name="score">Score: 0</p>
-    <input type="button" value="Add Point" class="btn btn-primary" onclick="updateScore(@i)" />
+    <input type="button" value="Add Point" class="btn btn-primary" onclick="increaseScore(@i)" />
+    <input type="button" value="-" class="btn btn-light" onclick="decreaseScore(@i)" />
+
     i++;
     <br>
     <br>
     <br>
 }
 
-@foreach(var item in Model.MatchList)
-{
-    <p>@item.Game_ID, @item.Account_ID</p>
-}
-
-
+<input type="button" value="Update" class="btn btn-outline-primary" />
 
 @section scripts{
     <script>
@@ -30,9 +31,16 @@
             scores.push(0);
         }
 
-        function updateScore(i) {
+        function increaseScore(i) {
             scores[i] = scores[i] + 1;
             document.getElementsByName("score")[i].textContent = "Score: " + scores[i];
+        }
+
+        function decreaseScore(i) {
+            if(scores[i] != 0){
+            scores[i] = scores[i] - 1;
+            document.getElementsByName("score")[i].textContent = "Score: " + scores[i];
+            }
         }
     </script>
 }

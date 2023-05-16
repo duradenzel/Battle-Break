@@ -43,5 +43,28 @@ namespace BattleBreakDAL
             return gameList;
         }
 
+        public GameDTO GetGameWithID(int ID)
+        {
+            GameDTO gameDTO = new();
+
+            using (MySqlConnection con = new(_connString))
+            {
+                con.Open();
+                MySqlCommand command = new($"SELECT * FROM `game` where `ID` = {ID}", con);
+                MySqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    gameDTO.ID = reader.GetInt32("ID");
+                    gameDTO.Name = reader.GetString("name");
+                    gameDTO.Minimum_Players = reader.GetInt32("minimum_players");
+                    gameDTO.Rules = reader.GetString("rules");
+                    gameDTO.Win_Condition = reader.GetString("win_condition");
+                }
+                con.Close();
+            }
+
+            return gameDTO;
+        }
     }
 }

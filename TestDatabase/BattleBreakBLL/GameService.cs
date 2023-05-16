@@ -32,5 +32,20 @@ namespace BattleBreakBLL
             return gameModels;
         }
 
+        public GameModel GetGameWithID(int ID) {
+            
+            GameDTO gameDTO = _gameDAL.GetGameWithID(ID);
+
+            GameModel gameModel = new()
+            {
+                ID = gameDTO.ID,
+                Name = gameDTO.Name,
+                Minimum_Players = gameDTO.Minimum_Players,
+                Rules = gameDTO.Rules,
+                Win_Condition = gameDTO.Win_Condition,
+            };
+
+            return gameModel;
+        }
     }
 }
