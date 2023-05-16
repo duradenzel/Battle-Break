@@ -20,16 +20,16 @@
                 @Html.DisplayNameFor(model => model.ID)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.GameName)
+                @Html.DisplayNameFor(model => model.name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.MinimumPlayers)
+                @Html.DisplayNameFor(model => model.minimum_players)
             </th>
             <th class="regels">
-                @Html.DisplayNameFor(model => model.Regels)
+                @Html.DisplayNameFor(model => model.rules)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.WinCondition)
+                @Html.DisplayNameFor(model => model.win_condition)
             </th>
             <th></th>
         </tr>
@@ -41,22 +41,22 @@
                 @Html.DisplayFor(modelItem => item.ID)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.GameName)
+                @Html.DisplayFor(modelItem => item.name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.MinimumPlayers)
+                @Html.DisplayFor(modelItem => item.minimum_players)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Regels)
+                @Html.DisplayFor(modelItem => item.rules)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.WinCondition)
+                @Html.DisplayFor(modelItem => item.win_condition)
             </td>
             <td >
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) 
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) 
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
+                    @Html.ActionLink("Edit", "GameEdit", "Admin", new { ID = item.ID, name = item.name, minimum_players = item.minimum_players, rules = item.rules, win_condition = item.win_condition }, null) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ })
+                    @Html.ActionLink("Delete", "DeleteGame", "Admin", new { ID = item.ID})
+                </td>
         </tr>
 }
     </tbody>

@@ -1,22 +1,22 @@
 ﻿@model TestDatabase.Models.Games
 
 @{
-    ViewData["Title"] = "AddGame";
+    ViewData["Title"] = "GameEdit";
 }
 
-<h1>AddGame</h1>
+<h1>EditGame</h1>
 
 <h4>Games</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="GameAdd">
+        <form asp-action="GameChange">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-@*            <div class="form-group">
+            <div class="form-group">
                 <label asp-for="ID" class="control-label"></label>
-                <input asp-for="ID" class="form-control" name="ID" />
+                <input asp-for="ID" class="form-control" name="ID" readonly />
                 <span asp-validation-for="ID" class="text-danger"></span>
-            </div>*@
+            </div>
             <div class="form-group">
                 <label asp-for="name" class="control-label"></label>
                 <input asp-for="name" class="form-control" name="name" />
@@ -29,7 +29,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="rules" class="control-label"></label>
-                <input asp-for="rules" class="form-control" name="rules" />
+                <input asp-for="rules" class="form-control" name="rules">
                 <span asp-validation-for="rules" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -38,12 +38,12 @@
                 <span asp-validation-for="win_condition" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Games">Back to List</a>
+    <a asp-action="Index">Back to List</a>
 </div>
