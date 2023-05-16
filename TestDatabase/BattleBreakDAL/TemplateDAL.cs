@@ -25,12 +25,12 @@ namespace BattleBreakDAL
             return new MySqlConnection(connString);
         }
 
-        public List<DTOS.TemplateDTO> GetTemplates()
+        public List<TemplateDTO> GetTemplates()
         {
             using (MySqlConnection con = MakeConnection())
             {
                 con.Open();
-                MySqlCommand sqlCom = new MySqlCommand("Select * From templates", con);
+                MySqlCommand sqlCom = new MySqlCommand("Select * From template", con);
                 MySqlDataReader reader = sqlCom.ExecuteReader();
                 List<TemplateDTO> templateList = new();
 

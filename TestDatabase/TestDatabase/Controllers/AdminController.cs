@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BattleBreakBLL;
+using BattleBreakBLL.Models;
+using BattleBreakDAL.DTOS;
+using BattleBreakDAL;
+using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
 using NuGet.Protocol.Core.Types;
 using NuGet.Protocol.Plugins;
@@ -83,6 +87,25 @@ namespace TestDatabase.Controllers
         }
 
         public IActionResult Template()
+        {
+            TemplateService templateService = new();
+            List<Template> template = new();
+            List<TemplateModel> templateModel = templateService.GetTemplates();
+
+            foreach (TemplateModel tm in templateModel)
+            {
+                Template t = new();
+                t.id = tm.id;
+                t.name = tm.name;
+                t.minimumPlayers = tm.minimumPlayers;
+                t.rules = tm.rules; 
+                t.winCondition = tm.winCondition;
+                template.Add(t);
+            }
+            return View(template);
+        }
+
+        public IActionResult CreateTemplate()
         {
             return View();
         }
