@@ -113,6 +113,9 @@ namespace TestDatabase.Controllers
 
             return RedirectToAction("Games");
             
+        public IActionResult Template()
+        {
+            return View();
         }
     }
 
