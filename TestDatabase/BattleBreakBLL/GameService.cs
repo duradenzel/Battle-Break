@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BattleBreakBLL.Models;
 using BattleBreakDAL;
 using BattleBreakDAL.DTOS;
+using MySql.Data.MySqlClient;
 
 namespace BattleBreakBLL
 {
@@ -23,10 +24,10 @@ namespace BattleBreakBLL
                 gameModels.Add(new GameModel
                 {
                     ID = dto.ID,
-                    Name = dto.Name,
-                    Minimum_Players = dto.Minimum_Players,
-                    Rules = dto.Rules,
-                    Win_Condition = dto.Win_Condition,
+                    name = dto.name,
+                    minimum_players = dto.minimum_players,
+                    rules = dto.rules,
+                    win_condition = dto.win_condition,
                 });
             }
             return gameModels;
@@ -39,13 +40,31 @@ namespace BattleBreakBLL
             GameModel gameModel = new()
             {
                 ID = gameDTO.ID,
-                Name = gameDTO.Name,
-                Minimum_Players = gameDTO.Minimum_Players,
-                Rules = gameDTO.Rules,
-                Win_Condition = gameDTO.Win_Condition,
+                name = gameDTO.name,
+                minimum_players = gameDTO.minimum_players,
+                rules = gameDTO.rules,
+                win_condition = gameDTO.win_condition,
             };
 
             return gameModel;
         }
+        public void GamesAddL(int ID, string name, int minimum_players, string rules, string win_condition)
+        {
+            GameDAL gamedal = new GameDAL();
+            gamedal.GameAddD(ID, name, minimum_players, rules, win_condition);
+        }
+
+        public void GameChangeL(int ID, string name, int minimum_players, string rules, string win_condition)
+        {
+            GameDAL gamedal = new GameDAL();
+            gamedal.GameChangeD(ID, name, minimum_players, rules, win_condition);
+        }
+
+        public  void DeleteGameL(int ID)
+        {
+            GameDAL gamedal = new GameDAL();
+            gamedal.DeleteGameD(ID);
+        }
+
     }
 }

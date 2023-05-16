@@ -50,7 +50,7 @@ namespace TestDatabase.Controllers
 
             foreach(var game in gameModels)
             {
-                if (gekozenSpel.ToLower() == game.Name.ToLower())
+                if (gekozenSpel.ToLower() == game.name.ToLower())
                 {
                     ChosenGame = game;
                 }
