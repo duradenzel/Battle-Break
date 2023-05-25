@@ -29,5 +29,17 @@ namespace BattleBreakBLL
             }
             return templateModel;
         }
+        public void TemplateAddL(int templateID, string templateName, int templateMinimumPlayers, string templateRules, string templateWinCondition)
+        {
+            TemplateDAL templateDAL = new();
+            templateDAL.TemplateAddD(templateID, templateName, templateMinimumPlayers, templateRules, templateWinCondition);
+        }
+
+        public void DeleteTemplateL(int templateID)
+        {
+            TemplateDAL templateDAL = new();
+            templateDAL.DeleteTemplateD(templateID);
+        }
     }
+
 }

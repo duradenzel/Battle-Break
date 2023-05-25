@@ -67,6 +67,7 @@ namespace BattleBreakDAL
             }
 
             return gameDTO;
+        }
 
         public void GameAddD(int ID, string name, int minimum_players, string rules, string win_condition)
         {
@@ -87,6 +88,7 @@ namespace BattleBreakDAL
                 }
             }
         }
+
         public void GameChangeD(int ID, string name, int minimum_players, string rules, string win_condition)
         {
 

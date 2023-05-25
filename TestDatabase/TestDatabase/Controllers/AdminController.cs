@@ -110,12 +110,13 @@ namespace TestDatabase.Controllers
 
         public IActionResult DeleteGame(int ID)
         {
-
-            
+            {
                 GameService gameservice = new GameService();
                 gameservice.DeleteGameL(ID);
 
-            return RedirectToAction("Games");
+                return RedirectToAction("Games");
+            }
+        }
             
         public IActionResult Template()
         {
@@ -136,9 +137,27 @@ namespace TestDatabase.Controllers
             return View(template);
         }
 
-        public IActionResult CreateTemplate()
+        public IActionResult CreateTemplate(int templateID, string templateName, int templateMinimumPlayers, string templateRules, string templateWinCondition)
+        {
+            TemplateService templateService = new();
+            templateService.TemplateAddL(templateID, templateName, templateMinimumPlayers, templateRules, templateWinCondition);
+
+            return RedirectToAction("Template");
+        }
+
+        public IActionResult AddTemplate()
         {
             return View();
+        }
+
+        public IActionResult DeleteTemplate(int id)
+        {
+            {
+                TemplateService templateService = new();
+                templateService.DeleteTemplateL(id);
+
+                return RedirectToAction("Template");
+            }
         }
     }
 

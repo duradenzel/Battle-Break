@@ -63,12 +63,12 @@ namespace BattleBreakBLL
             {
                 accountModels.Add(new AccountModel
                 {
-                    Account_ID = dto.Account_ID,
-                    User_Name = dto.User_Name,
-                    Full_Name = dto.Full_Name,
-                    Email = dto.Email,
-                    Password = dto.Password,
-                    Type = dto.Type,
+                    account_ID = dto.ID,
+                    user_Name = dto.user_Name,
+                    full_Name = dto.full_Name,
+                    email = dto.email,
+                    password = dto.password,
+                    type = dto.type,
                 });
             }
             return accountModels;
