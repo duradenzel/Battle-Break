@@ -19,10 +19,10 @@
 
 
         <div class="game-wrapper">
-            <h2 class="game-name">@Model.Name</h2>
-            <p>@Model.Rules</p>
+            <h2 class="game-name">@Model.name</h2>
+            <p>@Model.rules</p>
             <div class="game-players">
-                <p class="game-usercount">Aantal spelers: @aantalSpelers/@Model.Minimum_Players</p>
+                <p class="game-usercount">Aantal spelers: @aantalSpelers/@Model.minimum_players</p>
                 <ul class="game-players-ul">
                     @for (int i = 0; i < 8; i++)
                     {

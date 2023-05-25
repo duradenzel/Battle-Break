@@ -5,13 +5,12 @@
 
 <h1>Match</h1>
 
-<p><b>@Model.Game.Name</b></p>
-@*<h2>@Model.MatchList[1].Match_ID</h2>*@
+<p><b>@Model.Game.name</b></p>
 
 
 @foreach(var account in Model.AccountList)
 {
-    <p>@account.User_Name</p>
+    <p>@account.username</p>
     <p id="score" name="score">Score: 0</p>
     <input type="button" value="Add Point" class="btn btn-primary" onclick="increaseScore(@i)" />
     <input type="button" value="-" class="btn btn-light" onclick="decreaseScore(@i)" />

@@ -91,8 +91,8 @@ namespace BattleBreakDAL
                     AccountDTO account = new()
                     {
                         ID = reader.GetInt32("ID"),
-                        user_Name = reader.GetString("username"),
-                        full_Name = reader.GetString("full_name"),
+                        username = reader.GetString("username"),
+                        full_name = reader.GetString("full_name"),
                         email = reader.GetString("email"),
                         password = reader.GetString("password"),
                         type = reader.GetString("type"),
