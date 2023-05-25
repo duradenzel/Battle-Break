@@ -64,8 +64,8 @@ namespace BattleBreakBLL
                 accountModels.Add(new AccountModel
                 {
                     account_ID = dto.ID,
-                    user_Name = dto.user_Name,
-                    full_Name = dto.full_Name,
+                    username = dto.username,
+                    full_name = dto.full_name,
                     email = dto.email,
                     password = dto.password,
                     type = dto.type,

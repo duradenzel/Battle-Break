@@ -1,11 +1,11 @@
 ﻿using BattleBreakBLL.Models;
-using BattleBreakDAL.DTOS;
-using BattleBreakDAL;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+//using BattleBreakDAL.DTOS;
+//using BattleBreakDAL;
+//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Text;
+//using System.Threading.Tasks;
 
 namespace BattleBreakBLL
 {
@@ -31,5 +31,5 @@ namespace BattleBreakBLL
         //    return (drinken);
         //}
 
-    }
-}
+//    }
+//}

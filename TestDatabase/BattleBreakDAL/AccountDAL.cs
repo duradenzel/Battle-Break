@@ -33,7 +33,7 @@ namespace BattleBreakDAL
                                 // Create a new Account object and populate its properties from the retrieved data
                                 BattleBreakDAL.DTOS.AccountDTO account = new BattleBreakDAL.DTOS.AccountDTO();
                                 account.ID = Convert.ToInt32(reader["ID"]);
-                                account.user_Name = Convert.ToString(reader["user_name"]);
+                                account.username = Convert.ToString(reader["user_name"]);
                                 account.email = Convert.ToString(reader["email"]);
                                 account.password = Convert.ToString(reader["password"]);
 
