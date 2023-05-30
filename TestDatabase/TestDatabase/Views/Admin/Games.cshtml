@@ -12,35 +12,30 @@
     .tablebackground{
         background-color: rgba(255, 255, 255, 0.90);
         border-radius: 15px;
+        padding: 20px;
         marign: 10px;
     }
 </style>
 
-<div>
-    <input type="submit" value="Go Back" class="btn btn-primary" onclick="location.href='@Url.Action("Adminpage", "Admin")'" />
-    <input type="submit" value="Create new game" class="btn btn-primary" onclick="location.href='@Url.Action("AddGame", "Admin")'" />
-</div>
-
-<br />
-
 <div class="tablebackground">
+    <div>
+        <input type="submit" value="Go Back" class="btn btn-primary" onclick="location.href='@Url.Action("Adminpage", "Admin")'" />
+        <input type="submit" value="Create new game" class="btn btn-primary" onclick="location.href='@Url.Action("AddGame", "Admin")'" />
+    </div>
     <table class="table">
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.ID)
+                    Game name
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.minimum_players)
+                    Minimum players
                 </th>
                 <th class="regels">
-                    @Html.DisplayNameFor(model => model.rules)
+                    Rules
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.win_condition)
+                    Win condition
                 </th>
                 <th></th>
             </tr>
@@ -49,9 +44,6 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ID)
-                    </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.name)
                     </td>
@@ -65,13 +57,13 @@
                         @Html.DisplayFor(modelItem => item.win_condition)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "GameEdit", "Admin", new { ID = item.ID, name = item.name, minimum_players = item.minimum_players, rules = item.rules, win_condition = item.win_condition }, null) |
-                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ })
-                        @Html.ActionLink("Delete", "DeleteGame", "Admin", new { ID = item.ID})
+                        <div>
+                        <input type="submit" value="Edit" class="btn btn-primary" onclick="location.href='@Url.Action("GameEdit", "Admin", new { ID = item.ID, name = item.name, minimum_players = item.minimum_players, rules = item.rules, win_condition = item.win_condition }, null)'" />
+                        <input type="submit" value="Delete" class="btn btn-primary" onclick="location.href='@Url.Action("DeleteGame", "Admin", new { ID = item.ID})'" />
+                        </div>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
-
 </div>

@@ -13,26 +13,44 @@
         padding: 20px;
         marign: 10px;
     }
+
+    .knopjuh{
+        display: flex;
+        flex-direction: row;
+    }
+    .right{
+        margin-left: auto;
+    }
 </style>
 
 <div class="showtemplate">
-    <div>
-        <input type="submit" value="Create new template" class="btn btn-primary" onclick="location.href='@Url.Action("AddTemplate", "Admin")'" />
+
+    <div class="knopjuh">
+        <div>
+            <input type="submit" value="Go Back" class="btn btn-primary" onclick="location.href='@Url.Action("Adminpage", "Admin")'" />
+            <input type="submit" value="Create new template" class="btn btn-primary" onclick="location.href='@Url.Action("AddTemplate", "Admin")'" />
+        </div>
+        <div class="right">
+            <input type="submit" value="Accounts" class="btn btn-primary" onclick="location.href='@Url.Action("AccountList", "Admin")'" />
+            <input type="submit" value="Games" class="btn btn-primary" onclick="location.href='@Url.Action("Games", "Admin")'" />
+            <input type="submit" value="Templates" class="btn btn-primary" onclick="location.href='@Url.Action("Template", "Admin")'" />
+        </div>
     </div>
+
     <table class="table">
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.name)
+                    Template name
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.minimumPlayers)
+                    Miminum players
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.rules)
+                    Rules
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.winCondition)
+                    Win condition
                 </th>
                 <th></th>
             </tr>
@@ -54,17 +72,12 @@
                         @Html.DisplayFor(modelItem => item.winCondition)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                        @Html.ActionLink("Delete", "DeleteTemplate", "Admin", new { id = item.id})
+                        <input type="submit" value="Delete" class="btn btn-primary" onclick="location.href='@Url.Action("DeleteTemplate", "Admin", new { id = item.id})'" />
                     </td>
                 </tr>
             }
         </tbody>
     </table>
-    <div>
-        <a asp-action="Adminpage">Back to Adminpage</a>
-    </div>
 </div>
 
 
