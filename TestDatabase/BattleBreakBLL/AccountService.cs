@@ -10,7 +10,9 @@
 namespace BattleBreakBLL
 {
     public class AccountService
-    {
+    { }
+}
+
         //public static List<AccountModel> AllAccountsD()
         //{
         //    List<BattleBreakBLL.Models.AccountModel> drinken = new List<BattleBreakBLL.Models.AccountModel>();
@@ -31,5 +33,5 @@ namespace BattleBreakBLL
         //    return (drinken);
         //}
 
-//    }
-//}
+    }
+}

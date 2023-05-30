@@ -2,8 +2,6 @@
 using BattleBreakBLL.Models;
 using BattleBreakDAL.DTOS;
 using BattleBreakDAL;
-using BattleBreakBLL;
-using BattleBreakDAL;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Build.Framework;
 using MySql.Data.MySqlClient;
