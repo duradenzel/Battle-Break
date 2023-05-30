@@ -46,7 +46,7 @@
         <h1>Accounts</h1>
             <div class="knopjuh">
                 <div class="right">
-                    <input type="submit" value="Accounts" class="btn btn-primary" onclick="location.href='@Url.Action("AccountList", "Admin")'" />
+                    <input type="submit" value="Accounts" class="btn btn-primary" onclick="location.href='@Url.Action("Index", "Admin")'" />
                     <input type="submit" value="Games" class="btn btn-primary" onclick="location.href='@Url.Action("Games", "Admin")'" />
                     <input type="submit" value="Templates" class="btn btn-primary" onclick="location.href='@Url.Action("Template", "Admin")'" />
                 </div>
@@ -88,8 +88,8 @@
                                 @Html.DisplayFor(modelItem => item.type)
                             </td>
                             <td>
-                                <input type="submit" value="Edit" class="btn btn-primary" onclick="location.href='@Url.Action("Admin", "Admin",  new {id = item.ID})'" />
-                                <input type="submit" value="Delete" class="btn btn-primary" onclick="location.href='@Url.Action("Gebruiker", "Admin", new {id = item.ID})'" />
+                                <input type="submit" value="Admin" class="btn btn-primary" onclick="location.href='@Url.Action("Admin", "Admin",  new {id = item.ID})'" />
+                                <input type="submit" value="Gebruiker" class="btn btn-primary" onclick="location.href='@Url.Action("Gebruiker", "Admin", new {id = item.ID})'" />
                             </td>
                         </tr>
                     }
