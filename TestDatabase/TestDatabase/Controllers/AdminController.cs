@@ -83,7 +83,7 @@ namespace TestDatabase.Controllers
                 newItem.type = item.type;
                 account.Add(newItem);
             }
-            return View("AccountList", account);
+            return View("Index", account);
         }
 
         public IActionResult AddGame()

@@ -3,14 +3,28 @@
     ViewData["Title"] = "AccountList";
 }
 
-<h1>Accounts</h1>
+
+
 
 <style>
+    .container {
+        display: grid;
+        grid-template-columns: 5vw 95vw;
+        grid-template-rows: 30vh 70vh;
+        margin: 0;
+        padding: 0;
+    }
+
+    .table {
+        grid-column: 2;
+        grid-row: 1 / 2;
+        z-index: 10000;
+        width: 95vw;
+    }
     .showaccounts {
         background-color: rgba(255, 255, 255, 0.90);
         border-radius: 15px;
         padding: 20px;
-        marign: 10px;
     }
 
     .knopjuh {
@@ -21,60 +35,66 @@
     .right {
         margin-left: auto;
     }
+
 </style>
 
-<div class="showaccounts">
-    <div class="knopjuh">
-        <div>
-        </div>
-        <div class="right">
-            <input type="submit" value="Accounts" class="btn btn-primary" onclick="location.href='@Url.Action("AccountList", "Admin")'" />
-            <input type="submit" value="Games" class="btn btn-primary" onclick="location.href='@Url.Action("Games", "Admin")'" />
-            <input type="submit" value="Templates" class="btn btn-primary" onclick="location.href='@Url.Action("Template", "Admin")'" />
+<div class="container">
+    @Html.Partial("Navbar")
+
+    <div class="table">
+        <div class="showaccounts">
+        <h1>Accounts</h1>
+            <div class="knopjuh">
+                <div class="right">
+                    <input type="submit" value="Accounts" class="btn btn-primary" onclick="location.href='@Url.Action("AccountList", "Admin")'" />
+                    <input type="submit" value="Games" class="btn btn-primary" onclick="location.href='@Url.Action("Games", "Admin")'" />
+                    <input type="submit" value="Templates" class="btn btn-primary" onclick="location.href='@Url.Action("Template", "Admin")'" />
+                </div>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Username
+                        </th>
+                        <th>
+                            Full name
+                        </th>
+                        <th>
+                            Email
+                        </th>
+
+                        <th>
+                            User type
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr class="td">
+                            <td>
+                                @Html.DisplayFor(modelItem => item.username)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.full_name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.email)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.type)
+                            </td>
+                            <td>
+                                <input type="submit" value="Edit" class="btn btn-primary" onclick="location.href='@Url.Action("Admin", "Admin",  new {id = item.ID})'" />
+                                <input type="submit" value="Delete" class="btn btn-primary" onclick="location.href='@Url.Action("Gebruiker", "Admin", new {id = item.ID})'" />
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         </div>
     </div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    Username
-                </th>
-                <th>
-                    Full name
-                </th>
-                <th>
-                    Email
-                </th>
-
-                <th>
-                    User type
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.username)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.full_name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.email)
-                    </td>
-
-                    <td>
-                        @Html.DisplayFor(modelItem => item.type)
-                    </td>
-                    <td>
-                        <input type="submit" value="Edit" class="btn btn-primary" onclick="location.href='@Url.Action("Admin", "Admin",  new {id = item.ID})'" />
-                        <input type="submit" value="Delete" class="btn btn-primary" onclick="location.href='@Url.Action("Gebruiker", "Admin", new {id = item.ID})'" />
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
 </div>
