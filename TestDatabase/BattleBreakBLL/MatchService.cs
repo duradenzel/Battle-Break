@@ -100,5 +100,20 @@ namespace BattleBreakBLL
 
             return ID;
         }
+
+        public void UpdateData(int Match_ID, string points)
+        {
+            string[] pointsList = points.Split(',');
+            List<MatchModel> matchModels = GetMatchWithID(Match_ID);
+            int i = 0;
+            int won = 0;
+
+            foreach (MatchModel match in matchModels)
+            {
+                _matchDAL.UpdateMatch(match.Match_ID, match.Account_ID, match.Won, Int32.Parse(pointsList[i]));
+
+                i++;
+            }
+        }
     }
 }

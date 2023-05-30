@@ -121,7 +121,7 @@
             aantalTeams = document.getElementsByName("aantalTeams")[0].value;
         }
 
-        function sendData(spelID, userID){
+        function sendData(gameID, userID){
             var spelers = [];
             for (var i = 0; i < document.getElementsByName("aantalSpelers").length; i++){
                 spelers.push(document.getElementsByName("aantalSpelers")[i].value)
@@ -131,10 +131,10 @@
 
             $.ajax({
                 url: '/Main/sendData',
-                data: { Spel_ID: spelID, User_ID: userID, User_IDs: spelers1},
+                data: { Game_ID: gameID, User_ID: userID, User_IDs: spelers1},
                 type: 'GET',
                 success: function (returned_data) {
-                    console.log(returned_data)
+                    //console.log(returned_data)
                     location.href = "wedstrijd?ID=" + returned_data
                 },
                 error: function (returned_data) {
