@@ -4,9 +4,22 @@
     ViewData["Title"] = "Template";
 }
 
-<h1>Template</h1>
 
 <style>
+    .container {
+        display: grid;
+        grid-template-columns: 5vw 95vw;
+        grid-template-rows: 100vh;
+        margin: 0;
+        padding: 0;
+    }
+
+    .table {
+        grid-column: 2;
+        grid-row: 1 / 2;
+        z-index: 10000;
+        width: 94.1vw;
+    }
     .showtemplate {
         background-color: rgba(255, 255, 255, 0.90);
         border-radius: 15px;
@@ -23,60 +36,67 @@
     }
 </style>
 
-<div class="showtemplate">
+<div class="container">
+    @Html.Partial("Navbar")
 
-    <div class="knopjuh">
-        <div>
-            <input type="submit" value="Create new template" class="btn btn-primary" onclick="location.href='@Url.Action("AddTemplate", "Admin")'" />
-        </div>
-        <div class="right">
-            <input type="submit" value="Accounts" class="btn btn-primary" onclick="location.href='@Url.Action("Index", "Admin")'" />
-            <input type="submit" value="Games" class="btn btn-primary" onclick="location.href='@Url.Action("Games", "Admin")'" />
-            <input type="submit" value="Templates" class="btn btn-primary" onclick="location.href='@Url.Action("Template", "Admin")'" />
+    <div class="table">
+        <div class="showtemplate">
+            <h1>Template</h1>
+
+            <div class="knopjuh">
+                <div>
+                    <input type="submit" value="Create new template" class="btn btn-primary" onclick="location.href='@Url.Action("AddTemplate", "Admin")'" />
+                </div>
+                <div class="right">
+                    <input type="submit" value="Accounts" class="btn btn-primary" onclick="location.href='@Url.Action("AccountList", "Admin")'" />
+                    <input type="submit" value="Games" class="btn btn-primary" onclick="location.href='@Url.Action("Games", "Admin")'" />
+                    <input type="submit" value="Templates" class="btn btn-primary" onclick="location.href='@Url.Action("Template", "Admin")'" />
+                </div>
+            </div>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Template name
+                        </th>
+                        <th>
+                            Miminum players
+                        </th>
+                        <th>
+                            Rules
+                        </th>
+                        <th>
+                            Win condition
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.minimumPlayers)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.rules)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.winCondition)
+                            </td>
+                            <td>
+                                <input type="submit" value="Delete" class="btn btn-primary" onclick="location.href='@Url.Action("DeleteTemplate", "Admin", new { id = item.id})'" />
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         </div>
     </div>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    Template name
-                </th>
-                <th>
-                    Miminum players
-                </th>
-                <th>
-                    Rules
-                </th>
-                <th>
-                    Win condition
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.minimumPlayers)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.rules)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.winCondition)
-                    </td>
-                    <td>
-                        <input type="submit" value="Delete" class="btn btn-primary" onclick="location.href='@Url.Action("DeleteTemplate", "Admin", new { id = item.id})'" />
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
 </div>
 
 

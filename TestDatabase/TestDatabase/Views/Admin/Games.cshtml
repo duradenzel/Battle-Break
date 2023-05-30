@@ -4,8 +4,21 @@
     ViewData["Title"] = "Games";
 }
 
-<h1>Games</h1>
 <style>
+    .container {
+        display: grid;
+        grid-template-columns: 5vw 95vw;
+        grid-template-rows: 100vh;
+        margin: 0;
+        padding: 0;
+    }
+
+    .table {
+        grid-column: 2;
+        grid-row: 1 / 2;
+        z-index: 10000;
+        width: 95vw;
+    }
     .regels{
         min-width: 240px;
     }
@@ -13,7 +26,6 @@
         background-color: rgba(255, 255, 255, 0.90);
         border-radius: 15px;
         padding: 20px;
-        marign: 10px;
     }
 
     .knopjuh {
@@ -26,59 +38,65 @@
     }
 </style>
 
-<div class="tablebackground">
-    <div class="knopjuh">
-        <div>
-            <input type="submit" value="Create new game" class="btn btn-primary" onclick="location.href='@Url.Action("AddGame", "Admin")'" />
-        </div>
-        <div class="right">
-            <input type="submit" value="Accounts" class="btn btn-primary" onclick="location.href='@Url.Action("Index", "Admin")'" />
-            <input type="submit" value="Games" class="btn btn-primary" onclick="location.href='@Url.Action("Games", "Admin")'" />
-            <input type="submit" value="Templates" class="btn btn-primary" onclick="location.href='@Url.Action("Template", "Admin")'" />
+<div class="containter">
+    @Html.Partial("Navbar")
+    <div class="table">
+        <div class="tablebackground">
+            <h1>Games</h1>
+            <div class="knopjuh">
+                <div>
+                    <input type="submit" value="Create new game" class="btn btn-primary" onclick="location.href='@Url.Action("AddGame", "Admin")'" />
+                </div>
+                <div class="right">
+                    <input type="submit" value="Accounts" class="btn btn-primary" onclick="location.href='@Url.Action("AccountList", "Admin")'" />
+                    <input type="submit" value="Games" class="btn btn-primary" onclick="location.href='@Url.Action("Games", "Admin")'" />
+                    <input type="submit" value="Templates" class="btn btn-primary" onclick="location.href='@Url.Action("Template", "Admin")'" />
+                </div>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Game name
+                        </th>
+                        <th>
+                            Minimum players
+                        </th>
+                        <th class="regels">
+                            Rules
+                        </th>
+                        <th>
+                            Win condition
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.minimum_players)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.rules)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.win_condition)
+                            </td>
+                            <td>
+                                <div>
+                                    <input type="submit" value="Edit" class="btn btn-primary" onclick="location.href='@Url.Action("GameEdit", "Admin", new { ID = item.ID, name = item.name, minimum_players = item.minimum_players, rules = item.rules, win_condition = item.win_condition }, null)'" />
+                                    <input type="submit" value="Delete" class="btn btn-primary" onclick="location.href='@Url.Action("DeleteGame", "Admin", new { ID = item.ID})'" />
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         </div>
     </div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    Game name
-                </th>
-                <th>
-                    Minimum players
-                </th>
-                <th class="regels">
-                    Rules
-                </th>
-                <th>
-                    Win condition
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.minimum_players)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.rules)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.win_condition)
-                    </td>
-                    <td>
-                        <div>
-                        <input type="submit" value="Edit" class="btn btn-primary" onclick="location.href='@Url.Action("GameEdit", "Admin", new { ID = item.ID, name = item.name, minimum_players = item.minimum_players, rules = item.rules, win_condition = item.win_condition }, null)'" />
-                        <input type="submit" value="Delete" class="btn btn-primary" onclick="location.href='@Url.Action("DeleteGame", "Admin", new { ID = item.ID})'" />
-                        </div>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
 </div>
