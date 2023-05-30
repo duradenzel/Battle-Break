@@ -15,13 +15,17 @@
                 @Html.DisplayNameFor(model => model.ID)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Email)
+                @Html.DisplayNameFor(model => model.username)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.VolledigeNaam)
+                @Html.DisplayNameFor(model => model.full_name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Type)
+                @Html.DisplayNameFor(model => model.email)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.type)
             </th>
             <th></th>
         </tr>
@@ -33,13 +37,17 @@
                 @Html.DisplayFor(modelItem => item.ID)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Email)
+                @Html.DisplayFor(modelItem => item.username)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.VolledigeNaam)
+                @Html.DisplayFor(modelItem => item.full_name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Type)
+                @Html.DisplayFor(modelItem => item.email)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.type)
             </td>
             <td>
                     <a href="@Url.Action("Admin", "Admin",  new {id = item.ID})">Admin</a> |

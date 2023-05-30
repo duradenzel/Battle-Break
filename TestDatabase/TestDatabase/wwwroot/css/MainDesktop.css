@@ -6,14 +6,8 @@
     padding: 0;
 }
 
-.hamburgerNavigator {
-    grid-column: 1;
-    grid-row: 1 / span 5;
-}
 
-
-
-
+    
 
 .gameSelectorContainer {
     grid-column: 2;
@@ -90,6 +84,7 @@
     letter-spacing: 2px;
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
     opacity: 0.90;
+    z-index: 0;
 }
 
 #spel {
