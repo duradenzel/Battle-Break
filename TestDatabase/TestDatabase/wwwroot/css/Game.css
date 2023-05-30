@@ -1,19 +1,19 @@
-﻿.gridder {
+﻿.outer-grid {
     display: grid;
-    grid-template-columns: 5vw 25vw 10vw 1vw 59vw;
-    grid-template-rows: 30vh 2vh 38vh 2vh 28vh;
+    grid-template-columns: 5vw 95vw;
+    grid-template-rows: 100vh;
     margin: 0;
     padding: 0;
 }
 
 .hamburgerNavigator {
     grid-column: 1;
-    grid-row: 1 / span 5;
+    grid-row: 1;
 }
 
 .container {
-    grid-column: 2 / span 4;
-    grid-row: 1 / span 5;
+    grid-column: 2;
+    grid-row: 1;
 }
 
 h1 {
@@ -78,7 +78,11 @@ select {
     .btn:hover {
         background-color: #1f89e8;
     }
-
+.inner-grid {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 100%;
+}
 
 .game-wrapper {
     border-radius: 10px;
@@ -86,7 +90,28 @@ select {
     background-color: #f4f4f4;
     padding: 10px;
     color: #000;
-    column-span: 2;
+    width: 90vw;
+    height: 95vh;
+
+}
+
+.player-join {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.lobby {
+    background-color: #0094ff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+
+}
+
+.game-config {
+    grid-column: 2;
+    grid-row: 1;
+    border-radius: 10px;
+    background-color: #e4e4e4;
 }
 
 .game-name {
@@ -96,10 +121,13 @@ select {
 
 .game-players {
     margin-top: 50px;
+    overflow: hidden;
+
 }
 
 .game-players-ul {
     list-style: none;
+    overflow-y: scroll;
 }
 
 .game-players-li {

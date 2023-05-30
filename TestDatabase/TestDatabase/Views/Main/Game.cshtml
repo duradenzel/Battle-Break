@@ -14,24 +14,33 @@
 
 
 
-<div class="gridder">
+<div class="outer-grid">
     <div class="container">
-
-
         <div class="game-wrapper">
-            <h2 class="game-name">@Model.name</h2>
-            <p>@Model.rules</p>
-            <div class="game-players">
-                <p class="game-usercount">Aantal spelers: @aantalSpelers/@Model.minimum_players</p>
-                <ul class="game-players-ul">
-                    @for (int i = 0; i < 8; i++)
-                    {
-                        <li class="game-players-li">
-                            Open
-                        </li>
-                    }
-                </ul>
+            <div class="inner-grid">
 
+                <div class="player-join">
+                    <h2 class="game-name">@Model.Name</h2>
+                    <p>@Model.Rules</p>
+
+                    <div class="lobby">
+                        <div class="game-players">
+                            <p class="game-usercount">Aantal spelers: @aantalSpelers/@Model.Minimum_Players</p>
+                            <ul class="game-players-ul">
+                                @for (int i = 0; i < 8; i++)
+                                {
+                                    <li class="game-players-li">
+                                        Open
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="game-config">
+
+                </div>
             </div>
         </div>
 
