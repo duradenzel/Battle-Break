@@ -7,11 +7,14 @@ using BattleBreakBLL.Models;
 using BattleBreakDAL;
 using BattleBreakDAL.DTOS;
 
+
 namespace BattleBreakBLL
 {
     public class GameService
     {
         private readonly GameDAL _gameDAL = new();
+        public readonly MatchDAL _matchDAL = new();
+        private readonly EmailService _emailService = new();
 
         public List<GameModel> GetGames()
         {
@@ -29,8 +32,37 @@ namespace BattleBreakBLL
                     Win_Condition = dto.Win_Condition,
                 });
             }
+          
             return gameModels;
         }
 
+        public async Task<List<AccountModel>> GetAccounts() {
+            List<AccountDTO> accountDTO = await _gameDAL.GetAccounts();
+            List<AccountModel> accountModels = new();
+
+            foreach (var DTO in accountDTO)
+            {
+                accountModels.Add(new AccountModel
+                {
+                    Account_ID = DTO.Account_ID,
+                    User_Name = DTO.User_Name,
+                    Full_Name = DTO.Full_Name,
+                    Email = DTO.Email
+                });
+            }
+
+            return accountModels;
+        
+        }
+
+        public async Task SendInvite(string[] accounts) {
+
+            foreach(var account in accounts)
+            {      
+                await _emailService.SendEmail(account);
+            }
+        }
     }
+
+    
 }
