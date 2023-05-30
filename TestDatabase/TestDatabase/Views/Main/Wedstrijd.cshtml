@@ -11,7 +11,7 @@
 @foreach(var account in Model.AccountList)
 {
     <p>@account.username</p>
-    <p id="score" name="score">Score: 0</p>
+    <p id="score" name="score">Score: @Model.MatchList[i].Points</p>
     <input type="button" value="Add Point" class="btn btn-primary" onclick="increaseScore(@i)" />
     <input type="button" value="-" class="btn btn-light" onclick="decreaseScore(@i)" />
 
@@ -21,7 +21,7 @@
     <br>
 }
 
-<input type="button" value="Update" class="btn btn-outline-primary" />
+<input type="button" value="Update" class="btn btn-outline-primary" onclick="updateMatchData(@Model.MatchList[0].Match_ID)"/>
 
 @section scripts{
     <script>
@@ -40,6 +40,30 @@
             scores[i] = scores[i] - 1;
             document.getElementsByName("score")[i].textContent = "Score: " + scores[i];
             }
+        }
+
+        function updateMatchData(matchID) {
+            var pointsArray = [];
+            for (var i = 0; i < document.getElementsByName("score").length; i++) {
+                pointsArray.push(document.getElementsByName("score")[i].textContent.substring(7, 20));
+            }
+
+            points = pointsArray.join(',');
+            //points = document.getElementsByName("score")[0].textContent.substring(7, 20);
+            
+
+            $.ajax({
+                url: '/Main/updateMatchData',
+                data: { Match_ID: matchID, points: points },
+                type: 'GET',
+                success: function (returned_data) {
+                    console.log(returned_data)
+                    //location.href = "wedstrijd?ID=" + returned_data
+                },
+                error: function (returned_data) {
+                    console.log(returned_data)
+                }
+            });
         }
     </script>
 }
