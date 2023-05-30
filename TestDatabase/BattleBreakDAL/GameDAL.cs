@@ -110,6 +110,7 @@ namespace BattleBreakDAL
                 }
             }
         }
+        
         public void DeleteGameD(int ID)
         {
             string connString = "Server=studmysql01.fhict.local;Database=dbi515074;Uid=dbi515074;Pwd=AmineGPT;";
@@ -124,8 +125,6 @@ namespace BattleBreakDAL
                 }
             }
         }
-
-
 
         public async Task<List<AccountDTO>> GetAccounts()
         {
@@ -164,11 +163,6 @@ namespace BattleBreakDAL
 
             return accounts;
         }
-
-    
-
-
-
     }
 }
 
