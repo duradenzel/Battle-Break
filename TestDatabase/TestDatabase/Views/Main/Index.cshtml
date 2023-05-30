@@ -47,7 +47,7 @@
                 <ul class="leaderboard-list">
                     @foreach (var item in @Model.Leaderboard)
                     {
-                    <li>
+                    <li class="leaderboard-item">
                    @* <img src="@Url.Content("/Assets/medals/"+(i+1)+".png")" />*@
                             <span class="magic">@item.VolledigeNaam</span>
                     <div id="wins" class="right-align">
@@ -92,7 +92,7 @@
                     @foreach (var match in @Model.MatchHistory){
                         if(match.Game_ID == 1){
                         
-                        <li>
+                        <li class="MatchHistory-item">
                             <span class="magic">
                                 @match.Player1
                             </span>

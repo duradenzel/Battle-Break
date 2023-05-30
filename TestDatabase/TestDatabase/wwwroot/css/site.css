@@ -187,3 +187,20 @@ button {
 
 
 
+.accountlist{
+
+    background: #fff;
+}
+
+
+    .accountlist > option {
+        margin: auto;
+        text-align: left;
+        margin-left: 3rem;
+        font-size: 20px;
+        margin-bottom: 10px;
+        
+     
+    }
+
+
