@@ -6,10 +6,6 @@
     padding: 0;
 }
 
-.hamburgerNavigator {
-    grid-column: 1;
-    grid-row: 1 / span 5;
-}
 
 .container {
     grid-column: 2 / span 4;

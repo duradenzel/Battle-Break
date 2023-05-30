@@ -26,7 +26,10 @@ namespace TestDatabase.Controllers
 
         }
 
-        public IActionResult AdminPage() { return View(); }
+        public IActionResult AdminPage() 
+        { 
+            return View(); 
+        }
 
         public IActionResult Admin(int ID)
         {
@@ -65,7 +68,7 @@ namespace TestDatabase.Controllers
             return View("Games", games);
         }
 
-        public IActionResult AccountList()
+        public IActionResult Index()
         {
             List<TestDatabase.Models.Account> account = new List<TestDatabase.Models.Account>();
             AccountDAL accountDal = new AccountDAL();

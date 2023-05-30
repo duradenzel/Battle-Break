@@ -1,33 +1,31 @@
-﻿@model IEnumerable<TestDatabase.Models.Template>
-
+﻿@model IEnumerable<TestDatabase.Models.Account>
 @{
-    ViewData["Title"] = "Template";
+    ViewData["Title"] = "AccountList";
 }
 
-<h1>Template</h1>
+<h1>Accounts</h1>
 
 <style>
-    .showtemplate {
+    .showaccounts {
         background-color: rgba(255, 255, 255, 0.90);
         border-radius: 15px;
         padding: 20px;
         marign: 10px;
     }
 
-    .knopjuh{
+    .knopjuh {
         display: flex;
         flex-direction: row;
     }
-    .right{
+
+    .right {
         margin-left: auto;
     }
 </style>
 
-<div class="showtemplate">
-
+<div class="showaccounts">
     <div class="knopjuh">
         <div>
-            <input type="submit" value="Create new template" class="btn btn-primary" onclick="location.href='@Url.Action("AddTemplate", "Admin")'" />
         </div>
         <div class="right">
             <input type="submit" value="Accounts" class="btn btn-primary" onclick="location.href='@Url.Action("AccountList", "Admin")'" />
@@ -35,21 +33,21 @@
             <input type="submit" value="Templates" class="btn btn-primary" onclick="location.href='@Url.Action("Template", "Admin")'" />
         </div>
     </div>
-
     <table class="table">
         <thead>
             <tr>
                 <th>
-                    Template name
+                    Username
                 </th>
                 <th>
-                    Miminum players
+                    Full name
                 </th>
                 <th>
-                    Rules
+                    Email
                 </th>
+
                 <th>
-                    Win condition
+                    User type
                 </th>
                 <th></th>
             </tr>
@@ -59,24 +57,24 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.name)
+                        @Html.DisplayFor(modelItem => item.username)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.minimumPlayers)
+                        @Html.DisplayFor(modelItem => item.full_name)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.rules)
+                        @Html.DisplayFor(modelItem => item.email)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.type)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.winCondition)
-                    </td>
-                    <td>
-                        <input type="submit" value="Delete" class="btn btn-primary" onclick="location.href='@Url.Action("DeleteTemplate", "Admin", new { id = item.id})'" />
+                        <input type="submit" value="Edit" class="btn btn-primary" onclick="location.href='@Url.Action("Admin", "Admin",  new {id = item.ID})'" />
+                        <input type="submit" value="Delete" class="btn btn-primary" onclick="location.href='@Url.Action("Gebruiker", "Admin", new {id = item.ID})'" />
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 </div>
-
-

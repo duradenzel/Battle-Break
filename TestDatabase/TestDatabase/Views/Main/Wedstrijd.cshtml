@@ -10,8 +10,10 @@
 
 @foreach(var account in Model.AccountList)
 {
+    int points = @Model.MatchList[i].Points;
+
     <p>@account.username</p>
-    <p id="score" name="score">Score: @Model.MatchList[i].Points</p>
+    <p id="score" name="score">Score: @points</p>
     <input type="button" value="Add Point" class="btn btn-primary" onclick="increaseScore(@i)" />
     <input type="button" value="-" class="btn btn-light" onclick="decreaseScore(@i)" />
 
@@ -26,19 +28,21 @@
 @section scripts{
     <script>
         var scores = [];
-        for (var i = 0; i < document.getElementsByName("score").length; i++) {
+        for (var j = 0; j < document.getElementsByName("score").length; j++) {
             scores.push(0);
         }
 
         function increaseScore(i) {
-            scores[i] = scores[i] + 1;
+            var currentScore = parseInt(document.getElementsByName("score")[i].textContent.substring(7));
+            scores[i] = currentScore + 1;
             document.getElementsByName("score")[i].textContent = "Score: " + scores[i];
         }
 
         function decreaseScore(i) {
-            if(scores[i] != 0){
-            scores[i] = scores[i] - 1;
-            document.getElementsByName("score")[i].textContent = "Score: " + scores[i];
+            if (parseInt(document.getElementsByName("score")[i].textContent.substring(7)) != 0) {
+                var currentScore = parseInt(document.getElementsByName("score")[i].textContent.substring(7));
+                scores[i] = currentScore - 1;
+                document.getElementsByName("score")[i].textContent = "Score: " + scores[i];
             }
         }
 

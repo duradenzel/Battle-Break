@@ -9,55 +9,76 @@
     .regels{
         min-width: 240px;
     }
+    .tablebackground{
+        background-color: rgba(255, 255, 255, 0.90);
+        border-radius: 15px;
+        padding: 20px;
+        marign: 10px;
+    }
+
+    .knopjuh {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .right {
+        margin-left: auto;
+    }
 </style>
-<p>
-    <a asp-controller="Admin" asp-action="AddGame">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.minimum_players)
-            </th>
-            <th class="regels">
-                @Html.DisplayNameFor(model => model.rules)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.win_condition)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.minimum_players)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.rules)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.win_condition)
-            </td>
-            <td >
-                    @Html.ActionLink("Edit", "GameEdit", "Admin", new { ID = item.ID, name = item.name, minimum_players = item.minimum_players, rules = item.rules, win_condition = item.win_condition }, null) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ })
-                    @Html.ActionLink("Delete", "DeleteGame", "Admin", new { ID = item.ID})
-                </td>
-        </tr>
-}
-    </tbody>
-</table>
+
+<div class="tablebackground">
+    <div class="knopjuh">
+        <div>
+            <input type="submit" value="Create new game" class="btn btn-primary" onclick="location.href='@Url.Action("AddGame", "Admin")'" />
+        </div>
+        <div class="right">
+            <input type="submit" value="Accounts" class="btn btn-primary" onclick="location.href='@Url.Action("AccountList", "Admin")'" />
+            <input type="submit" value="Games" class="btn btn-primary" onclick="location.href='@Url.Action("Games", "Admin")'" />
+            <input type="submit" value="Templates" class="btn btn-primary" onclick="location.href='@Url.Action("Template", "Admin")'" />
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Game name
+                </th>
+                <th>
+                    Minimum players
+                </th>
+                <th class="regels">
+                    Rules
+                </th>
+                <th>
+                    Win condition
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.minimum_players)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.rules)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.win_condition)
+                    </td>
+                    <td>
+                        <div>
+                        <input type="submit" value="Edit" class="btn btn-primary" onclick="location.href='@Url.Action("GameEdit", "Admin", new { ID = item.ID, name = item.name, minimum_players = item.minimum_players, rules = item.rules, win_condition = item.win_condition }, null)'" />
+                        <input type="submit" value="Delete" class="btn btn-primary" onclick="location.href='@Url.Action("DeleteGame", "Admin", new { ID = item.ID})'" />
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
