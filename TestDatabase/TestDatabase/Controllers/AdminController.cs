@@ -1,4 +1,5 @@
 ﻿using BattleBreakBLL;
+using BattleBreakBLL.Models;
 using BattleBreakDAL;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Build.Framework;
@@ -17,44 +18,37 @@ namespace TestDatabase.Controllers
         public IActionResult GameAdd(int ID, string name, int minimum_players, string rules, string win_condition)
         {
 
-                GameService gamedal = new GameService();
-                gamedal.GamesAddL(ID, name, minimum_players, rules, win_condition);
+            GameService gamedal = new GameService();
+            gamedal.GamesAddL(ID, name, minimum_players, rules, win_condition);
 
             return RedirectToAction("Games");
-            
+
         }
 
         public IActionResult AdminPage() { return View(); }
 
-        public IActionResult Admin(int id)
+        public IActionResult Admin(int ID)
         {
-            Account account = new Account();
-            ListMetAccounts l = new ListMetAccounts();
-            // Your logic here
-            // Example: call a method on your model using the passed id
-            account.GetAccountById(id);
-            List<Account> accounts = l.AllAccounts();
-            // ...
+            AccountService accountService = new AccountService();
+            accountService.MakeAdminL(ID);
 
-            return View("AccountList", accounts);
+            return RedirectToAction("AccountList");
         }
 
-        public IActionResult Gebruiker(int id)
+
+
+        public IActionResult Gebruiker(int ID)
         {
-            Account account = new Account();
-            ListMetAccounts l = new ListMetAccounts();
-            // Your logic here
-            // Example: call a method on your model using the passed id
-            account.MaakGebruiker(id);
-            List<Account> accounts = l.AllAccounts();
-            // ...
-            return View("AccountList", accounts);
+            AccountService accountService = new AccountService();
+            accountService.MakeUserL(ID);
+
+            return RedirectToAction("AccountList");
         }
 
         public IActionResult Games()
         {
             List<TestDatabase.Models.Games> games = new List<TestDatabase.Models.Games>();
-             GameService gameservice = new GameService();
+            GameService gameservice = new GameService();
             foreach (var item in gameservice.GetGames())
             {
                 TestDatabase.Models.Games newItem = new TestDatabase.Models.Games();
@@ -72,10 +66,20 @@ namespace TestDatabase.Controllers
 
         public IActionResult AccountList()
         {
-            ListMetAccounts l = new ListMetAccounts();
-            List<Account> accounts =  l.AllAccounts();
-
-            return View("AccountList", accounts);
+            List<TestDatabase.Models.Account> account = new List<TestDatabase.Models.Account>();
+            AccountDAL accountDal = new AccountDAL();
+            foreach (var item in accountDal.AllAccountsD())
+            {
+                TestDatabase.Models.Account newItem = new TestDatabase.Models.Account();
+                newItem.ID = item.ID;
+                newItem.username = item.username;
+                newItem.full_name = item.full_name;
+                newItem.password = item.password;
+                newItem.email = item.email;
+                newItem.type = item.type;
+                account.Add(newItem);
+            }
+            return View("AccountList", account);
         }
 
         public IActionResult AddGame()
@@ -99,24 +103,43 @@ namespace TestDatabase.Controllers
         public IActionResult GameChange(int ID, string name, int minimum_players, string rules, string win_condition)
         {
             GameService gameservice = new GameService();
-            gameservice.GameChangeL (ID, name,  minimum_players,  rules,  win_condition);
+            gameservice.GameChangeL(ID, name, minimum_players, rules, win_condition);
 
             return RedirectToAction("Games");
         }
+
 
         public IActionResult DeleteGame(int ID)
         {
 
-            
-                GameService gameservice = new GameService();
-                gameservice.DeleteGameL(ID);
+
+            GameService gameservice = new GameService();
+            gameservice.DeleteGameL(ID);
 
             return RedirectToAction("Games");
-            
-        public IActionResult Template()
-        {
-            return View();
-        }
-    }
 
+            //public IActionResult Template()
+            //{
+            //    return View();
+            //}
+        }
+        //public IActionResult List<Accounts> (int ID, string user_Name, string full_name, string password, string email, string type)
+        //{
+        //    List<TestDatabase.Models.Account> account = new List<TestDatabase.Models.Account>();
+        //    AccountDAL accountDal = new AccountDAL();
+        //    foreach (var item in accountDal.AllAccountsD())
+        //    {
+        //        TestDatabase.Models.Account newItem = new TestDatabase.Models.Account();
+        //        newItem.ID = item.ID;
+        //        newItem.username = item.username;
+        //        newItem.full_name = item.full_name;
+        //        newItem.password = item.password;
+        //        newItem.email = item.email;
+        //        newItem.type = item.type;
+        //        account.Add(newItem);
+        //    }
+
+        //    return View(account);
+        //}
+    }
 }
