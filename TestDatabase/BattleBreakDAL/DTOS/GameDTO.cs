@@ -10,8 +10,8 @@ namespace BattleBreakDAL.DTOS
     {
         public int ID { get; set; }
         public string? name { get; set; }
-        public int minimum_Players { get; set; }
+        public int minimum_players { get; set; }
         public string? rules { get; set; }
-        public string? win_Condition { get; set; }
+        public string? win_condition { get; set; }
     }
 }

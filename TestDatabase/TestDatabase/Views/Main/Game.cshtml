@@ -19,10 +19,10 @@
 
 
         <div class="game-wrapper">
-            <h2 class="game-name">@Model.Name</h2>
-            <p>@Model.Rules</p>
+            <h2 class="game-name">@Model.name</h2>
+            <p>@Model.rules</p>
             <div class="game-players">
-                <p class="game-usercount">Aantal spelers: @aantalSpelers/@Model.Minimum_Players</p>
+                <p class="game-usercount">Aantal spelers: @aantalSpelers/@Model.minimum_players</p>
                 <ul class="game-players-ul">
                     @for (int i = 0; i < 8; i++)
                     {
@@ -32,6 +32,10 @@
                     }
                 </ul>
 
+            <div class="buttons-container">
+                    <input type="submit" value="Invite Player" class="btn modal-toggle" onclick="ToggleInviteModal(this)"  />
+                <input type="submit" value="Leave Game" class="btn"  />
+            </div>
             </div>
         </div>
 
@@ -71,6 +75,19 @@
 
 
 
+<div class="modal hidden">
+    <div class="modal-content">
+        <span class="close" onclick="ToggleInviteModal(this)">&times;</span>
+        <h2 style="color: black">Invite</h2>
+        <select class="accountlist" size="13" multiple>
+           
+        </select>
+        <button class="btn" onclick="SendInvite()">Invite Players</button>
+    </div>
+</div>
+
+
+
 @*    <div class="container">
         <h1>Spel</h1>
         <p>@gekozenSpel.naam</p>
@@ -103,6 +120,59 @@
 
 @section scripts{
     <script>
+
+        function SendInvite(){
+            var selected = $('.accountlist').val();
+            console.log(selected);
+            $.ajax({
+                url: '/Game/SendInvite',
+                data: JSON.stringify(selected),
+                type: 'POST',
+                contentType: 'application/json',
+                success: function (res) {
+                    console.log(res)
+                    const modal = document.querySelector('.modal');
+                    modal.classList.toggle('hidden');
+
+
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            });
+
+        }
+
+        function ToggleInviteModal(activator){
+            console.log(activator);
+            const modal = document.querySelector('.modal');
+            const accountlist = document.querySelector('.accountlist');
+
+            modal.classList.toggle('hidden');
+            if(activator.classList.contains("modal-toggle")){
+            
+                $.ajax({
+                    url: '/Game/GetAccounts',
+                    type: 'GET',
+                    contentType: 'application/json',
+                    success: function (res) {
+                        accountlist.innerHTML = "";
+                        
+                        res.map(e => {
+                            var opt = document.createElement("option");
+                            opt.className = "account";
+                            opt.innerHTML = e.email;
+                            accountlist.appendChild(opt);
+                        })
+                        
+                    },
+                    error: function (error) {
+                        console.log(error)
+                    }
+                });
+            }
+        }
+      
         function mode() {
             var val = document.getElementById("mode").value;
             aantalTeams = document.getElementById("aantalTeams");
@@ -121,7 +191,7 @@
             aantalTeams = document.getElementsByName("aantalTeams")[0].value;
         }
 
-        function sendData(spelID, userID){
+        function sendData(gameID, userID){
             var spelers = [];
             for (var i = 0; i < document.getElementsByName("aantalSpelers").length; i++){
                 spelers.push(document.getElementsByName("aantalSpelers")[i].value)
@@ -131,10 +201,10 @@
 
             $.ajax({
                 url: '/Main/sendData',
-                data: { Spel_ID: spelID, User_ID: userID, User_IDs: spelers1},
+                data: { Game_ID: gameID, User_ID: userID, User_IDs: spelers1},
                 type: 'GET',
                 success: function (returned_data) {
-                    console.log(returned_data)
+                    //console.log(returned_data)
                     location.href = "wedstrijd?ID=" + returned_data
                 },
                 error: function (returned_data) {

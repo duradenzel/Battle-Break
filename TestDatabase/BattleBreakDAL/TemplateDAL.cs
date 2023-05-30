@@ -25,12 +25,12 @@ namespace BattleBreakDAL
             return new MySqlConnection(connString);
         }
 
-        public List<DTOS.TemplateDTO> GetTemplates()
+        public List<TemplateDTO> GetTemplates()
         {
             using (MySqlConnection con = MakeConnection())
             {
                 con.Open();
-                MySqlCommand sqlCom = new MySqlCommand("Select * From templates", con);
+                MySqlCommand sqlCom = new MySqlCommand("Select * From template", con);
                 MySqlDataReader reader = sqlCom.ExecuteReader();
                 List<TemplateDTO> templateList = new();
 
@@ -48,5 +48,38 @@ namespace BattleBreakDAL
             }
         }
 
+        public void TemplateAddD(int templateID, string templateName, int templateMinimumPlayers, string templateRules, string templateWinCondition)
+        {
+            // return the create view
+            string connString = "Server=studmysql01.fhict.local;Database=dbi515074;Uid=dbi515074;Pwd=AmineGPT;";
+
+            using (MySqlConnection con = new MySqlConnection(connString))
+            {
+                con.Open();
+                string query = "INSERT INTO template (name, minimum_players, rules, win_condition) VALUES (@templateName, @templateMinimumPlayers, @templateRules, @templateWinCondition)";
+                using (MySqlCommand cmd = new MySqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@templateName", templateName); // update parameter name to @naam
+                    cmd.Parameters.AddWithValue("@templateMinimumPlayers", templateMinimumPlayers);
+                    cmd.Parameters.AddWithValue("@templateRules", templateRules);
+                    cmd.Parameters.AddWithValue("@templateWinCondition", templateWinCondition);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+        public void DeleteTemplateD(int templateID)
+        {
+            string connString = "Server=studmysql01.fhict.local;Database=dbi515074;Uid=dbi515074;Pwd=AmineGPT;";
+            using (MySqlConnection connection = new MySqlConnection(connString))
+            {
+                connection.Open();
+                string query = "DELETE FROM template WHERE ID = @templateID";
+                using (MySqlCommand command = new MySqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@templateID", templateID);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }

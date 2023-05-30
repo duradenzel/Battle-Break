@@ -1,5 +1,6 @@
 ﻿using BattleBreakBLL;
 using BattleBreakBLL.Models;
+using BattleBreakDAL.DTOS;
 using BattleBreakDAL;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Build.Framework;
@@ -18,6 +19,8 @@ namespace TestDatabase.Controllers
         public IActionResult GameAdd(int ID, string name, int minimum_players, string rules, string win_condition)
         {
 
+            GameService gamedal = new GameService();
+            gamedal.GamesAddL(ID, name, minimum_players, rules, win_condition);
             GameService gamedal = new GameService();
             gamedal.GamesAddL(ID, name, minimum_players, rules, win_condition);
 
@@ -111,35 +114,52 @@ namespace TestDatabase.Controllers
 
         public IActionResult DeleteGame(int ID)
         {
-
-
             GameService gameservice = new GameService();
             gameservice.DeleteGameL(ID);
 
             return RedirectToAction("Games");
-
-            //public IActionResult Template()
-            //{
-            //    return View();
-            //}
         }
-        //public IActionResult List<Accounts> (int ID, string user_Name, string full_name, string password, string email, string type)
-        //{
-        //    List<TestDatabase.Models.Account> account = new List<TestDatabase.Models.Account>();
-        //    AccountDAL accountDal = new AccountDAL();
-        //    foreach (var item in accountDal.AllAccountsD())
-        //    {
-        //        TestDatabase.Models.Account newItem = new TestDatabase.Models.Account();
-        //        newItem.ID = item.ID;
-        //        newItem.username = item.username;
-        //        newItem.full_name = item.full_name;
-        //        newItem.password = item.password;
-        //        newItem.email = item.email;
-        //        newItem.type = item.type;
-        //        account.Add(newItem);
-        //    }
+            
+        public IActionResult Template()
+        {
+            TemplateService templateService = new();
+            List<Template> template = new();
+            List<TemplateModel> templateModel = templateService.GetTemplates();
 
-        //    return View(account);
-        //}
+            foreach (TemplateModel tm in templateModel)
+            {
+                Template t = new();
+                t.id = tm.id;
+                t.name = tm.name;
+                t.minimumPlayers = tm.minimumPlayers;
+                t.rules = tm.rules; 
+                t.winCondition = tm.winCondition;
+                template.Add(t);
+            }
+            return View(template);
+        }
+
+        public IActionResult CreateTemplate(int templateID, string templateName, int templateMinimumPlayers, string templateRules, string templateWinCondition)
+        {
+            TemplateService templateService = new();
+            templateService.TemplateAddL(templateID, templateName, templateMinimumPlayers, templateRules, templateWinCondition);
+
+            return RedirectToAction("Template");
+        }
+
+        public IActionResult AddTemplate()
+        {
+            return View();
+        }
+
+        public IActionResult DeleteTemplate(int id)
+        {
+            {
+                TemplateService templateService = new();
+                templateService.DeleteTemplateL(id);
+
+                return RedirectToAction("Template");
+            }
+        }
     }
 }
