@@ -36,7 +36,7 @@ namespace TestDatabase.Controllers
             AccountService accountService = new AccountService();
             accountService.MakeAdminL(ID);
 
-            return RedirectToAction("AccountList");
+            return RedirectToAction("Index");
         }
 
 
@@ -46,7 +46,7 @@ namespace TestDatabase.Controllers
             AccountService accountService = new AccountService();
             accountService.MakeUserL(ID);
 
-            return RedirectToAction("AccountList");
+            return RedirectToAction("Index");
         }
 
         public IActionResult Games()
@@ -83,7 +83,7 @@ namespace TestDatabase.Controllers
                 newItem.type = item.type;
                 account.Add(newItem);
             }
-            return View("AccountList", account);
+            return View("Index", account);
         }
 
         public IActionResult AddGame()
