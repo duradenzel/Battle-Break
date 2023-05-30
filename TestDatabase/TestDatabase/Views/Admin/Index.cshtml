@@ -12,28 +12,42 @@
         padding: 20px;
         marign: 10px;
     }
+
+    .knopjuh {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .right {
+        margin-left: auto;
+    }
 </style>
 
 <div class="showaccounts">
-    <input type="submit" value="Go Back" class="btn btn-primary" onclick="location.href='@Url.Action("Adminpage", "Admin")'" />
+    <div class="knopjuh">
+        <div>
+        </div>
+        <div class="right">
+            <input type="submit" value="Accounts" class="btn btn-primary" onclick="location.href='@Url.Action("AccountList", "Admin")'" />
+            <input type="submit" value="Games" class="btn btn-primary" onclick="location.href='@Url.Action("Games", "Admin")'" />
+            <input type="submit" value="Templates" class="btn btn-primary" onclick="location.href='@Url.Action("Template", "Admin")'" />
+        </div>
+    </div>
     <table class="table">
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.ID)
+                    Username
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.username)
+                    Full name
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.full_name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.email)
+                    Email
                 </th>
 
                 <th>
-                    @Html.DisplayNameFor(model => model.type)
+                    User type
                 </th>
                 <th></th>
             </tr>
@@ -43,17 +57,17 @@
             {
                 <tr>
                     <td>
-                        Username
+                        @Html.DisplayFor(modelItem => item.username)
                     </td>
                     <td>
-                        Full name
+                        @Html.DisplayFor(modelItem => item.full_name)
                     </td>
                     <td>
-                        Email
+                        @Html.DisplayFor(modelItem => item.email)
                     </td>
 
                     <td>
-                        User type
+                        @Html.DisplayFor(modelItem => item.type)
                     </td>
                     <td>
                         <input type="submit" value="Edit" class="btn btn-primary" onclick="location.href='@Url.Action("Admin", "Admin",  new {id = item.ID})'" />
