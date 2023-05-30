@@ -13,13 +13,14 @@
     <div class="gameSelectorContainer">
         <form class="game-select-button" action="/Game">
             <select class="game-select-button" name="game" id="game">
-                <option value="volleybal">Volleybal</option>
-                <option value="tafeltennis">Tafeltennis</option>
-                <option value="stardew Valley">Stardew Valley</option>
+                @foreach (var game in Model.GameList)
+                {
+                    <option value="@game.name">@game.name</option>
+                }
             </select>
         </form>
         <div>
-            <a class="game-select-button" onclick="redirectToSelectedPage()">
+            <a class="game-select-button" onclick="goToPage()">
                 <i class="fa-sharp fa-solid fa-door-open fa-2x" style="color: #1081c5;"></i>
             </a>
         </div>
@@ -47,7 +48,7 @@
                 <ul class="leaderboard-list">
                     @foreach (var item in @Model.Leaderboard)
                     {
-                    <li>
+                    <li class="leaderboard-item">
                    @* <img src="@Url.Content("/Assets/medals/"+(i+1)+".png")" />*@
                             <span class="magic">@item.VolledigeNaam</span>
                     <div id="wins" class="right-align">
@@ -92,7 +93,7 @@
                     @foreach (var match in @Model.MatchHistory){
                         if(match.Game_ID == 1){
                         
-                        <li>
+                        <li class="MatchHistory-item">
                             <span class="magic">
                                 @match.Player1
                             </span>
@@ -145,3 +146,10 @@
         </div>
     </div>
 </div>
+
+<script>
+    function goToPage() {
+        var chosenGame = document.getElementById("game").value;
+        window.location.href = '/Main/Game?gekozenspel=' + chosenGame;
+    }
+</script>
