@@ -1,11 +1,11 @@
 ﻿using BattleBreakBLL.Models;
-//using BattleBreakDAL.DTOS;
-//using BattleBreakDAL;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
+using BattleBreakDAL.DTOS;
+using BattleBreakDAL;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace BattleBreakBLL
 {
@@ -18,7 +18,7 @@ namespace BattleBreakBLL
             foreach (var item in accountDal.AllAccountsD())
             {
                 BattleBreakBLL.Models.AccountModel newItem = new BattleBreakBLL.Models.AccountModel();
-                newItem.ID = item.ID;
+                newItem.account_ID = item.ID;
                 newItem.username = item.username;
                 newItem.full_name = item.full_name;
                 newItem.password = item.password;

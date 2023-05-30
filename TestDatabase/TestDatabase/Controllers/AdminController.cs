@@ -21,9 +21,7 @@ namespace TestDatabase.Controllers
 
             GameService gamedal = new GameService();
             gamedal.GamesAddL(ID, name, minimum_players, rules, win_condition);
-            GameService gamedal = new GameService();
-            gamedal.GamesAddL(ID, name, minimum_players, rules, win_condition);
-
+            
             return RedirectToAction("Games");
 
         }
