@@ -4,7 +4,11 @@
 }
 
 <h1>View</h1>
-<ul>
+
+<input type="submit" value="Accounts" class="btn btn-primary" onclick="location.href='@Url.Action("AccountList", "Admin")'" />
+<input type="submit" value="Games" class="btn btn-primary" onclick="location.href='@Url.Action("Games", "Admin")'" />
+<input type="submit" value="Templates" class="btn btn-primary" onclick="location.href='@Url.Action("Template", "Admin")'" />
+@*<ul>
     
 </ul>
 <button>
@@ -27,4 +31,4 @@
         // Replace the URL below with the URL of the page you want to redirect to
         window.location.href = "https://localhost:7098/Admin/accountList";
     }
-</script>
+</script>*@

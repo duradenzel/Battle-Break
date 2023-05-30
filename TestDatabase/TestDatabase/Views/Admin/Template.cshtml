@@ -6,49 +6,65 @@
 
 <h1>Template</h1>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.minimumPlayers)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.rules)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.winCondition)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.minimumPlayers)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.rules)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.winCondition)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "DeleteTemplate", "Admin", new { id = item.id})
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<style>
+    .showtemplate {
+        background-color: rgba(255, 255, 255, 0.90);
+        border-radius: 15px;
+        padding: 20px;
+        marign: 10px;
+    }
+</style>
 
-<button>
-    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="AddTemplate">Add new templates</a>
-</button>
+<div class="showtemplate">
+    <div>
+        <input type="submit" value="Create new template" class="btn btn-primary" onclick="location.href='@Url.Action("AddTemplate", "Admin")'" />
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.minimumPlayers)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.rules)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.winCondition)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.minimumPlayers)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.rules)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.winCondition)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Delete", "DeleteTemplate", "Admin", new { id = item.id})
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div>
+        <a asp-action="Adminpage">Back to Adminpage</a>
+    </div>
+</div>
+
+
