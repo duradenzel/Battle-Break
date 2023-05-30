@@ -6,6 +6,7 @@ using System.Net.Mail;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net.Http.Headers;
 
 namespace BattleBreakBLL
 {
@@ -18,7 +19,7 @@ namespace BattleBreakBLL
         public string senderPassword = "AmineGPT";
 
 
-        public void SendEmail(string recipient)
+        public async Task SendEmail(string recipient)
         {
 
             string subject = "You've been invited to join a game!";
@@ -31,6 +32,8 @@ namespace BattleBreakBLL
             MailMessage message = new MailMessage(senderEmail, recipient, subject, body);
             message.IsBodyHtml = true;
             client.Send(message);
+
+            return;
 
 
         }

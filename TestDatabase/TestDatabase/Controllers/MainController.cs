@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
 using TestDatabase.Models;
 using BattleBreakBLL;
-using BattleBreakDAL;
 using BattleBreakBLL.Models;
 using BCrypt.Net;
 using TestDatabase.ViewModels;

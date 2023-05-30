@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -123,6 +124,51 @@ namespace BattleBreakDAL
                 }
             }
         }
+
+
+
+        public async Task<List<AccountDTO>> GetAccounts()
+        {
+            List<AccountDTO> accounts = new();
+            try
+            {
+                using (MySqlConnection conn = new(_connString))
+                {
+                    string query = "SELECT * FROM account";
+
+                    conn.Open();
+                    using (MySqlCommand command = new(query, conn))
+                    {
+
+
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (await reader.ReadAsync())
+                            {
+                                AccountDTO account = new();
+                                account.ID = reader.GetInt32(reader.GetOrdinal("ID"));
+                                account.username = reader.GetString(reader.GetOrdinal("username"));
+                                account.full_name = reader.GetString(reader.GetOrdinal("full_name"));
+                                account.email = reader.GetString(reader.GetOrdinal("email"));
+
+                                accounts.Add(account);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.Write("Error fetching accounts: " + ex.Message);
+            }
+
+            return accounts;
+        }
+
+    
+
+
+
     }
 }
 

@@ -8,11 +8,14 @@ using BattleBreakDAL;
 using BattleBreakDAL.DTOS;
 using MySql.Data.MySqlClient;
 
+
 namespace BattleBreakBLL
 {
     public class GameService
     {
         private readonly GameDAL _gameDAL = new();
+        public readonly MatchDAL _matchDAL = new();
+        private readonly EmailService _emailService = new();
 
         public List<GameModel> GetGames()
         {
@@ -30,7 +33,27 @@ namespace BattleBreakBLL
                     win_condition = dto.win_condition,
                 });
             }
+          
             return gameModels;
+        }
+
+        public async Task<List<AccountModel>> GetAccounts() {
+            List<AccountDTO> accountDTO = await _gameDAL.GetAccounts();
+            List<AccountModel> accountModels = new();
+
+            foreach (var DTO in accountDTO)
+            {
+                accountModels.Add(new AccountModel
+                {
+                    account_ID = DTO.ID,
+                    username = DTO.username,
+                    full_name = DTO.full_name,
+                    email = DTO.email
+                });
+            }
+
+            return accountModels;
+        
         }
 
         public GameModel GetGameWithID(int ID) {
@@ -66,5 +89,16 @@ namespace BattleBreakBLL
             gamedal.DeleteGameD(ID);
         }
 
+        public async Task SendInvite(string[] accounts) {
+
+            foreach(var account in accounts)
+            {      
+                await _emailService.SendEmail(account);
+            }
+        }
     }
+
 }
+
+    
+

@@ -9,32 +9,6 @@
 
 <div class="container">
     @Html.Partial("Navbar")
-    <div class="hamburgerNavigator">
-        <aside class="sidebar hidden">
-            <ul class="nav flex-column">
-                <li class="nav-item">
-
-                    <a class="nav-link active" href="/Main/Index">
-                        <i class="fa-solid fa-house" style="color: #1081c5;"></i>                      
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/Main/Game?gekozenspel=fortnite">
-                        <i class="fa-solid fa-gamepad" style="color: #1081c5;"></i>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="fa-solid fa-user" style="color: #1081c5;"></i>
-                    </a>
-                </li>
-                <!-- Add more sidebar items as needed -->
-            </ul>
-        </aside>
-    </div>
-
-
-    @Html.Partial("Navbar")
 
     <div class="gameSelectorContainer">
         <form class="game-select-button" action="/Game">
