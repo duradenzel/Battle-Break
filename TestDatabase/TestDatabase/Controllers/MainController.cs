@@ -49,7 +49,7 @@ namespace TestDatabase.Controllers
 
             foreach(var game in gameModels)
             {
-                if (gekozenSpel.ToLower() == game.Name.ToLower())
+                if (gekozenSpel.ToLower() == game.name.ToLower())
                 {
                     ChosenGame = game;
                 }
@@ -60,9 +60,10 @@ namespace TestDatabase.Controllers
 
         public IActionResult Wedstrijd(int ID)
         {
-            List<MatchModel> matches = _matchService.GetMatchWithID(ID);
-            List<AccountModel> accounts = _matchService.GetAccounts(ID);
-            MatchViewModel matchViewModel = new(matches, accounts);
+            List<MatchModel> matchList = _matchService.GetMatchWithID(ID);
+            List<AccountModel> accountList = _matchService.GetAccounts(ID);
+            GameModel gameModel = _gameService.GetGameWithID(matchList[0].Game_ID);
+            MatchViewModel matchViewModel = new(matchList, accountList, gameModel);
 
             return View(matchViewModel);
         }
@@ -71,6 +72,12 @@ namespace TestDatabase.Controllers
         {
             int Won = 0;
             return _matchService.SendData(Game_ID, User_IDs, Won, 2);
+        }
+
+        public void updateMatchData(int Match_ID, string points)
+        {
+            _matchService.UpdateData(Match_ID, points);
+            //return match_ID.ToString() + points;
         }
     }
 }

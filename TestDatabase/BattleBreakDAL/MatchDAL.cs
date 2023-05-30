@@ -90,12 +90,12 @@ namespace BattleBreakDAL
                 {
                     AccountDTO account = new()
                     {
-                        Account_ID = reader.GetInt32("ID"),
-                        User_Name = reader.GetString("username"),
-                        Full_Name = reader.GetString("full_name"),
-                        Email = reader.GetString("email"),
-                        Password = reader.GetString("password"),
-                        Type = reader.GetString("type"),
+                        ID = reader.GetInt32("ID"),
+                        username = reader.GetString("username"),
+                        full_name = reader.GetString("full_name"),
+                        email = reader.GetString("email"),
+                        password = reader.GetString("password"),
+                        type = reader.GetString("type"),
                     };
                     accountList.Add(account);
                 }
@@ -142,6 +142,22 @@ namespace BattleBreakDAL
 
                     reader = cmd.ExecuteReader();
                 }
+                con.Close();
+            }
+        }
+
+        public void UpdateMatch(int Match_ID, int Account_ID, int won, int score)
+        {
+            using(MySqlConnection con = new(_connString))
+            {
+                con.Open();
+                MySqlCommand cmd = new MySqlCommand("UPDATE `match` SET `won` = @Won, `points` = @Score WHERE `ID` = @ID AND `Account_ID` = @Account_ID", con);
+                cmd.Parameters.AddWithValue("@ID", Match_ID);
+                cmd.Parameters.AddWithValue("@Account_ID", Account_ID);
+                cmd.Parameters.AddWithValue("@Won", won);
+                cmd.Parameters.AddWithValue("@Score", score);
+
+                MySqlDataReader reader = cmd.ExecuteReader();
                 con.Close();
             }
         }

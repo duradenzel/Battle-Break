@@ -8,11 +8,11 @@ namespace BattleBreakBLL.Models
 {
     public class AccountModel
     {
-        public int Account_ID { get; set; }
-        public string? User_Name { get; set; }
-        public string? Full_Name { get; set; }
-        public string? Email { get; set; }
-        public string? Password { get; set; }
-        public string? Type { get; set; }
+        public int account_ID { get; set; }
+        public string? username { get; set; }
+        public string? full_name { get; set; }
+        public string? email { get; set; }
+        public string? password { get; set; }
+        public string? type { get; set; }
     }
 }

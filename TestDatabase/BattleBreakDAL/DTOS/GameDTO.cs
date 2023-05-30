@@ -9,9 +9,9 @@ namespace BattleBreakDAL.DTOS
     public class GameDTO
     {
         public int ID { get; set; }
-        public string? Name { get; set; }
-        public int Minimum_Players { get; set; }
-        public string? Rules { get; set; }
-        public string? Win_Condition { get; set; }
+        public string? name { get; set; }
+        public int minimum_players { get; set; }
+        public string? rules { get; set; }
+        public string? win_condition { get; set; }
     }
 }

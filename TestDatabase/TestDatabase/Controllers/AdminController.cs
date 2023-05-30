@@ -1,8 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BattleBreakBLL;
+using BattleBreakBLL.Models;
+using BattleBreakDAL.DTOS;
+using BattleBreakDAL;
+using BattleBreakBLL;
+using BattleBreakDAL;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Build.Framework;
 using MySql.Data.MySqlClient;
 using NuGet.Protocol.Core.Types;
 using NuGet.Protocol.Plugins;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using TestDatabase.Models;
 
 namespace TestDatabase.Controllers
@@ -10,25 +18,14 @@ namespace TestDatabase.Controllers
     public class AdminController : Controller
     {
 
-        public IActionResult Create(int ID, string GameName, int MinimumPlayers, string Regels, string WinCondition)
+        public IActionResult GameAdd(int ID, string name, int minimum_players, string rules, string win_condition)
         {
-            // return the create view
-            string connString = "Server=studmysql01.fhict.local;Database=dbi515074;Uid=dbi515074;Pwd=AmineGPT;";
 
-            using (MySqlConnection con = new MySqlConnection(connString))
-            {
-                con.Open();
-                string query = "INSERT INTO spel (naam, MinimumSpelers, Regels, WinConditie) VALUES (@naam, @minPlayers, @regels, @winCondition)";
-                using (MySqlCommand cmd = new MySqlCommand(query, con))
-                {
-                    cmd.Parameters.AddWithValue("@naam", GameName); // update parameter name to @naam
-                    cmd.Parameters.AddWithValue("@minPlayers", MinimumPlayers);
-                    cmd.Parameters.AddWithValue("@regels", Regels);
-                    cmd.Parameters.AddWithValue("@winCondition", WinCondition);
-                    cmd.ExecuteNonQuery();
-                }
-                return View("AddGame");
-            }
+            GameService gamedal = new GameService();
+            gamedal.GamesAddL(ID, name, minimum_players, rules, win_condition);
+
+            return RedirectToAction("Games");
+            
         }
 
         public IActionResult AdminPage() { return View(); }
@@ -60,13 +57,21 @@ namespace TestDatabase.Controllers
 
         public IActionResult Games()
         {
-            ListMetGames gamen = new ListMetGames();
-            // Your logic here
-            // Example: call a method on your model using the passed id
-            gamen.AllGames();
-            List<Games> Games = gamen.AllGames();
+            List<TestDatabase.Models.Games> games = new List<TestDatabase.Models.Games>();
+             GameService gameservice = new GameService();
+            foreach (var item in gameservice.GetGames())
+            {
+                TestDatabase.Models.Games newItem = new TestDatabase.Models.Games();
+                newItem.ID = item.ID;
+                newItem.name = item.name;
+                newItem.win_condition = item.win_condition;
+                newItem.rules = item.rules;
+                newItem.minimum_players = item.minimum_players;
+
+                games.Add(newItem);
+            }
             // ...
-            return View("Games", Games);
+            return View("Games", games);
         }
 
         public IActionResult AccountList()
@@ -82,7 +87,77 @@ namespace TestDatabase.Controllers
             return View();
         }
 
+        public IActionResult GameEdit(int ID, string name, int minimum_players, string rules, string win_condition)
+        {
+            Games game = new Games();
+            game.ID = ID;
+            game.name = name;
+            game.minimum_players = minimum_players;
+            game.rules = rules;
+            game.win_condition = win_condition;
 
+
+            return View(game);
+        }
+
+        public IActionResult GameChange(int ID, string name, int minimum_players, string rules, string win_condition)
+        {
+            GameService gameservice = new GameService();
+            gameservice.GameChangeL (ID, name,  minimum_players,  rules,  win_condition);
+
+            return RedirectToAction("Games");
+        }
+
+        public IActionResult DeleteGame(int ID)
+        {
+            {
+                GameService gameservice = new GameService();
+                gameservice.DeleteGameL(ID);
+
+                return RedirectToAction("Games");
+            }
+        }
+            
+        public IActionResult Template()
+        {
+            TemplateService templateService = new();
+            List<Template> template = new();
+            List<TemplateModel> templateModel = templateService.GetTemplates();
+
+            foreach (TemplateModel tm in templateModel)
+            {
+                Template t = new();
+                t.id = tm.id;
+                t.name = tm.name;
+                t.minimumPlayers = tm.minimumPlayers;
+                t.rules = tm.rules; 
+                t.winCondition = tm.winCondition;
+                template.Add(t);
+            }
+            return View(template);
+        }
+
+        public IActionResult CreateTemplate(int templateID, string templateName, int templateMinimumPlayers, string templateRules, string templateWinCondition)
+        {
+            TemplateService templateService = new();
+            templateService.TemplateAddL(templateID, templateName, templateMinimumPlayers, templateRules, templateWinCondition);
+
+            return RedirectToAction("Template");
+        }
+
+        public IActionResult AddTemplate()
+        {
+            return View();
+        }
+
+        public IActionResult DeleteTemplate(int id)
+        {
+            {
+                TemplateService templateService = new();
+                templateService.DeleteTemplateL(id);
+
+                return RedirectToAction("Template");
+            }
+        }
     }
-
 }

@@ -1,0 +1,60 @@
+﻿@model IEnumerable<TestDatabase.Models.Template>
+
+@{
+    ViewData["Title"] = "Template";
+}
+
+<h1>Template</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.minimumPlayers)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.rules)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.winCondition)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.minimumPlayers)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.rules)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.winCondition)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "DeleteTemplate", "Admin", new { id = item.id})
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<button>
+    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="AddTemplate">Add new templates</a>
+</button>
