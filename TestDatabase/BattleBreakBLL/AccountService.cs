@@ -7,10 +7,10 @@
 //using System.Text;
 //using System.Threading.Tasks;
 
-namespace BattleBreakBLL
-{
-    public class AccountService
-    {
+//namespace BattleBreakBLL
+//{
+//    public class AccountService
+    //{
         //public static List<AccountModel> AllAccountsD()
         //{
         //    List<BattleBreakBLL.Models.AccountModel> drinken = new List<BattleBreakBLL.Models.AccountModel>();
