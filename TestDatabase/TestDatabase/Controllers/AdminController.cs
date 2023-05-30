@@ -28,7 +28,10 @@ namespace TestDatabase.Controllers
             
         }
 
-        public IActionResult AdminPage() { return View(); }
+        public IActionResult AdminPage() 
+        { 
+            return View(); 
+        }
 
         public IActionResult Admin(int id)
         {

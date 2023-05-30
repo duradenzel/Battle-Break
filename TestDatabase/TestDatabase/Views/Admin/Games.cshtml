@@ -9,55 +9,69 @@
     .regels{
         min-width: 240px;
     }
+    .tablebackground{
+        background-color: rgba(255, 255, 255, 0.90);
+        border-radius: 15px;
+        marign: 10px;
+    }
 </style>
-<p>
-    <a asp-controller="Admin" asp-action="AddGame">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.minimum_players)
-            </th>
-            <th class="regels">
-                @Html.DisplayNameFor(model => model.rules)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.win_condition)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.minimum_players)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.rules)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.win_condition)
-            </td>
-            <td >
-                    @Html.ActionLink("Edit", "GameEdit", "Admin", new { ID = item.ID, name = item.name, minimum_players = item.minimum_players, rules = item.rules, win_condition = item.win_condition }, null) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ })
-                    @Html.ActionLink("Delete", "DeleteGame", "Admin", new { ID = item.ID})
-                </td>
-        </tr>
-}
-    </tbody>
-</table>
+
+<div>
+    <input type="submit" value="Go Back" class="btn btn-primary" onclick="location.href='@Url.Action("Adminpage", "Admin")'" />
+    <input type="submit" value="Create new game" class="btn btn-primary" onclick="location.href='@Url.Action("AddGame", "Admin")'" />
+</div>
+
+<br />
+
+<div class="tablebackground">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.minimum_players)
+                </th>
+                <th class="regels">
+                    @Html.DisplayNameFor(model => model.rules)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.win_condition)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.minimum_players)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.rules)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.win_condition)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "GameEdit", "Admin", new { ID = item.ID, name = item.name, minimum_players = item.minimum_players, rules = item.rules, win_condition = item.win_condition }, null) |
+                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ })
+                        @Html.ActionLink("Delete", "DeleteGame", "Admin", new { ID = item.ID})
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
