@@ -33,5 +33,3 @@ namespace BattleBreakBLL
         //    return (drinken);
         //}
 
-    }
-}

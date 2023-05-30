@@ -45,10 +45,10 @@ namespace BattleBreakBLL
             {
                 accountModels.Add(new AccountModel
                 {
-                    Account_ID = DTO.Account_ID,
-                    User_Name = DTO.User_Name,
-                    Full_Name = DTO.Full_Name,
-                    Email = DTO.Email
+                    account_ID = DTO.ID,
+                    username = DTO.username,
+                    full_name = DTO.full_name,
+                    email = DTO.email
                 });
             }
 
@@ -89,8 +89,6 @@ namespace BattleBreakBLL
             gamedal.DeleteGameD(ID);
         }
 
-    }
-}
         public async Task SendInvite(string[] accounts) {
 
             foreach(var account in accounts)
@@ -100,5 +98,7 @@ namespace BattleBreakBLL
         }
     }
 
-    
 }
+
+    
+
