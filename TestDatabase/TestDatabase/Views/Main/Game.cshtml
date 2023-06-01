@@ -38,41 +38,8 @@
             </div>
             </div>
         </div>
-
-
-        @*<h1 class="title">Game</h1>
-        <div class="game-info">
-            <p class="game-name">@Model.Name</p>
-            <p class="game-rules">@Model.Rules</p>
-            <p class="player-count">Aantal spelers: <span id="player-count">@aantalSpelers</span>/<span id="minimum-players">@Model.Minimum_Players</span></p>
-        </div>
-
-        <form class="player-count-form">
-            <label for="number" class="player-count-label">Aantal spelers:</label>
-            <div class="value-buttons">
-                <div class="value-button decrease" onclick="decreaseValue()" value="Decrease Value">-</div>
-                <input type="number" id="number" value="2" min="2" class="player-count-input" />
-                <div class="value-button increase" onclick="increaseValue()" value="Increase Value">+</div>
-            </div>
-        </form>
-
-        <div class="mode-selection">
-            <label for="mode" class="mode-label">Kies een modus:</label>
-            <select onchange="mode()" name="mode" id="mode" class="mode-select">
-                <option value="head">Head to Head</option>
-                <option value="team">Teams</option>
-            </select>
-        </div>
-
-        <div id="aantalTeams"></div>
-
-        <div class="buttons-container">
-            <input type="submit" value="Choose" class="btn choose-btn" onclick="sendData(@Model.ID,@userID)" />
-            <input type="submit" value="Leave Game" class="btn leave-btn" onclick="location.href='@Url.Action("Index")'" />
-        </div>*@
     </div>
 </div>
-
 
 
 <div class="modal hidden">
@@ -86,36 +53,6 @@
     </div>
 </div>
 
-
-
-@*    <div class="container">
-        <h1>Spel</h1>
-        <p>@gekozenSpel.naam</p>
-        <p>@gekozenSpel.regels</p>
-        <p>Aantal spelers: @aantalSpelers/@gekozenSpel.minimumSpelers</p>
-
-        <form>
-            <div class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value">-</div>
-            <input type="number" id="number" value="2" />
-            <div class="value-button" id="increase" onclick="increaseValue()" value="Increase Value">+</div>
-        </form>
-
-        <div id="test"><input id="te" type="text" name="aantalSpelers"><input id="te" type="text" name="aantalSpelers"></div>
-        <br>
-
-        <select onchange="mode()" name="mode" id="mode">
-            <option value="head">Head to Head</option>
-            <option value="team">Teams</option>
-        </select>
-        <br>
-        <br>
-
-        <div id ="aantalTeams"></div>
-
-        <input type="submit" value="Kies" class="btn" onclick="sendData(@gekozenSpelID,@userID)" />
-
-        <input type="submit" value="Verlaat spel" class="btn" onclick="location.href='@Url.Action("Index")'" />
-    </div>*@
 
 
 @section scripts{
@@ -162,6 +99,7 @@
                             var opt = document.createElement("option");
                             opt.className = "account";
                             opt.innerHTML = e.email;
+                           
                             accountlist.appendChild(opt);
                         })
                         

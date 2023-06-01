@@ -287,3 +287,23 @@
     text-align: center;
     margin: 10px;
 }
+
+
+.MatchHistory-item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+    .MatchHistory-item > .magic {
+        flex: 1;
+        align-self: center;
+        
+    }
+
+        .MatchHistory-item > .magic:nth-child(2) {      
+            text-align: center;
+        }
+
+        .MatchHistory-item > .magic:nth-child(3) {
+           text-align: right;
+        }
