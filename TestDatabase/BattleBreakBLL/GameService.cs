@@ -79,8 +79,14 @@ namespace BattleBreakBLL
 
         public void GameChangeL(int ID, string name, int minimum_players, string rules, string win_condition)
         {
+            GameDTO gdto = new();
+            gdto.ID = ID;
+            gdto.name = name;
+            gdto.minimum_players = minimum_players;
+            gdto.rules = rules;
+            gdto.win_condition = win_condition;
             GameDAL gamedal = new GameDAL();
-            gamedal.GameChangeD(ID, name, minimum_players, rules, win_condition);
+            gamedal.GameChangeD(gdto);
         }
 
         public  void DeleteGameL(int ID)

@@ -104,10 +104,10 @@ namespace TestDatabase.Controllers
             return View(game);
         }
 
-        public IActionResult GameChange(int ID, string name, int minimum_players, string rules, string win_condition)
+        public IActionResult GameChange(Games games)
         {
-            GameService gameservice = new GameService();
-            gameservice.GameChangeL(ID, name, minimum_players, rules, win_condition);
+            GameService gameservice = new();
+            gameservice.GameChangeL(games.ID, games.name, games.minimum_players, games.rules, games.win_condition);
 
             return RedirectToAction("Games");
         }

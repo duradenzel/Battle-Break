@@ -13,6 +13,10 @@
         <form asp-action="GameChange">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
+                <input asp-for="ID" class="form-control" name="ID" type="hidden" readonly="readonly" />
+                <span asp-validation-for="ID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="name" class="control-label">Game name</label>
                 <input asp-for="name" class="form-control" name="name" />
                 <span asp-validation-for="name" class="text-danger"></span>
