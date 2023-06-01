@@ -11,19 +11,23 @@ namespace BattleBreakBLL
 {
     public class AccountService
     {
-        public static List<AccountModel> AllAccountsD(int ID, string user_Name, string full_name, string password, string email, string type)
+        private readonly AccountDAL _accountDAL = new();
+
+        public List<AccountModel> AllAccountsD()
         {
-            List<BattleBreakBLL.Models.AccountModel> drinken = new List<BattleBreakBLL.Models.AccountModel>();
-            AccountDAL accountDal = new AccountDAL();
+            List<AccountModel> drinken = new();
+            AccountDAL accountDal = new();
             foreach (var item in accountDal.AllAccountsD())
             {
-                BattleBreakBLL.Models.AccountModel newItem = new BattleBreakBLL.Models.AccountModel();
-                newItem.account_ID = item.ID;
-                newItem.username = item.username;
-                newItem.full_name = item.full_name;
-                newItem.password = item.password;
-                newItem.email = item.email;
-                newItem.type = item.type;
+                AccountModel newItem = new()
+                {
+                    account_ID = item.ID,
+                    username = item.username,
+                    full_name = item.full_name,
+                    password = item.password,
+                    email = item.email,
+                    type = item.type
+                };
                 drinken.Add(newItem);
             }
 
@@ -32,14 +36,12 @@ namespace BattleBreakBLL
 
         public void MakeAdminL(int ID)
         {
-            AccountDAL accountDal = new AccountDAL();
-            accountDal.MakeAdminD(ID);
+            _accountDAL.MakeAdminD(ID);
         }
 
         public void MakeUserL(int ID)
         {
-            AccountDAL accountDal = new AccountDAL();
-            accountDal.MakeUserD(ID);
+            _accountDAL.MakeUserD(ID);
         }
 
     }

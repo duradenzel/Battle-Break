@@ -11,48 +11,76 @@ namespace BattleBreakDAL
 {
     public class AccountDAL
     {
-            public List<AccountDTO> AllAccountsD()
+        private readonly string _connString = "Server=studmysql01.fhict.local;Database=dbi515074;Uid=dbi515074;Pwd=AmineGPT;";
+
+        public List<AccountDTO> GetAccountWithID(int ID)
+        {
+            List<AccountDTO> accountList = new();
+
+            using (MySqlConnection con = new(_connString))
             {
-                string connString = "Server=studmysql01.fhict.local;Database=dbi515074;Uid=dbi515074;Pwd=AmineGPT;";
+                con.Open();
+                MySqlCommand command = new($"SELECT * FROM `account` WHERE `ID` = {ID} ", con);
+                MySqlDataReader reader = command.ExecuteReader();
 
-                List<BattleBreakDAL.DTOS.AccountDTO> accounts = new List<BattleBreakDAL.DTOS.AccountDTO>();
-                using (MySqlConnection con = new MySqlConnection(connString))
+                while (reader.Read())
                 {
-                    con.Open();
-
-                    // Query to retrieve data from the database
-                    string query = "SELECT * FROM account"; // Replace 'YourTableName' with the actual name of your database table
-                    using (MySqlCommand cmd = new MySqlCommand(query, con))
+                    AccountDTO match = new()
                     {
-                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        ID = reader.GetInt32("ID"),
+                        username = reader.GetString("username"),
+                        full_name = reader.GetString("full_name"),
+                        email = reader.GetString("email"),
+                        password = reader.GetString("password"),
+                        type = reader.GetString("type"),
+                    };
+
+                    accountList.Add(match);
+                }
+                con.Close();
+            }
+
+            return accountList;
+        }
+
+        public List<AccountDTO> AllAccountsD()
+        {
+            List<AccountDTO> accounts = new List<AccountDTO>();
+            using (MySqlConnection con = new MySqlConnection(_connString))
+            {
+                con.Open();
+
+                // Query to retrieve data from the database
+                string query = "SELECT * FROM account"; // Replace 'YourTableName' with the actual name of your database table
+                using (MySqlCommand cmd = new MySqlCommand(query, con))
+                {
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
                         {
-                            while (reader.Read())
-                            {
-                                // Create a new Account object and populate its properties from the retrieved data
-                                BattleBreakDAL.DTOS.AccountDTO account = new BattleBreakDAL.DTOS.AccountDTO();
-                                account.ID = Convert.ToInt32(reader["ID"]);
-                                account.username = Convert.ToString(reader["username"]);
-                                account.full_name = Convert.ToString(reader["full_name"]);
-                                account.email = Convert.ToString(reader["email"]);
-                                account.password = Convert.ToString(reader["password"]);
+                            // Create a new Account object and populate its properties from the retrieved data
+                            AccountDTO account = new AccountDTO();
+                            account.ID = Convert.ToInt32(reader["ID"]);
+                            account.username = Convert.ToString(reader["username"]);
+                            account.full_name = Convert.ToString(reader["full_name"]);
+                            account.email = Convert.ToString(reader["email"]);
+                            account.password = Convert.ToString(reader["password"]);
 
-                                account.type = Convert.ToString(reader["type"]);
+                            account.type = Convert.ToString(reader["type"]);
 
-                                // Add the populated Account object to the list
-                                accounts.Add(account);
-                            }
+                            // Add the populated Account object to the list
+                            accounts.Add(account);
                         }
                     }
                 }
-                return accounts;
             }
+            return accounts;
+        }
 
-            public void MakeUserD(int id)
-            {
-            string connString = "Server=studmysql01.fhict.local;Database=dbi515074;Uid=dbi515074;Pwd=AmineGPT;";
-
-            List<BattleBreakDAL.DTOS.AccountDTO> accounts = new List<BattleBreakDAL.DTOS.AccountDTO>();
-            using (MySqlConnection con = new MySqlConnection(connString))
+        public void MakeUserD(int id)
+        {
+            List<AccountDTO> accounts = new List<AccountDTO>();
+            using (MySqlConnection con = new MySqlConnection(_connString))
             {
                 con.Open();
                 string query = "SELECT * FROM account WHERE ID = @id";
@@ -93,16 +121,13 @@ namespace BattleBreakDAL
                         }
                     }
                 }
-
             }
-
         }
-            public void MakeAdminD(int id)
-            {
-            string connString = "Server=studmysql01.fhict.local;Database=dbi515074;Uid=dbi515074;Pwd=AmineGPT;";
 
-            List<BattleBreakDAL.DTOS.AccountDTO> accounts = new List<BattleBreakDAL.DTOS.AccountDTO>();
-            using (MySqlConnection con = new MySqlConnection(connString))
+        public void MakeAdminD(int id)
+        {
+            List<AccountDTO> accounts = new List<AccountDTO>();
+            using (MySqlConnection con = new MySqlConnection(_connString))
             {
                 con.Open();
                 string query = "SELECT * FROM account WHERE ID = @id";
@@ -143,12 +168,7 @@ namespace BattleBreakDAL
                         }
                     }
                 }
-
             }
-
         }
-
-        }
-
-
     }
+}

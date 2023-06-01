@@ -15,6 +15,7 @@ namespace TestDatabase.Controllers
 {
     public class AdminController : Controller
     {
+        private readonly AccountService _accountService = new();
 
         public IActionResult GameAdd(int ID, string name, int minimum_players, string rules, string win_condition)
         {
@@ -70,20 +71,9 @@ namespace TestDatabase.Controllers
 
         public IActionResult Index()
         {
-            List<TestDatabase.Models.Account> account = new List<TestDatabase.Models.Account>();
-            AccountDAL accountDal = new AccountDAL();
-            foreach (var item in accountDal.AllAccountsD())
-            {
-                TestDatabase.Models.Account newItem = new TestDatabase.Models.Account();
-                newItem.ID = item.ID;
-                newItem.username = item.username;
-                newItem.full_name = item.full_name;
-                newItem.password = item.password;
-                newItem.email = item.email;
-                newItem.type = item.type;
-                account.Add(newItem);
-            }
-            return View("Index", account);
+            List<AccountModel> accountList = _accountService.AllAccountsD();
+
+            return View(accountList);
         }
 
         public IActionResult AddGame()

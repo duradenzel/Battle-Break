@@ -20,13 +20,14 @@ namespace BattleBreakDAL
                 using (MySqlConnection connection = new MySqlConnection(_connString))
                 {
                     connection.Open();
-                    using (MySqlCommand command = new MySqlCommand("SELECT stats.matches_played, stats.matches_won, account.email, account.full_name FROM stats INNER JOIN account ON stats.account_ID = account.ID;", connection))
+                    using (MySqlCommand command = new MySqlCommand("SELECT stats.matches_played, stats.matches_won, stats.account_ID, account.email, account.full_name FROM stats INNER JOIN account ON stats.account_ID = account.ID ORDER BY stats.matches_won DESC;", connection))
                     {
                         using (MySqlDataReader reader = command.ExecuteReader())
                         {
                             while (await reader.ReadAsync())
                             {
                                 LeaderboardDTO stats = new LeaderboardDTO();
+                                stats.Account_ID = reader.GetInt32(reader.GetOrdinal("account_ID"));
                                 stats.AccountEmail = reader.GetString(reader.GetOrdinal("email"));
                                 stats.GewonnenWedstrijden = reader.GetInt32(reader.GetOrdinal("matches_won"));
                                 stats.GespeeldeWedstrijden = reader.GetInt32(reader.GetOrdinal("matches_played"));
