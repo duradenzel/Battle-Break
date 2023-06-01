@@ -73,7 +73,7 @@ namespace TestDatabase.Controllers
         {
             List<AccountModel> accountList = _accountService.AllAccountsD();
 
-            return View("AccountList", accountList);
+            return View(accountList);
         }
 
         public IActionResult AddGame()

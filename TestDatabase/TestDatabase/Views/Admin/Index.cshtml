@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TestDatabase.Models.Account>
+﻿@model IEnumerable<BattleBreakBLL.Models.AccountModel>
 @{
     ViewData["Title"] = "AccountList";
 }
@@ -88,8 +88,8 @@
                                 @Html.DisplayFor(modelItem => item.type)
                             </td>
                             <td>
-                                <input type="submit" value="Admin" class="btn btn-primary" onclick="location.href='@Url.Action("Admin", "Admin",  new {id = item.ID})'" />
-                                <input type="submit" value="Gebruiker" class="btn btn-primary" onclick="location.href='@Url.Action("Gebruiker", "Admin", new {id = item.ID})'" />
+                                <input type="submit" value="Admin" class="btn btn-primary" onclick="location.href='@Url.Action("Admin", "Admin",  new {id = item.account_ID})'" />
+                                <input type="submit" value="Gebruiker" class="btn btn-primary" onclick="location.href='@Url.Action("Gebruiker", "Admin", new {id = item.account_ID})'" />
                             </td>
                         </tr>
                     }
