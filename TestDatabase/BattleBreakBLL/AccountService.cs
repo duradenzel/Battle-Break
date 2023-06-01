@@ -13,6 +13,21 @@ namespace BattleBreakBLL
     {
         private readonly AccountDAL _accountDAL = new();
 
+        public AccountModel GetAccountWithID(int ID)
+        {
+            AccountDTO AccountDTO = _accountDAL.GetAccountWithID(ID);
+            AccountModel AccountModel = new()
+            {
+                account_ID = AccountDTO.ID,
+                username = AccountDTO.username,
+                full_name = AccountDTO.full_name,
+                password = AccountDTO.password,
+                email = AccountDTO.email,
+                type = AccountDTO.type
+            };
+            return AccountModel;
+        }
+
         public List<AccountModel> AllAccountsD()
         {
             List<AccountModel> drinken = new();

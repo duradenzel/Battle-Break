@@ -13,9 +13,9 @@ namespace BattleBreakDAL
     {
         private readonly string _connString = "Server=studmysql01.fhict.local;Database=dbi515074;Uid=dbi515074;Pwd=AmineGPT;";
 
-        public List<AccountDTO> GetAccountWithID(int ID)
+        public AccountDTO GetAccountWithID(int ID)
         {
-            List<AccountDTO> accountList = new();
+            AccountDTO account = new();
 
             using (MySqlConnection con = new(_connString))
             {
@@ -25,7 +25,7 @@ namespace BattleBreakDAL
 
                 while (reader.Read())
                 {
-                    AccountDTO match = new()
+                    account = new()
                     {
                         ID = reader.GetInt32("ID"),
                         username = reader.GetString("username"),
@@ -35,12 +35,12 @@ namespace BattleBreakDAL
                         type = reader.GetString("type"),
                     };
 
-                    accountList.Add(match);
+                   
                 }
                 con.Close();
             }
 
-            return accountList;
+            return account;
         }
 
         public List<AccountDTO> AllAccountsD()
