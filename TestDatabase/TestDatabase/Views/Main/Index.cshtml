@@ -48,7 +48,7 @@
                 <ul class="leaderboard-list">
                     @foreach (var item in @Model.Leaderboard)
                     {
-                    <li>
+                    <li onclick="goToProfile(@item.Account_ID)">
                    @* <img src="@Url.Content("/Assets/medals/"+(i+1)+".png")" />*@
                             <span class="magic">@item.VolledigeNaam</span>
                     <div id="wins" class="right-align">
@@ -151,5 +151,10 @@
     function goToPage() {
         var chosenGame = document.getElementById("game").value;
         window.location.href = '/Main/Game?gekozenspel=' + chosenGame;
+    }
+
+    function goToProfile(ID) {
+        console.log(ID);
+        window.location.href = '/Main/Profile?ID=' + ID;
     }
 </script>

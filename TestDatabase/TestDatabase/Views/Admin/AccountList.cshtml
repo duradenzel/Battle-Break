@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TestDatabase.Models.Account>
+﻿@model IEnumerable<BattleBreakBLL.Models.AccountModel>
 @{
     ViewData["Title"] = "AccountList";
 }
@@ -12,7 +12,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ID)
+                @Html.DisplayNameFor(model => model.account_ID)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.username)
@@ -34,7 +34,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.ID)
+                @Html.DisplayFor(modelItem => item.account_ID)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.username)

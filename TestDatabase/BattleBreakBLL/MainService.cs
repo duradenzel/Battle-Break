@@ -20,6 +20,7 @@ namespace BattleBreakBLL
             {
                 leaderboardModels.Add(new LeaderboardModel
                 {
+                    Account_ID = dto.Account_ID,
                     GespeeldeWedstrijden = dto.GespeeldeWedstrijden,
                     GewonnenWedstrijden = dto.GewonnenWedstrijden,
                     AccountEmail = dto.AccountEmail,

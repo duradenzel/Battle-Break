@@ -69,6 +69,12 @@ namespace TestDatabase.Controllers
             return View(matchViewModel);
         }
 
+        public IActionResult Profile(int ID)
+        {
+            ViewData["id"] = ID;
+            return View();
+        }
+
         public int sendData(int Game_ID, int User_ID, /*int Won,*/ string User_IDs)
         {
             int Won = 0;
