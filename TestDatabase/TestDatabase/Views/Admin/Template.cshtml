@@ -4,51 +4,99 @@
     ViewData["Title"] = "Template";
 }
 
-<h1>Template</h1>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.minimumPlayers)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.rules)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.winCondition)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.minimumPlayers)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.rules)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.winCondition)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "DeleteTemplate", "Admin", new { id = item.id})
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<style>
+    .container {
+        display: grid;
+        grid-template-columns: 5vw 95vw;
+        grid-template-rows: 100vh;
+        margin: 0;
+        padding: 0;
+    }
 
-<button>
-    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="AddTemplate">Add new templates</a>
-</button>
+    .table {
+        grid-column: 2;
+        grid-row: 1 / 2;
+        z-index: 10000;
+        width: 94.1vw;
+    }
+    .showtemplate {
+        background-color: rgba(255, 255, 255, 0.90);
+        border-radius: 15px;
+        padding: 20px;
+        marign: 10px;
+    }
+
+    .knopjuh{
+        display: flex;
+        flex-direction: row;
+    }
+    .right{
+        margin-left: auto;
+    }
+</style>
+
+<div class="container">
+    @Html.Partial("Navbar")
+
+    <div class="table">
+        <div class="showtemplate">
+            <h1>Template</h1>
+
+            <div class="knopjuh">
+                <div>
+                    <input type="submit" value="Create new template" class="btn btn-primary" onclick="location.href='@Url.Action("AddTemplate", "Admin")'" />
+                </div>
+                <div class="right">
+                    <input type="submit" value="Accounts" class="btn btn-primary" onclick="location.href='@Url.Action("Index", "Admin")'" />
+                    <input type="submit" value="Games" class="btn btn-primary" onclick="location.href='@Url.Action("Games", "Admin")'" />
+                    <input type="submit" value="Templates" class="btn btn-primary" onclick="location.href='@Url.Action("Template", "Admin")'" />
+                </div>
+            </div>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Template name
+                        </th>
+                        <th>
+                            Miminum players
+                        </th>
+                        <th>
+                            Rules
+                        </th>
+                        <th>
+                            Win condition
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.minimumPlayers)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.rules)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.winCondition)
+                            </td>
+                            <td>
+                                <input type="submit" value="Delete" class="btn btn-primary" onclick="location.href='@Url.Action("DeleteTemplate", "Admin", new { id = item.id})'" />
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+

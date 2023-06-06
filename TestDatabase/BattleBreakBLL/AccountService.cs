@@ -11,20 +11,39 @@ namespace BattleBreakBLL
 {
     public class AccountService
     {
-        public static List<AccountModel> AllAccountsD(int ID, string user_Name, string full_name, string password, string email, string type)
+        private readonly AccountDAL _accountDAL = new();
+
+        public AccountModel GetAccountWithID(int ID)
         {
-            List<BattleBreakBLL.Models.AccountModel> Account = new List<BattleBreakBLL.Models.AccountModel>();
-            AccountDAL accountDal = new AccountDAL();
+            AccountDTO AccountDTO = _accountDAL.GetAccountWithID(ID);
+            AccountModel AccountModel = new()
+            {
+                account_ID = AccountDTO.ID,
+                username = AccountDTO.username,
+                full_name = AccountDTO.full_name,
+                password = AccountDTO.password,
+                email = AccountDTO.email,
+                type = AccountDTO.type
+            };
+            return AccountModel;
+        }
+
+        public List<AccountModel> AllAccountsD()
+        {
+            List<AccountModel> drinken = new();
+            AccountDAL accountDal = new();
             foreach (var item in accountDal.AllAccountsD())
             {
-                BattleBreakBLL.Models.AccountModel newItem = new BattleBreakBLL.Models.AccountModel();
-                newItem.account_ID = item.ID;
-                newItem.username = item.username;
-                newItem.full_name = item.full_name;
-                newItem.password = item.password;
-                newItem.email = item.email;
-                newItem.type = item.type;
-                Account.Add(newItem);
+                AccountModel newItem = new()
+                {
+                    account_ID = item.ID,
+                    username = item.username,
+                    full_name = item.full_name,
+                    password = item.password,
+                    email = item.email,
+                    type = item.type
+                };
+                drinken.Add(newItem);
             }
 
             return (Account);
@@ -32,14 +51,12 @@ namespace BattleBreakBLL
 
         public void MakeAdminL(int ID)
         {
-            AccountDAL accountDal = new AccountDAL();
-            accountDal.MakeAdminD(ID);
+            _accountDAL.MakeAdminD(ID);
         }
 
         public void MakeUserL(int ID)
         {
-            AccountDAL accountDal = new AccountDAL();
-            accountDal.MakeUserD(ID);
+            _accountDAL.MakeUserD(ID);
         }
 
     }

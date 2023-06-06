@@ -90,7 +90,7 @@ namespace BattleBreakDAL
             }
         }
 
-        public void GameChangeD(int ID, string name, int minimum_players, string rules, string win_condition)
+        public void GameChangeD(GameDTO game)
         {
 
             string connString = "Server=studmysql01.fhict.local;Database=dbi515074;Uid=dbi515074;Pwd=AmineGPT;";
@@ -101,11 +101,11 @@ namespace BattleBreakDAL
                 string query = "UPDATE game SET name = @name, minimum_players = @minimum_players, rules = @rules, win_condition = @win_condition WHERE ID = @ID";
                 using (MySqlCommand cmd = new MySqlCommand(query, con))
                 {
-                    cmd.Parameters.AddWithValue("@ID", ID);
-                    cmd.Parameters.AddWithValue("@name", name);
-                    cmd.Parameters.AddWithValue("@minimum_players", minimum_players); // update parameter name to @naam
-                    cmd.Parameters.AddWithValue("@rules", rules);
-                    cmd.Parameters.AddWithValue("@win_condition", win_condition);
+                    cmd.Parameters.AddWithValue("@ID", game.ID);
+                    cmd.Parameters.AddWithValue("@name", game.name);
+                    cmd.Parameters.AddWithValue("@minimum_players", game.minimum_players); // update parameter name to @naam
+                    cmd.Parameters.AddWithValue("@rules", game.rules);
+                    cmd.Parameters.AddWithValue("@win_condition", game.win_condition);
                     cmd.ExecuteNonQuery();
                 }
             }
