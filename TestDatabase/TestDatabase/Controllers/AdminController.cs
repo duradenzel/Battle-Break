@@ -2,7 +2,9 @@
 using BattleBreakBLL.Models;
 using BattleBreakDAL.DTOS;
 using BattleBreakDAL;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Build.Framework;
 using MySql.Data.MySqlClient;
 using NuGet.Protocol.Core.Types;
@@ -122,6 +124,7 @@ namespace TestDatabase.Controllers
             {
                 Template t = new();
                 t.id = tm.id;
+                t.game = tm.game;
                 t.name = tm.name;
                 t.minimumPlayers = tm.minimumPlayers;
                 t.rules = tm.rules; 
@@ -132,14 +135,17 @@ namespace TestDatabase.Controllers
             return View(template);
         }
 
-        public IActionResult CreateTemplate(TemplateModel templateID, TemplateModel templateName, TemplateModel templateMinimumPlayers, TemplateModel templateRules, TemplateModel templateWinCondition)
+        public IActionResult CreateTemplate(TemplateModel templateID, TemplateModel templateGame, TemplateModel templateName, TemplateModel templateMinimumPlayers, TemplateModel templateRules, TemplateModel templateWinCondition)
         {
             GameService gameService = new();
+            TemplateService templateService = new TemplateService();
             List<GameModel> gameModelList = gameService.GetGames();
-            TemplateService templateService = new();
-            templateService.TemplateAddL(templateID, templateName, templateMinimumPlayers, templateRules, templateWinCondition);
+            List<string> gameNames = templateService.GetGames();
+            ViewBag.GameNames = new SelectList(gameNames);
 
-            TemplateViewModel templateViewModel = new(gameModelList, templateID, templateName, templateMinimumPlayers, templateRules, templateWinCondition);
+            templateService.TemplateAddL(templateID, templateGame, templateName, templateMinimumPlayers, templateRules, templateWinCondition);
+
+            TemplateViewModel templateViewModel = new(gameModelList, templateID, templateGame, templateName, templateMinimumPlayers, templateRules, templateWinCondition);
             return RedirectToAction("Template");
         }
 
