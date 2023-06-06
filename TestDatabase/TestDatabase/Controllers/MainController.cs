@@ -71,13 +71,14 @@ namespace TestDatabase.Controllers
         public async Task<IActionResult> Profile(int ID)
         {
             List<LeaderboardModel> leaderboardStats = await _mainService.GetLeaderboardStats();
-            List<MatchHistoryModel> matchHistory = await _mainService.GetMatchHistory();
+            List<MatchHistoryModel> individualMatchHistory = await _mainService.GetIndividualMatchHistory(ID);
             List<GameModel> gameModelList = _gameService.GetGames();
-            AccountModel account = _accountService.GetAccountWithID(ID);
+            AccountModel account = await _accountService.GetAccountWithIDAsync(ID);
 
-            var viewModel = new ProfileViewModel(leaderboardStats, matchHistory, gameModelList, account);
+            var viewModel = new ProfileViewModel(leaderboardStats, individualMatchHistory, gameModelList, account);
             return View(viewModel);
         }
+
 
         public int sendData(int Game_ID, int User_ID, /*int Won,*/ string User_IDs)
         {

@@ -35,13 +35,57 @@ namespace BattleBreakDAL
                         type = reader.GetString("type"),
                     };
 
-                   
+
                 }
                 con.Close();
             }
 
             return account;
         }
+        public async Task<AccountDTO> GetAccountWithIDAsync(int ID)
+        {
+            AccountDTO accountDTO = await Task.Run(() =>
+            {
+                AccountDTO account = new AccountDTO();
+
+                using (MySqlConnection con = new MySqlConnection(_connString))
+                {
+                    con.Open();
+                    MySqlCommand command = new MySqlCommand($"SELECT * FROM `account` WHERE `ID` = {ID} ", con);
+                    MySqlDataReader reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        account = new()
+                        {
+                            ID = reader.GetInt32("ID"),
+                            username = reader.GetString("username"),
+                            full_name = reader.GetString("full_name"),
+                            email = reader.GetString("email"),
+                            password = reader.GetString("password"),
+                            type = reader.GetString("type"),
+                        };
+                    }
+
+                    con.Close();
+                }
+
+                return account;
+            });
+
+            AccountDTO accountModel = new AccountDTO
+            {
+                ID = accountDTO.ID,
+                username = accountDTO.username,
+                full_name = accountDTO.full_name,
+                password = accountDTO.password,
+                email = accountDTO.email,
+                type = accountDTO.type
+            };
+
+            return accountModel;
+        }
+
 
         public List<AccountDTO> AllAccountsD()
         {
