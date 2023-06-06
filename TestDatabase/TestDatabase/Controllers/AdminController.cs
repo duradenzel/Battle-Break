@@ -135,22 +135,22 @@ namespace TestDatabase.Controllers
             return View(template);
         }
 
-        public IActionResult CreateTemplate(TemplateModel templateID, TemplateModel templateGame, TemplateModel templateName, TemplateModel templateMinimumPlayers, TemplateModel templateRules, TemplateModel templateWinCondition)
+        public IActionResult CreateTemplate(TemplateModel templateModel)
         {
             GameService gameService = new();
             TemplateService templateService = new TemplateService();
             List<GameModel> gameModelList = gameService.GetGames();
-            List<string> gameNames = templateService.GetGames();
-            ViewBag.GameNames = new SelectList(gameNames);
 
-            templateService.TemplateAddL(templateID, templateGame, templateName, templateMinimumPlayers, templateRules, templateWinCondition);
+            templateService.TemplateAddL(templateModel);
 
-            TemplateViewModel templateViewModel = new(gameModelList, templateID, templateGame, templateName, templateMinimumPlayers, templateRules, templateWinCondition);
             return RedirectToAction("Template");
         }
 
         public IActionResult AddTemplate()
         {
+            TemplateService templateService = new TemplateService();
+            List<string> gameNames = templateService.GetGames();
+            ViewBag.GameNames = new SelectList(gameNames);
             return View();
         }
 
