@@ -30,9 +30,8 @@ namespace BattleBreakBLL
 
         public List<AccountModel> AllAccountsD()
         {
-            List<AccountModel> drinken = new();
-            AccountDAL accountDal = new();
-            foreach (var item in accountDal.AllAccountsD())
+            List<AccountModel> accountModels = new();
+            foreach (var item in _accountDAL.AllAccountsD())
             {
                 AccountModel newItem = new()
                 {
@@ -43,10 +42,10 @@ namespace BattleBreakBLL
                     email = item.email,
                     type = item.type
                 };
-                drinken.Add(newItem);
+                accountModels.Add(newItem);
             }
 
-            return (Account);
+            return (accountModels);
         }
 
         public void MakeAdminL(int ID)
