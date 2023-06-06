@@ -20,12 +20,6 @@
         <div class="col-md-4">
             <form asp-action="CreateTemplate">
                 <form class="game-select-button" action="/Game">
-                    <select class="game-select-button" name="game" id="game">
-                        @foreach (var game in Model.GameList)
-                        {
-                            <option value="@game.name">@game.name</option>
-                        }
-                    </select>
                 </form>
                 <div>
                     <a class="game-select-button" onclick="goToPage()">
@@ -35,9 +29,9 @@
                 <input type="submit" value="Create" class="btn btn-primary" />
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
-                    <label asp-for="name" class="control-label">Template name</label>
-                    <input asp-for="name" class="form-control" name="templateName" />
-                    <span asp-validation-for="name" class="text-danger"></span>
+                    <label asp-for="game" class="control-label">Game name</label>
+                    <select asp-for="game" asp-items="ViewBag.GameNames" class="form-control" name="templateGame"></select>
+                    <span asp-validation-for="game" class="text-danger"></span>
                 </div>
                     <div class="form-group">
                         <label asp-for="name" class="control-label">Template name</label>
@@ -68,3 +62,8 @@
     </div>
 </div>
 
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

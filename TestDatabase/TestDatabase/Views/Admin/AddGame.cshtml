@@ -11,41 +11,37 @@
         background-color: rgba(255, 255, 255, 0.90);
         border-radius: 15px;
         padding: 20px;
-        marign: 10px;
+        margin: 10px;
     }
 </style>
 
 <div class="creategame">
     <div class="row">
         <div class="col-md-4">
-            <form asp-action="GameAdd">
+            <form asp-action="GameAdd" method="post">
                 <div class="form-group">
                     <input type="submit" value="Create" class="btn btn-primary" />
                 </div>
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                @*            <div class="form-group">
-                <label asp-for="ID" class="control-label"></label>
-                <input asp-for="ID" class="form-control" name="ID" />
-                <span asp-validation-for="ID" class="text-danger"></span>
-                </div>*@
+
                 <div class="form-group">
                     <label asp-for="name" class="control-label">Game name</label>
-                    <input asp-for="name" class="form-control" name="name" />
+                    <input asp-for="name" class="form-control" />
                     <span asp-validation-for="name" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="minimum_players" class="control-label">Minimum players</label>
-                    <input asp-for="minimum_players" class="form-control" name="minimum_players" />
+                    <input asp-for="minimum_players" class="form-control" />
                     <span asp-validation-for="minimum_players" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="rules" class="control-label">Rules</label>
-                    <input asp-for="rules" class="form-control" name="rules" />
+                    <input asp-for="rules" class="form-control" />
                     <span asp-validation-for="rules" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="win_condition" class="control-label">Win condition</label>
-                    <input asp-for="win_condition" class="form-control" name="win_condition" />
+                    <input asp-for="win_condition" class="form-control" />
                     <span asp-validation-for="win_condition" class="text-danger"></span>
                 </div>
             </form>
@@ -56,3 +52,9 @@
         <a asp-action="Games">Back to List</a>
     </div>
 </div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

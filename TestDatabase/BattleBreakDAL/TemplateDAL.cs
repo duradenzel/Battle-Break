@@ -37,28 +37,48 @@ namespace BattleBreakDAL
                 while (reader.Read())
                 {
                     TemplateDTO t = new();
-                    t.id = reader.GetInt32(0);
-                    t.name = reader.GetString(1);
-                    t.minimumPlayers = reader.GetInt32(2);
-                    t.rules = reader.GetString(3);
-                    t.winCondition = reader.GetString(4);
+                    t.id = reader.GetInt32("ID");
+                    t.game = reader.GetString("game");
+                    t.name = reader.GetString("name");
+                    t.minimumPlayers = reader.GetInt32("minimum_players");
+                    t.rules = reader.GetString("rules");
+                    t.winCondition = reader.GetString("win_condition");
                     templateList.Add(t);
                 }
                 return templateList;
             }
         }
 
+        public List<string> GetGames()
+        {
+            using (MySqlConnection con = new MySqlConnection(connString))
+            {
+                con.Open();
+                MySqlCommand sqlCom = new MySqlCommand("Select DISTINCT name FROM game", con);
+                MySqlDataReader reader = sqlCom.ExecuteReader();
+                List<string> gameNames = new List<string>();
+
+                while (reader.Read())
+                {
+                    string gameName = reader.GetString("name");
+                    gameNames.Add(gameName);
+                }
+
+                return gameNames;
+            }
+        }
+
         public void TemplateAddD(TemplateDTO template)
         {
             // return the create view
-            string connString = "Server=studmysql01.fhict.local;Database=dbi515074;Uid=dbi515074;Pwd=AmineGPT;";
 
             using (MySqlConnection con = new MySqlConnection(connString))
             {
                 con.Open();
-                string query = "INSERT INTO template (name, minimum_players, rules, win_condition) VALUES (@templateName, @templateMinimumPlayers, @templateRules, @templateWinCondition)";
+                string query = "INSERT INTO template (name, game, minimum_players, rules, win_condition) VALUES (@templateName, @templateGame, @templateMinimumPlayers, @templateRules, @templateWinCondition)";
                 using (MySqlCommand cmd = new MySqlCommand(query, con))
                 {
+                    cmd.Parameters.AddWithValue("@templateGame", template.game);
                     cmd.Parameters.AddWithValue("@templateName", template.name); // update parameter name to @naam
                     cmd.Parameters.AddWithValue("@templateMinimumPlayers", template.minimumPlayers);
                     cmd.Parameters.AddWithValue("@templateRules", template.rules);
@@ -69,7 +89,6 @@ namespace BattleBreakDAL
         }
         public void DeleteTemplateD(int templateID)
         {
-            string connString = "Server=studmysql01.fhict.local;Database=dbi515074;Uid=dbi515074;Pwd=AmineGPT;";
             using (MySqlConnection connection = new MySqlConnection(connString))
             {
                 connection.Open();

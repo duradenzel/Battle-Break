@@ -58,6 +58,9 @@
                 <thead>
                     <tr>
                         <th>
+                            Game name
+                        </th>
+                        <th>
                             Template name
                         </th>
                         <th>
@@ -76,6 +79,9 @@
                     @foreach (var item in Model)
                     {
                         <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.game)
+                            </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.name)
                             </td>
