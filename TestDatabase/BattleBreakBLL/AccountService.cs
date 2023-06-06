@@ -27,6 +27,22 @@ namespace BattleBreakBLL
             };
             return AccountModel;
         }
+        public async Task<AccountModel> GetAccountWithIDAsync(int ID)
+        {
+            AccountDTO accountDTO = await _accountDAL.GetAccountWithIDAsync(ID);
+
+            AccountModel accountModel = new AccountModel
+            {
+                account_ID = accountDTO.ID,
+                username = accountDTO.username,
+                full_name = accountDTO.full_name,
+                password = accountDTO.password,
+                email = accountDTO.email,
+                type = accountDTO.type
+            };
+
+            return accountModel;
+        }
 
         public List<AccountModel> AllAccountsD()
         {
