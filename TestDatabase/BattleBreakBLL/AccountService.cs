@@ -13,7 +13,7 @@ namespace BattleBreakBLL
     {
         public static List<AccountModel> AllAccountsD(int ID, string user_Name, string full_name, string password, string email, string type)
         {
-            List<BattleBreakBLL.Models.AccountModel> drinken = new List<BattleBreakBLL.Models.AccountModel>();
+            List<BattleBreakBLL.Models.AccountModel> Account = new List<BattleBreakBLL.Models.AccountModel>();
             AccountDAL accountDal = new AccountDAL();
             foreach (var item in accountDal.AllAccountsD())
             {
@@ -24,10 +24,10 @@ namespace BattleBreakBLL
                 newItem.password = item.password;
                 newItem.email = item.email;
                 newItem.type = item.type;
-                drinken.Add(newItem);
+                Account.Add(newItem);
             }
 
-            return (drinken);
+            return (Account);
         }
 
         public void MakeAdminL(int ID)
