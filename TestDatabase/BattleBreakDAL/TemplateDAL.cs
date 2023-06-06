@@ -48,7 +48,7 @@ namespace BattleBreakDAL
             }
         }
 
-        public void TemplateAddD(int templateID, string templateName, int templateMinimumPlayers, string templateRules, string templateWinCondition)
+        public void TemplateAddD(TemplateDTO template)
         {
             // return the create view
             string connString = "Server=studmysql01.fhict.local;Database=dbi515074;Uid=dbi515074;Pwd=AmineGPT;";
@@ -59,10 +59,10 @@ namespace BattleBreakDAL
                 string query = "INSERT INTO template (name, minimum_players, rules, win_condition) VALUES (@templateName, @templateMinimumPlayers, @templateRules, @templateWinCondition)";
                 using (MySqlCommand cmd = new MySqlCommand(query, con))
                 {
-                    cmd.Parameters.AddWithValue("@templateName", templateName); // update parameter name to @naam
-                    cmd.Parameters.AddWithValue("@templateMinimumPlayers", templateMinimumPlayers);
-                    cmd.Parameters.AddWithValue("@templateRules", templateRules);
-                    cmd.Parameters.AddWithValue("@templateWinCondition", templateWinCondition);
+                    cmd.Parameters.AddWithValue("@templateName", template.name); // update parameter name to @naam
+                    cmd.Parameters.AddWithValue("@templateMinimumPlayers", template.minimumPlayers);
+                    cmd.Parameters.AddWithValue("@templateRules", template.rules);
+                    cmd.Parameters.AddWithValue("@templateWinCondition", template.winCondition);
                     cmd.ExecuteNonQuery();
                 }
             }
