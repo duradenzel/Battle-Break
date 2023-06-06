@@ -10,6 +10,7 @@ using NuGet.Protocol.Plugins;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using TestDatabase.Models;
+using TestDatabase.ViewModels;
 
 namespace TestDatabase.Controllers
 {
@@ -127,14 +128,18 @@ namespace TestDatabase.Controllers
                 t.winCondition = tm.winCondition;
                 template.Add(t);
             }
+
             return View(template);
         }
 
-        public IActionResult CreateTemplate(int templateID, string templateName, int templateMinimumPlayers, string templateRules, string templateWinCondition)
+        public IActionResult CreateTemplate(TemplateModel templateID, TemplateModel templateName, TemplateModel templateMinimumPlayers, TemplateModel templateRules, TemplateModel templateWinCondition)
         {
+            GameService gameService = new();
+            List<GameModel> gameModelList = gameService.GetGames();
             TemplateService templateService = new();
             templateService.TemplateAddL(templateID, templateName, templateMinimumPlayers, templateRules, templateWinCondition);
 
+            TemplateViewModel templateViewModel = new(gameModelList, templateID, templateName, templateMinimumPlayers, templateRules, templateWinCondition);
             return RedirectToAction("Template");
         }
 
