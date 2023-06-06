@@ -2,7 +2,66 @@
     ViewData["Title"] = "Profile";
 }
 
-<h1>Profile</h1>
+@*<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/MainDesktop.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/font-awesome/css/all.css" />
+    <script src=" https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/js/navbar.js" asp-append-version="true"></script>
+</head>
+*@
 
-@ViewData["id"]
 
+
+
+
+<div class="container">
+    @Html.Partial("Navbar")
+
+    <h1>Profile</h1>
+
+    <p>@Model.account.full_name</p>
+
+    <div class="matchHistoryContainer">
+        <div class="MatchHistory">
+
+            <div class="MatchHistory-box">
+                <div class="MatchHistory-content">
+                    <div class="MatchHistory-title">
+                        <span class="magic">Match History</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="MatchHistory-wrapper" type="none">
+
+                <ul class="MatchHistory-list">
+                    <span class="magicSelect">
+                        Tafeltennis <br />
+                    </span>
+                    @foreach (var match in @Model.MatchHistory)
+                    {
+                        if (match.Game_ID == 1)
+                        {
+
+                            <li class="MatchHistory-item">
+                                <span class="magic">
+                                    @match.Player1
+                                </span>
+                                <span class="magic">
+
+                                    @match.Player1_Points - @match.Player2_Points
+                                </span>
+                                <span class="magic">
+                                    @match.Player2
+
+                                </span>
+                            </li>
+                        }
+                    }
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</div>

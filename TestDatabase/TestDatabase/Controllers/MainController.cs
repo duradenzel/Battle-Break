@@ -14,11 +14,10 @@ namespace TestDatabase.Controllers
 {
     public class MainController : Controller
     {
-        string connString = "Server=studmysql01.fhict.local;Database=dbi515074;Uid=dbi515074;Pwd=AmineGPT;";
-
         private readonly MainService _mainService;
         private readonly MatchService _matchService = new();
         private readonly GameService _gameService = new();
+        private readonly AccountService _accountService = new();
 
         public MainController()
         {
@@ -69,10 +68,15 @@ namespace TestDatabase.Controllers
             return View(matchViewModel);
         }
 
-        public IActionResult Profile(int ID)
+        public async Task<IActionResult> Profile(int ID)
         {
-            ViewData["id"] = ID;
-            return View();
+            List<LeaderboardModel> leaderboardStats = await _mainService.GetLeaderboardStats();
+            List<MatchHistoryModel> matchHistory = await _mainService.GetMatchHistory();
+            List<GameModel> gameModelList = _gameService.GetGames();
+            AccountModel account = _accountService.GetAccountWithID(ID);
+
+            var viewModel = new ProfileViewModel(leaderboardStats, matchHistory, gameModelList, account);
+            return View(viewModel);
         }
 
         public int sendData(int Game_ID, int User_ID, /*int Won,*/ string User_IDs)
