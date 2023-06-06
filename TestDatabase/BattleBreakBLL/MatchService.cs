@@ -101,17 +101,22 @@ namespace BattleBreakBLL
             return ID;
         }
 
-        public void UpdateData(int Match_ID, string points)
+        public void UpdateData(int Match_ID, string points, int winner)
         {
             string[] pointsList = points.Split(',');
             List<MatchModel> matchModels = GetMatchWithID(Match_ID);
             int i = 0;
-            int won = 0;
 
             foreach (MatchModel match in matchModels)
             {
-                _matchDAL.UpdateMatch(match.Match_ID, match.Account_ID, match.Won, Int32.Parse(pointsList[i]));
+                if (match.Account_ID == winner)
+                {
+                    _matchDAL.UpdateMatch(match.Match_ID, match.Account_ID, 1, Int32.Parse(pointsList[i]));
+                } else
+                {
+                    _matchDAL.UpdateMatch(match.Match_ID, match.Account_ID, 0, Int32.Parse(pointsList[i]));
 
+                }
                 i++;
             }
         }
