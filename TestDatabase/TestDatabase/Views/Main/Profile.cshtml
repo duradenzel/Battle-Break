@@ -13,7 +13,23 @@
 <div class="container">
     @Html.Partial("Navbar")
 
-    <h1>@Model.account.full_name</h1>
+    <div class="profile-wrapper">
+        <div class="profile-icon">
+            @if (@Model.account.account_ID == 1)
+            {
+                <img src="https://cdn.discordapp.com/attachments/1072088170927243298/1114573456336486510/rn_image_picker_lib_temp_50cc79d2-3ad0-431b-86b0-5a673e5c8e65.jpg" alt="Profile Icon">
+            }
+            else
+            {
+                <img src="https://cdn.discordapp.com/attachments/1072088170927243298/1115634017182699540/vecteezy_profile-icon-design-vector_5544718.jpg" alt="Profile Icon">
+            }
+        </div>
+        <h1 class="AccountName">@Model.account.full_name</h1>
+    </div>
+
+
+
+
 
 
     <div class="matchHistoryContainer">

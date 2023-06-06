@@ -1,192 +1,34 @@
-﻿.gridder {
-    display: grid;
-    grid-template-columns: 5vw 25vw 10vw 1vw 59vw;
-    grid-template-rows: 30vh 2vh 38vh 2vh 28vh;
-    margin: 0;
-    padding: 0;
-}
-
-
-.container {
-    grid-column: 2 / span 4;
-    grid-row: 1 / span 5;
-}
-
-h1 {
-    font-size: 32px;
-    margin-bottom: 20px;
-}
-
-form {
-    margin-top: 20px;
+﻿.profile-wrapper {
     display: flex;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
+    margin-top: 200px;
 }
 
-.value-button {
-    display: inline-block;
-    font-size: 20px;
-    width: 30px;
-    height: 30px;
-    text-align: center;
-    vertical-align: middle;
-    padding: 7px 0;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    cursor: pointer;
-}
-
-    .value-button:hover {
-        background-color: #f2f2f2;
-    }
-
-    .value-button:active {
-        background-color: #e6e6e6;
-    }
-
-#number {
-    width: 50px;
-    height: 30px;
-    text-align: center;
-    margin: 0 10px;
-    border: none;
-    background-color: #f2f2f2;
-}
-
-select {
-    width: 200px;
-    height: 30px;
-    margin-top: 20px;
-    border: none;
-    background-color: #f2f2f2;
-}
-
-.btn {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #1081c5;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-}
-
-    .btn:hover {
-        background-color: #1f89e8;
-    }
-
-
-.game-wrapper {
-    border-radius: 10px;
-    margin: 20px 0px;
-    background-color: #f4f4f4;
-    padding: 10px;
-    color: #000;
-    width: 90vw;
-    height: 95vh;
-}
-
-.game-name {
-    text-align: left;
-    color: #000;
-}
-
-.game-players {
-    margin-top: 50px;
-}
-
-.game-players-ul {
-    list-style: none;
-}
-
-.game-players-li {
-    height: 50px;
-    background-color: #e4e4e4;
-    margin: 5px 0px;
-    line-height: 50px;
-    padding-left: 10px;
-    width: 93%;
-}
-
-.game-ctas {
-    display: flex;
-}
-
-    .game-ctas > button {
-        width: 200px;
-        margin: 10px 30px;
-    }
-
-/* Modal button style */
-.modal-btn {
-    background-color: #4CAF50; /* Green */
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 10px;
-    cursor: pointer;
-}
-
-/* Modal container style */
-.modal {
-    display: block;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.4);
-}
-
-/* Modal content style */
-.modal-content {
-    background-color: #fefefe;
-    margin:auto;
-    margin-top: 20px;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 600px;
-    position: relative;
-}
-
-/* Close button style */
-.close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 28px;
+.AccountName {
+    font-size: 35px;
     font-weight: bold;
-    cursor: pointer;
+    color: white;
+    filter: drop-shadow(0px 4px 4px rgba(0, 10, 200, 0.25));
 }
 
-    /* Close button hover style */
-    .close:hover {
-        color: #000;
+
+.profile-icon {
+    margin-top: 50px;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 5px solid #00a0c4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    filter: drop-shadow(0px 4px 4px rgba(0, 10, 200, 0.25));
+}
+
+    .profile-icon img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
     }
-
-
-.hidden{
-    display: none;
-}
-
-.accountlist{
-    overflow-y: scroll;
-    list-style: none;
-    height: 500px;
-    width: 100%
-}
-
-.accountlist > option{
-    height: 70px;
-    background-color: #e4e4e4;
-    margin: 5px 0px;
-    padding-left: 10px;
-    line-height: 70px;
-}
