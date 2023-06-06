@@ -2,7 +2,9 @@
 using BattleBreakBLL.Models;
 using BattleBreakDAL.DTOS;
 using BattleBreakDAL;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Build.Framework;
 using MySql.Data.MySqlClient;
 using NuGet.Protocol.Core.Types;
@@ -10,6 +12,7 @@ using NuGet.Protocol.Plugins;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using TestDatabase.Models;
+using TestDatabase.ViewModels;
 
 namespace TestDatabase.Controllers
 {
@@ -121,20 +124,28 @@ namespace TestDatabase.Controllers
             {
                 Template t = new();
                 t.id = tm.id;
+                t.game = tm.game;
                 t.name = tm.name;
                 t.minimumPlayers = tm.minimumPlayers;
                 t.rules = tm.rules; 
                 t.winCondition = tm.winCondition;
                 template.Add(t);
             }
+
             return View(template);
         }
 
-        public IActionResult CreateTemplate(int templateID, string templateName, int templateMinimumPlayers, string templateRules, string templateWinCondition)
+        public IActionResult CreateTemplate(TemplateModel templateID, TemplateModel templateGame, TemplateModel templateName, TemplateModel templateMinimumPlayers, TemplateModel templateRules, TemplateModel templateWinCondition)
         {
-            TemplateService templateService = new();
-            templateService.TemplateAddL(templateID, templateName, templateMinimumPlayers, templateRules, templateWinCondition);
+            GameService gameService = new();
+            TemplateService templateService = new TemplateService();
+            List<GameModel> gameModelList = gameService.GetGames();
+            List<string> gameNames = templateService.GetGames();
+            ViewBag.GameNames = new SelectList(gameNames);
 
+            templateService.TemplateAddL(templateID, templateGame, templateName, templateMinimumPlayers, templateRules, templateWinCondition);
+
+            TemplateViewModel templateViewModel = new(gameModelList, templateID, templateGame, templateName, templateMinimumPlayers, templateRules, templateWinCondition);
             return RedirectToAction("Template");
         }
 
