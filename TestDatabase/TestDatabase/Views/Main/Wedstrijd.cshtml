@@ -77,14 +77,14 @@
         function checkForWinnerDupe(){
             var winner = getWinner()[0];
             var scoreElements = document.getElementsByName("score");
-            var j = 0;
+            var timesExceeded = 0;
 
             for (var i = 0; i < scoreElements.length; i++) {
                 if (scoreElements[i].textContent.substring(7, 20) == getWinner()[1]) {
-                    j++;
+                    timesExceeded++;
                 }
             }
-            if(j >= 2){
+            if (timesExceeded > 1) {
                 return true
             } else {
                 return false;
@@ -108,22 +108,18 @@
                 } else {
                     winner = getWinner()[0];
                 }
-
-                //if (confirm("Als er twee spelers zijn met dezelfde hoogste score, wordt een willekeurige speler met deze score als winnaar verklaard")) {
-                //    winner = confirmAutomaticWinner();
-                //} else {
-                //    //break;
-                //}
             }
             console.log(winner)
-
+            if(winner != 0){
             points = pointsArray.join(',');            
 
             $.ajax({
                 url: '/Main/updateMatchData',
                 data: { Match_ID: matchID, points: points, winner: winner},
-                type: 'GET'
+                type: 'GET',
+                succes: alert("Wedstrijd ge-update!")
             });
+            }
         }
     </script>
 }
