@@ -86,9 +86,9 @@ namespace TestDatabase.Controllers
             return _matchService.SendData(Game_ID, User_IDs, Won, 2);
         }
 
-        public void updateMatchData(int Match_ID, string points)
+        public void updateMatchData(int Match_ID, string points, int winner)
         {
-            _matchService.UpdateData(Match_ID, points);
+            _matchService.UpdateData(Match_ID, points, winner);
             //return match_ID.ToString() + points;
         }
     }
