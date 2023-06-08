@@ -174,6 +174,7 @@ namespace TestDatabase.Controllers
             template.winCondition = winCondition;
             template.rules = rules;
 
+            return View(template);
         }
 
     }
