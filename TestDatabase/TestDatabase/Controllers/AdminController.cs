@@ -163,5 +163,18 @@ namespace TestDatabase.Controllers
                 return RedirectToAction("Template");
             }
         }
+
+        public IActionResult EditTemplate(int id, string game, string name, int minimumPlayers, string winCondition, string rules)
+        {
+            Template template = new Template();
+            template.id = id;
+            template.game= game;
+            template.name= name;
+            template.minimumPlayers =minimumPlayers;
+            template.winCondition = winCondition;
+            template.rules = rules;
+
+        }
+
     }
 }
