@@ -18,13 +18,13 @@ namespace BattleBreakDAL
             using (MySqlConnection con = new MySqlConnection(_connString))
             {
                 await con.OpenAsync();
-
-                MySqlCommand command = new MySqlCommand($"SELECT * FROM `account` WHERE `ID` = {ID}", con);
-                MySqlDataReader reader =  command.ExecuteReader();
+                MySqlCommand command = new MySqlCommand("SELECT * FROM `account` WHERE `ID` = @ID", con);
+                command.Parameters.AddWithValue("@ID", ID);
+                MySqlDataReader reader = command.ExecuteReader();
 
                 if (await reader.ReadAsync())
                 {
-                    AccountDTO account = new AccountDTO()
+                    AccountDTO accountDTO = new AccountDTO
                     {
                         ID = reader.GetInt32("ID"),
                         username = reader.GetString("username"),
@@ -35,14 +35,12 @@ namespace BattleBreakDAL
                         image_url = reader.GetString("image_url")
                     };
 
-                    return account;
+                    return accountDTO;
                 }
             }
 
-            return null; // Account not found
+            return null; // Return null if no account found with the given ID
         }
-
-
 
         public List<AccountDTO> AllAccountsD()
         {

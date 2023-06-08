@@ -68,17 +68,27 @@ namespace TestDatabase.Controllers
             return View(matchViewModel);
         }
 
-        public async Task<IActionResult> Profile(int ID)
+        public async Task<IActionResult> Profile(int ID, int game_ID)
         {
             List<LeaderboardModel> leaderboardStats = await _mainService.GetLeaderboardStats();
-            List<MatchHistoryModel> individualMatchHistory = await _mainService.GetIndividualMatchHistory(ID);
+            List<MatchHistoryModel> individualMatchHistory;
+
+            if (game_ID == 0)
+            {
+                individualMatchHistory = await _mainService.GetIndividualMatchHistory(ID);
+            }
+            else
+            {
+                individualMatchHistory = await _mainService.GetIndividualMatchHistoryPerGame(ID, game_ID);
+            }
+
             List<GameModel> gameModelList = _gameService.GetGames();
+            GameModel chosenGame = _gameService.GetGameWithID(game_ID);
             AccountModel account = await _accountService.GetAccountWithIDAsync(ID);
 
-            var viewModel = new ProfileViewModel(leaderboardStats, individualMatchHistory, gameModelList, account);
+            var viewModel = new ProfileViewModel(leaderboardStats, individualMatchHistory, gameModelList, account, chosenGame);
             return View(viewModel);
         }
-
 
         public int sendData(int Game_ID, int User_ID, /*int Won,*/ string User_IDs)
         {

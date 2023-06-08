@@ -21,6 +21,15 @@
 
 
     <div class="matchHistoryContainer">
+        <select name="game-select" id="game-select" onchange="gameSelect()">
+            <option value="0">Kies Spel</option>
+            <option value="0">Alle Spellen</option>
+
+            @foreach (var game in Model.GameList)
+            {
+                <option value="@game.ID">@game.name</option>
+            }
+        </select>
         <div class="MatchHistory">
 
             <div class="MatchHistory-box">
@@ -35,27 +44,23 @@
 
                 <ul class="MatchHistory-list">
                     <span class="magicSelect">
-                        Tafeltennis <br />
+                        @Model.ChosenGame.name <br />
                     </span>
                     @foreach (var match in @Model.MatchHistory)
                     {
-                        if (match.Game_ID == 1)
-                        {
+                        <li class="MatchHistory-item">
+                            <span class="magic">
+                                @match.Player1
+                            </span>
+                            <span class="magic">
 
-                            <li class="MatchHistory-item">
-                                <span class="magic">
-                                    @match.Player1
-                                </span>
-                                <span class="magic">
+                                @match.Player1_Points - @match.Player2_Points
+                            </span>
+                            <span class="magic">
+                                @match.Player2
 
-                                    @match.Player1_Points - @match.Player2_Points
-                                </span>
-                                <span class="magic">
-                                    @match.Player2
-
-                                </span>
-                            </li>
-                        }
+                            </span>
+                        </li>
                     }
                 </ul>
 
@@ -63,3 +68,9 @@
         </div>
     </div>
 </div>
+
+<script>
+    function gameSelect(){
+        location.href = '/Main/Profile?ID=' + @Model.account.account_ID + '&game_ID=' + document.getElementById("game-select").value;
+    }
+</script>
