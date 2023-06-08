@@ -13,19 +13,18 @@ namespace BattleBreakDAL
     {
         private readonly string _connString = "Server=studmysql01.fhict.local;Database=dbi515074;Uid=dbi515074;Pwd=AmineGPT;";
 
-        public AccountDTO GetAccountWithID(int ID)
+        public async Task<AccountDTO> GetAccountWithIDAsync(int ID)
         {
-            AccountDTO account = new();
-
-            using (MySqlConnection con = new(_connString))
+            using (MySqlConnection con = new MySqlConnection(_connString))
             {
-                con.Open();
-                MySqlCommand command = new($"SELECT * FROM `account` WHERE `ID` = {ID} ", con);
+                await con.OpenAsync();
+                MySqlCommand command = new MySqlCommand("SELECT * FROM `account` WHERE `ID` = @ID", con);
+                command.Parameters.AddWithValue("@ID", ID);
                 MySqlDataReader reader = command.ExecuteReader();
 
-                while (reader.Read())
+                if (await reader.ReadAsync())
                 {
-                    account = new()
+                    AccountDTO accountDTO = new AccountDTO
                     {
                         ID = reader.GetInt32("ID"),
                         username = reader.GetString("username"),
@@ -33,59 +32,15 @@ namespace BattleBreakDAL
                         email = reader.GetString("email"),
                         password = reader.GetString("password"),
                         type = reader.GetString("type"),
+                        image_url = reader.GetString("image_url")
                     };
 
-
+                    return accountDTO;
                 }
-                con.Close();
             }
 
-            return account;
+            return null; // Return null if no account found with the given ID
         }
-        public async Task<AccountDTO> GetAccountWithIDAsync(int ID)
-        {
-            AccountDTO accountDTO = await Task.Run(() =>
-            {
-                AccountDTO account = new AccountDTO();
-
-                using (MySqlConnection con = new MySqlConnection(_connString))
-                {
-                    con.Open();
-                    MySqlCommand command = new MySqlCommand($"SELECT * FROM `account` WHERE `ID` = {ID} ", con);
-                    MySqlDataReader reader = command.ExecuteReader();
-
-                    while (reader.Read())
-                    {
-                        account = new()
-                        {
-                            ID = reader.GetInt32("ID"),
-                            username = reader.GetString("username"),
-                            full_name = reader.GetString("full_name"),
-                            email = reader.GetString("email"),
-                            password = reader.GetString("password"),
-                            type = reader.GetString("type"),
-                        };
-                    }
-
-                    con.Close();
-                }
-
-                return account;
-            });
-
-            AccountDTO accountModel = new AccountDTO
-            {
-                ID = accountDTO.ID,
-                username = accountDTO.username,
-                full_name = accountDTO.full_name,
-                password = accountDTO.password,
-                email = accountDTO.email,
-                type = accountDTO.type
-            };
-
-            return accountModel;
-        }
-
 
         public List<AccountDTO> AllAccountsD()
         {
@@ -111,6 +66,8 @@ namespace BattleBreakDAL
                             account.password = Convert.ToString(reader["password"]);
 
                             account.type = Convert.ToString(reader["type"]);
+                            account.image_url = Convert.ToString(reader["image_url"]);
+
 
                             // Add the populated Account object to the list
                             accounts.Add(account);

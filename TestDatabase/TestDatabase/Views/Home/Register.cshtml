@@ -4,35 +4,32 @@
 <div class="login-wrapper">
 
 
-<section>
-    <div class="form-box">
-        <div class="form-value">
+    <section>
+        <div class="form-box">
+            <div class="form-value">
 
-            <form action="@Url.Action("Register", "Home")" method="post">
-                <img id="logo" src="@Url.Content("/Assets/Logo.png")" />
+                <form action="@Url.Action("Register", "Home")" method="post">
+                    <img id="logo" src="@Url.Content("/Assets/BattleBreak_Dark.png")" />
 
-                <h2>Register</h2>
-                <div class="inputbox">
-                    <input type="text" name="username" required>
-                    <label for="">Gebruikersnaam</label>
-                </div>
-                <div class="inputbox">
-                    <input type="text" name="fullname" required>
-                    <label for="">Volledige naam</label>
-                </div>
-                <div class="inputbox">
-                    <input type="email" name="email" required>
-                    <label for="">Email</label>
-                </div>
-                <div class="inputbox">
-                    <input type="password" name="password" required>
-                    <label for="">Password</label>
-                </div>
-              
-                <button>Create Account</button>
-               
-            </form>
+                    <div class="inputbox">
+                        <input type="text" name="username" placeholder="Username" required>
+                    </div>
+                    <div class="inputbox">
+                        <input type="text" name="fullname" placeholder="Full name" required>
+                    </div>
+                    <div class="inputbox">
+                        <input type="email" name="email" placeholder="Email" required>
+                    </div>
+                    <div class="inputbox">
+                        <input type="password" name="password" placeholder="Password" required>
+                    </div>
+
+                    <button>Create Account</button>
+                    <p class="back-to-login"><a href="@Url.Action("Index", "Home")">Back to login</a></p>
+                </form>
+            </div>
+
         </div>
-    </div>
+</div>
 </section>
 </div>

@@ -88,6 +88,7 @@ namespace BattleBreakDAL
             return matchHistory;
 
         }
+
         public async Task<List<MatchHistoryDTO>> GetIndividualMatchHistory(int currentUserID)
         {
             List<MatchHistoryDTO> individualMatchHistory = new List<MatchHistoryDTO>();
@@ -107,6 +108,53 @@ namespace BattleBreakDAL
                     using (MySqlCommand command = new MySqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@currentUserID", currentUserID);
+                        using (DbDataReader reader = await command.ExecuteReaderAsync())
+                        {
+                            while (await reader.ReadAsync())
+                            {
+                                MatchHistoryDTO match = new MatchHistoryDTO();
+                                match.Game_ID = reader.GetInt32(reader.GetOrdinal("game_ID"));
+                                match.Match_ID = reader.GetInt32(reader.GetOrdinal("match_ID"));
+                                match.Player1 = reader.GetString(reader.GetOrdinal("Player1"));
+                                match.Player1_Points = reader.GetInt32(reader.GetOrdinal("Player1_Points"));
+                                match.Player2 = reader.GetString(reader.GetOrdinal("Player2"));
+                                match.Player2_Points = reader.GetInt32(reader.GetOrdinal("Player2_Points"));
+
+                                individualMatchHistory.Add(match);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions here
+            }
+
+            return individualMatchHistory;
+        }
+
+        public async Task<List<MatchHistoryDTO>> GetIndividualMatchHistoryPerGame(int currentUserID, int selectedGameID)
+        {
+            List<MatchHistoryDTO> individualMatchHistory = new List<MatchHistoryDTO>();
+
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(_connString))
+                {
+                    await connection.OpenAsync();
+                    string query = @"SELECT match1.ID AS match_ID, match1.game_ID AS game_ID, account1.full_name AS Player1, 
+                                    match1.points AS Player1_Points, account2.full_name AS Player2, match2.points AS Player2_Points
+                                    FROM `match` match1
+                                    JOIN `match` match2 ON match1.ID = match2.ID AND match1.account_ID < match2.account_ID 
+                                    JOIN account account1 ON match1.account_ID = account1.ID
+                                    JOIN account account2 ON match2.account_ID = account2.ID
+                                    WHERE (account1.ID = @currentUserID OR account2.ID = @currentUserID)
+                                    AND (match1.game_ID = @selectedGameID OR match2.game_ID = @selectedGameID);";
+                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@currentUserID", currentUserID);
+                        command.Parameters.AddWithValue("@selectedGameID", selectedGameID);
                         using (DbDataReader reader = await command.ExecuteReaderAsync())
                         {
                             while (await reader.ReadAsync())

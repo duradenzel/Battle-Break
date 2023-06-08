@@ -9,30 +9,27 @@
 
 
 
-
 <div class="container">
     @Html.Partial("Navbar")
 
     <div class="profile-wrapper">
         <div class="profile-icon">
-            @if (@Model.account.account_ID == 1)
-            {
-                <img src="https://cdn.discordapp.com/attachments/1072088170927243298/1114573456336486510/rn_image_picker_lib_temp_50cc79d2-3ad0-431b-86b0-5a673e5c8e65.jpg" alt="Profile Icon">
-            }
-            else
-            {
-                <img src="https://cdn.discordapp.com/attachments/1072088170927243298/1115634017182699540/vecteezy_profile-icon-design-vector_5544718.jpg" alt="Profile Icon">
-            }
+            <img src="@Model.account.image_url" alt="Profile Icon">
         </div>
         <h1 class="AccountName">@Model.account.full_name</h1>
-    </div>
-
-
-
-
+    </div>    
 
 
     <div class="matchHistoryContainer">
+        <select name="game-select" id="game-select" onchange="gameSelect()">
+            <option value="0">Kies Spel</option>
+            <option value="0">Alle Spellen</option>
+
+            @foreach (var game in Model.GameList)
+            {
+                <option value="@game.ID">@game.name</option>
+            }
+        </select>
         <div class="MatchHistory">
 
             <div class="MatchHistory-box">
@@ -47,27 +44,23 @@
 
                 <ul class="MatchHistory-list">
                     <span class="magicSelect">
-                        Tafeltennis <br />
+                        @Model.ChosenGame.name <br />
                     </span>
                     @foreach (var match in @Model.MatchHistory)
                     {
-                        if (match.Game_ID == 1)
-                        {
+                        <li class="MatchHistory-item">
+                            <span class="magic">
+                                @match.Player1
+                            </span>
+                            <span class="magic">
 
-                            <li class="MatchHistory-item">
-                                <span class="magic">
-                                    @match.Player1
-                                </span>
-                                <span class="magic">
+                                @match.Player1_Points - @match.Player2_Points
+                            </span>
+                            <span class="magic">
+                                @match.Player2
 
-                                    @match.Player1_Points - @match.Player2_Points
-                                </span>
-                                <span class="magic">
-                                    @match.Player2
-
-                                </span>
-                            </li>
-                        }
+                            </span>
+                        </li>
                     }
                 </ul>
 
@@ -75,3 +68,9 @@
         </div>
     </div>
 </div>
+
+<script>
+    function gameSelect(){
+        location.href = '/Main/Profile?ID=' + @Model.account.account_ID + '&game_ID=' + document.getElementById("game-select").value;
+    }
+</script>
