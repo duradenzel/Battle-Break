@@ -22,9 +22,9 @@
             <h2 class="game-name">@Model.name</h2>
             <p>@Model.rules</p>
             <div class="game-players">
-                <p class="game-usercount">Aantal spelers: @aantalSpelers/@Model.minimum_players</p>
-                <ul class="game-players-ul">
-                    @for (int i = 0; i < 8; i++)
+                <p class="game-usercount">Aantal spelers: <span id="connected-players">0</span>/@Model.minimum_players</p>
+                <ul id="players" class="game-players-ul">
+                    @for (int i = 0; i < 6; i++)
                     {
                         <li class="game-players-li">
                             Open
@@ -33,8 +33,8 @@
                 </ul>
 
             <div class="buttons-container">
-                    <input type="submit" value="Invite Player" class="btn modal-toggle" onclick="ToggleInviteModal(this)"  />
-                    <input type="submit" value="Leave Game" class="btn"  />
+                    <button value="Invite Player" class="btn modal-toggle" onclick="ToggleInviteModal(this)">Invite Players</button>
+                    <button value="Leave Game" class="btn" id="start-button">Start Game</button>
             </div>
             </div>
         </div>
@@ -56,6 +56,8 @@
 
 
 @section scripts{
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/lobby.js"></script>
     <script>
 
         function SendInvite(){
@@ -70,6 +72,8 @@
                     console.log(res)
                     const modal = document.querySelector('.modal');
                     modal.classList.toggle('hidden');
+                    toastr.success(`Invite sent to ${selected}!`);
+
 
 
                 },
