@@ -1,6 +1,7 @@
 ﻿using BattleBreakBLL;
 using BattleBreakBLL.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace TestDatabase.Controllers
@@ -8,7 +9,8 @@ namespace TestDatabase.Controllers
     public class GameController : Controller
     {
         public readonly GameService _gameService = new GameService();
-        
+
+        [Authorize]
 
         public IActionResult Index()
         {

@@ -17,7 +17,10 @@ namespace TestDatabase.Controllers
         {
             _authService = authService;
         }
-
+        public IActionResult Index()
+        {
+            return View("Login");
+        }
 
         [HttpGet]
 
@@ -70,7 +73,7 @@ namespace TestDatabase.Controllers
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
 
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Main");
 
             }
 

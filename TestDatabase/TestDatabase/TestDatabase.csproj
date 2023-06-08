@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BattleBreakBLL\BattleBreakBLL.csproj" />
+    <ProjectReference Include="..\BattleBreakDAL\BattleBreakDAL.csproj" />
   </ItemGroup>
 
 </Project>

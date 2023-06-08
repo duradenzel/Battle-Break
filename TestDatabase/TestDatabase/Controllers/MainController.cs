@@ -1,14 +1,8 @@
-﻿using System.Data;
-using System.Diagnostics;
-using System.Security.Cryptography;
-using Microsoft.AspNetCore.Mvc;
-using MySql.Data.MySqlClient;
-using TestDatabase.Models;
+﻿using Microsoft.AspNetCore.Mvc;
 using BattleBreakBLL;
 using BattleBreakBLL.Models;
-using BCrypt.Net;
 using TestDatabase.ViewModels;
-using System.Threading.Tasks.Dataflow;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TestDatabase.Controllers
 {
@@ -39,8 +33,9 @@ namespace TestDatabase.Controllers
 
             return View(viewModel);
         }  
-           
 
+
+        [Authorize]
         public IActionResult Game(string gekozenSpel)
         {
             List<GameModel> gameModels = _gameService.GetGames();
@@ -58,6 +53,8 @@ namespace TestDatabase.Controllers
             return View(ChosenGame);
         }
 
+        [Authorize]
+
         public IActionResult Wedstrijd(int ID)
         {
             List<MatchModel> matchList = _matchService.GetMatchWithID(ID);
@@ -67,6 +64,8 @@ namespace TestDatabase.Controllers
 
             return View(matchViewModel);
         }
+
+        [Authorize]
 
         public async Task<IActionResult> Profile(int ID)
         {
@@ -78,7 +77,6 @@ namespace TestDatabase.Controllers
             var viewModel = new ProfileViewModel(leaderboardStats, individualMatchHistory, gameModelList, account);
             return View(viewModel);
         }
-
 
         public int sendData(int Game_ID, int User_ID, /*int Won,*/ string User_IDs)
         {

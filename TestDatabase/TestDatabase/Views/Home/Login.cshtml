@@ -1,6 +1,4 @@
-﻿@{
-    ViewData["Title"] = "Login Page";
-}
+﻿@model TestDatabase.ViewModels.LoginViewModel
 
 <section>
         <div class="form-box">
@@ -16,6 +14,7 @@
                         @ViewBag.ErrorMessage
                     </div>
                 }
+
                     <div class="inputbox">
                         <input type="email" name="email" placeholder="Email" required>
                         

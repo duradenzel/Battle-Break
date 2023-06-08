@@ -1,20 +1,14 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using BattleBreakBLL;
+using BattleBreakDAL;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<AuthDAL>();
+builder.Services.AddTransient<AuthService>();
 
-builder.Services.AddSession(options =>
-{
-    options.IdleTimeout = TimeSpan.FromMinutes(30);
-});
-
-builder.Services.Configure<CookiePolicyOptions>(options =>
-{
-    options.CheckConsentNeeded = context => true;
-    options.MinimumSameSitePolicy = SameSiteMode.None;
-});
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
@@ -38,9 +32,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-app.UseCookiePolicy();
 app.UseAuthentication();
-app.UseSession();
 app.UseAuthorization();
 
 app.MapControllerRoute(
