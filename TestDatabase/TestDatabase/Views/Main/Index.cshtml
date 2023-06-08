@@ -48,7 +48,7 @@
                 <ul class="leaderboard-list">
                     @foreach (var item in @Model.Leaderboard)
                     {
-                    <li onclick="goToProfile(@item.Account_ID, 1)" class="leaderboard-item">
+                    <li onclick="goToProfile(@item.Account_ID, 0)" class="leaderboard-item">
 
                    @* <img src="@Url.Content("/Assets/medals/"+(i+1)+".png")" />*@
                             <span class="magic">@item.VolledigeNaam</span>

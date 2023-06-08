@@ -72,6 +72,11 @@ namespace TestDatabase.Controllers
         {
             List<LeaderboardModel> leaderboardStats = await _mainService.GetLeaderboardStats();
             List<MatchHistoryModel> individualMatchHistory;
+            List<GameModel> gameModelList = _gameService.GetGames();
+            GameModel chosenGame = new GameModel() {
+                name = "Alle Spellen",
+            }; 
+            AccountModel account = await _accountService.GetAccountWithIDAsync(ID);
 
             if (game_ID == 0)
             {
@@ -80,11 +85,8 @@ namespace TestDatabase.Controllers
             else
             {
                 individualMatchHistory = await _mainService.GetIndividualMatchHistoryPerGame(ID, game_ID);
+                chosenGame = _gameService.GetGameWithID(game_ID);
             }
-
-            List<GameModel> gameModelList = _gameService.GetGames();
-            GameModel chosenGame = _gameService.GetGameWithID(game_ID);
-            AccountModel account = await _accountService.GetAccountWithIDAsync(ID);
 
             var viewModel = new ProfileViewModel(leaderboardStats, individualMatchHistory, gameModelList, account, chosenGame);
             return View(viewModel);
