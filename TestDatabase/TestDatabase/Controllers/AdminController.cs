@@ -55,11 +55,11 @@ namespace TestDatabase.Controllers
 
         public IActionResult Games()
         {
-            List<TestDatabase.Models.Games> games = new List<TestDatabase.Models.Games>();
+            List<Games> games = new List<Games>();
             GameService gameservice = new GameService();
             foreach (var item in gameservice.GetGames())
             {
-                TestDatabase.Models.Games newItem = new TestDatabase.Models.Games();
+                Games newItem = new Games();
                 newItem.ID = item.ID;
                 newItem.name = item.name;
                 newItem.win_condition = item.win_condition;
