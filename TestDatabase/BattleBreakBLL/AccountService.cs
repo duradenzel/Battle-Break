@@ -13,20 +13,6 @@ namespace BattleBreakBLL
     {
         private readonly AccountDAL _accountDAL = new();
 
-        public AccountModel GetAccountWithID(int ID)
-        {
-            AccountDTO AccountDTO = _accountDAL.GetAccountWithID(ID);
-            AccountModel AccountModel = new()
-            {
-                account_ID = AccountDTO.ID,
-                username = AccountDTO.username,
-                full_name = AccountDTO.full_name,
-                password = AccountDTO.password,
-                email = AccountDTO.email,
-                type = AccountDTO.type
-            };
-            return AccountModel;
-        }
         public async Task<AccountModel> GetAccountWithIDAsync(int ID)
         {
             AccountDTO accountDTO = await _accountDAL.GetAccountWithIDAsync(ID);
@@ -38,9 +24,9 @@ namespace BattleBreakBLL
                 full_name = accountDTO.full_name,
                 password = accountDTO.password,
                 email = accountDTO.email,
-                type = accountDTO.type
+                type = accountDTO.type,
+                image_url = accountDTO.image_url,
             };
-
             return accountModel;
         }
 
@@ -56,7 +42,8 @@ namespace BattleBreakBLL
                     full_name = item.full_name,
                     password = item.password,
                     email = item.email,
-                    type = item.type
+                    type = item.type,
+                    image_url = item.image_url,
                 };
                 accountModels.Add(newItem);
             }
