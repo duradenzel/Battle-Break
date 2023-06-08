@@ -17,6 +17,8 @@ namespace BattleBreakDAL
 
         public MatchDAL() { }
 
+        //public List<MatchDTO> GetMatchWithIDandGame(int account_ID, int game_ID) { }
+
         public List<MatchDTO> GetMatchWithID(int ID)
         {
             List<MatchDTO> matchList = new();
