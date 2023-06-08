@@ -2,7 +2,9 @@
 using BattleBreakBLL.Models;
 using BattleBreakDAL.DTOS;
 using BattleBreakDAL;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Build.Framework;
 using MySql.Data.MySqlClient;
 using NuGet.Protocol.Core.Types;
@@ -10,6 +12,7 @@ using NuGet.Protocol.Plugins;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using TestDatabase.Models;
+using TestDatabase.ViewModels;
 
 namespace TestDatabase.Controllers
 {
@@ -52,11 +55,11 @@ namespace TestDatabase.Controllers
 
         public IActionResult Games()
         {
-            List<TestDatabase.Models.Games> games = new List<TestDatabase.Models.Games>();
+            List<Games> games = new List<Games>();
             GameService gameservice = new GameService();
             foreach (var item in gameservice.GetGames())
             {
-                TestDatabase.Models.Games newItem = new TestDatabase.Models.Games();
+                Games newItem = new Games();
                 newItem.ID = item.ID;
                 newItem.name = item.name;
                 newItem.win_condition = item.win_condition;
@@ -121,25 +124,33 @@ namespace TestDatabase.Controllers
             {
                 Template t = new();
                 t.id = tm.id;
+                t.game = tm.game;
                 t.name = tm.name;
                 t.minimumPlayers = tm.minimumPlayers;
                 t.rules = tm.rules; 
                 t.winCondition = tm.winCondition;
                 template.Add(t);
             }
+
             return View(template);
         }
 
-        public IActionResult CreateTemplate(int templateID, string templateName, int templateMinimumPlayers, string templateRules, string templateWinCondition)
+        public IActionResult CreateTemplate(TemplateModel templateModel)
         {
-            TemplateService templateService = new();
-            templateService.TemplateAddL(templateID, templateName, templateMinimumPlayers, templateRules, templateWinCondition);
+            GameService gameService = new();
+            TemplateService templateService = new TemplateService();
+            List<GameModel> gameModelList = gameService.GetGames();
+
+            templateService.TemplateAddL(templateModel);
 
             return RedirectToAction("Template");
         }
 
         public IActionResult AddTemplate()
         {
+            TemplateService templateService = new TemplateService();
+            List<string> gameNames = templateService.GetGames();
+            ViewBag.GameNames = new SelectList(gameNames);
             return View();
         }
 
@@ -152,5 +163,19 @@ namespace TestDatabase.Controllers
                 return RedirectToAction("Template");
             }
         }
+
+        public IActionResult EditTemplate(int id, string game, string name, int minimumPlayers, string winCondition, string rules)
+        {
+            Template template = new Template();
+            template.id = id;
+            template.game= game;
+            template.name= name;
+            template.minimumPlayers =minimumPlayers;
+            template.winCondition = winCondition;
+            template.rules = rules;
+
+            return View(template);
+        }
+
     }
 }

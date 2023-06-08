@@ -21,6 +21,7 @@ namespace BattleBreakBLL
             {
                 TemplateModel t = new();
                 t.id = dto.id;
+                t.game = dto.game;
                 t.name = dto.name;
                 t.minimumPlayers = dto.minimumPlayers;
                 t.rules = dto.rules;
@@ -29,16 +30,36 @@ namespace BattleBreakBLL
             }
             return templateModel;
         }
-        public void TemplateAddL(int templateID, string templateName, int templateMinimumPlayers, string templateRules, string templateWinCondition)
+
+        public List<string> GetGames()
+        {
+            TemplateDAL templateDAL = new TemplateDAL();
+            List<string> gameNames = templateDAL.GetGames();
+            return gameNames;
+        }
+
+        public void TemplateAddL(TemplateModel templateModel)
         {
             TemplateDAL templateDAL = new();
-            templateDAL.TemplateAddD(templateID, templateName, templateMinimumPlayers, templateRules, templateWinCondition);
+            TemplateDTO templateDTO = new();
+            templateDTO.id = templateModel.id;
+            templateDTO.name = templateModel.name;
+            templateDTO.game = templateModel.game;
+            templateDTO.minimumPlayers = templateModel.minimumPlayers;
+            templateDTO.rules = templateModel.rules;
+            templateDTO.winCondition = templateModel.winCondition;
+            templateDAL.TemplateAddD(templateDTO);
         }
 
         public void DeleteTemplateL(int templateID)
         {
             TemplateDAL templateDAL = new();
             templateDAL.DeleteTemplateD(templateID);
+        }
+
+        public void ChangeTemplates()
+        {
+
         }
     }
 

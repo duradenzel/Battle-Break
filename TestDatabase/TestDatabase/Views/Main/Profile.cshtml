@@ -2,15 +2,9 @@
     ViewData["Title"] = "Profile";
 }
 
-@*<head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-    <link rel="stylesheet" href="~/css/MainDesktop.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/font-awesome/css/all.css" />
-    <script src=" https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="~/js/navbar.js" asp-append-version="true"></script>
+<head>
+    <link rel="stylesheet" href="~/css/Profile.css" asp-append-version="true" />
 </head>
-*@
-
 
 
 
@@ -18,11 +12,24 @@
 <div class="container">
     @Html.Partial("Navbar")
 
-    <h1>Profile</h1>
+    <div class="profile-wrapper">
+        <div class="profile-icon">
+            <img src="@Model.account.image_url" alt="Profile Icon">
+        </div>
+        <h1 class="AccountName">@Model.account.full_name</h1>
+    </div>    
 
-    <p>@Model.account.full_name</p>
 
     <div class="matchHistoryContainer">
+        <select name="game-select" id="game-select" onchange="gameSelect()">
+            <option value="0">Kies Spel</option>
+            <option value="0">Alle Spellen</option>
+
+            @foreach (var game in Model.GameList)
+            {
+                <option value="@game.ID">@game.name</option>
+            }
+        </select>
         <div class="MatchHistory">
 
             <div class="MatchHistory-box">
@@ -37,27 +44,23 @@
 
                 <ul class="MatchHistory-list">
                     <span class="magicSelect">
-                        Tafeltennis <br />
+                        @Model.ChosenGame.name <br />
                     </span>
                     @foreach (var match in @Model.MatchHistory)
                     {
-                        if (match.Game_ID == 1)
-                        {
+                        <li class="MatchHistory-item">
+                            <span class="magic">
+                                @match.Player1
+                            </span>
+                            <span class="magic">
 
-                            <li class="MatchHistory-item">
-                                <span class="magic">
-                                    @match.Player1
-                                </span>
-                                <span class="magic">
+                                @match.Player1_Points - @match.Player2_Points
+                            </span>
+                            <span class="magic">
+                                @match.Player2
 
-                                    @match.Player1_Points - @match.Player2_Points
-                                </span>
-                                <span class="magic">
-                                    @match.Player2
-
-                                </span>
-                            </li>
-                        }
+                            </span>
+                        </li>
                     }
                 </ul>
 
@@ -65,3 +68,9 @@
         </div>
     </div>
 </div>
+
+<script>
+    function gameSelect(){
+        location.href = '/Main/Profile?ID=' + @Model.account.account_ID + '&game_ID=' + document.getElementById("game-select").value;
+    }
+</script>

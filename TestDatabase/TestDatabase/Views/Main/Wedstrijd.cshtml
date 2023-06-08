@@ -23,6 +23,18 @@
     <br>
 }
 
+<label for="winner-select">Selecteer winnaar</label><br />
+<select name="winner-select" id="winner-select">
+    <option value="Automatisch">Hoogste score</option>
+    @foreach (var account in Model.AccountList)
+    {
+        <option value="@account.account_ID">@account.username</option>
+    }
+</select>
+
+<br />
+<br />
+
 <input type="button" value="Update" class="btn btn-outline-primary" onclick="updateMatchData(@Model.MatchList[0].Match_ID)"/>
 
 @section scripts{
@@ -46,28 +58,68 @@
             }
         }
 
+        function getWinner(){
+            var winner;
+            var winnerPoints;
+            var mostPoints = -1;
+            var scoreElements = document.getElementsByName("score");
+
+            for (var i = 0; i < scoreElements.length; i++) {
+                if (scoreElements[i].textContent.substring(7, 20) >= mostPoints) {
+                    mostPoints = scoreElements[i].textContent.substring(7, 20);
+                    winner = document.getElementById("winner-select")[i + 1].value
+                    winnerPoints = scoreElements[i].textContent.substring(7, 20);
+                }
+            }
+            return [winner, winnerPoints];
+        }
+
+        function checkForWinnerDupe(){
+            var winner = getWinner()[0];
+            var scoreElements = document.getElementsByName("score");
+            var timesExceeded = 0;
+
+            for (var i = 0; i < scoreElements.length; i++) {
+                if (scoreElements[i].textContent.substring(7, 20) == getWinner()[1]) {
+                    timesExceeded++;
+                }
+            }
+            if (timesExceeded > 1) {
+                return true
+            } else {
+                return false;
+            }
+        }
+
         function updateMatchData(matchID) {
             var pointsArray = [];
-            for (var i = 0; i < document.getElementsByName("score").length; i++) {
-                pointsArray.push(document.getElementsByName("score")[i].textContent.substring(7, 20));
+            var scoreElements = document.getElementsByName("score");
+
+            for (var i = 0; i < scoreElements.length; i++) {
+                pointsArray.push(scoreElements[i].textContent.substring(7, 20));
             }
 
-            points = pointsArray.join(',');
-            //points = document.getElementsByName("score")[0].textContent.substring(7, 20);
+            var winner = document.getElementById("winner-select").value;
             
+            if(winner == "Automatisch"){
+                if(checkForWinnerDupe()){
+                    alert("Er zijn twee spelers met de hoogste score!")
+                    winner = 0;
+                } else {
+                    winner = getWinner()[0];
+                }
+            }
+            console.log(winner)
+            if(winner != 0){
+            points = pointsArray.join(',');            
 
             $.ajax({
                 url: '/Main/updateMatchData',
-                data: { Match_ID: matchID, points: points },
+                data: { Match_ID: matchID, points: points, winner: winner},
                 type: 'GET',
-                success: function (returned_data) {
-                    console.log(returned_data)
-                    //location.href = "wedstrijd?ID=" + returned_data
-                },
-                error: function (returned_data) {
-                    console.log(returned_data)
-                }
+                succes: alert("Wedstrijd ge-update!")
             });
+            }
         }
     </script>
 }

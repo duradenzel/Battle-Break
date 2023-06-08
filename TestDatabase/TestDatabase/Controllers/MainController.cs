@@ -68,14 +68,27 @@ namespace TestDatabase.Controllers
             return View(matchViewModel);
         }
 
-        public async Task<IActionResult> Profile(int ID)
+        public async Task<IActionResult> Profile(int ID, int game_ID)
         {
             List<LeaderboardModel> leaderboardStats = await _mainService.GetLeaderboardStats();
-            List<MatchHistoryModel> matchHistory = await _mainService.GetMatchHistory();
+            List<MatchHistoryModel> individualMatchHistory;
             List<GameModel> gameModelList = _gameService.GetGames();
-            AccountModel account = _accountService.GetAccountWithID(ID);
+            GameModel chosenGame = new GameModel() {
+                name = "Alle Spellen",
+            }; 
+            AccountModel account = await _accountService.GetAccountWithIDAsync(ID);
 
-            var viewModel = new ProfileViewModel(leaderboardStats, matchHistory, gameModelList, account);
+            if (game_ID == 0)
+            {
+                individualMatchHistory = await _mainService.GetIndividualMatchHistory(ID);
+            }
+            else
+            {
+                individualMatchHistory = await _mainService.GetIndividualMatchHistoryPerGame(ID, game_ID);
+                chosenGame = _gameService.GetGameWithID(game_ID);
+            }
+
+            var viewModel = new ProfileViewModel(leaderboardStats, individualMatchHistory, gameModelList, account, chosenGame);
             return View(viewModel);
         }
 
@@ -85,9 +98,9 @@ namespace TestDatabase.Controllers
             return _matchService.SendData(Game_ID, User_IDs, Won, 2);
         }
 
-        public void updateMatchData(int Match_ID, string points)
+        public void updateMatchData(int Match_ID, string points, int winner)
         {
-            _matchService.UpdateData(Match_ID, points);
+            _matchService.UpdateData(Match_ID, points, winner);
             //return match_ID.ToString() + points;
         }
     }

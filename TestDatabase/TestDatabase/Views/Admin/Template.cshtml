@@ -58,6 +58,9 @@
                 <thead>
                     <tr>
                         <th>
+                            Game name
+                        </th>
+                        <th>
                             Template name
                         </th>
                         <th>
@@ -77,6 +80,9 @@
                     {
                         <tr>
                             <td>
+                                @Html.DisplayFor(modelItem => item.game)
+                            </td>
+                            <td>
                                 @Html.DisplayFor(modelItem => item.name)
                             </td>
                             <td>
@@ -90,6 +96,8 @@
                             </td>
                             <td>
                                 <input type="submit" value="Delete" class="btn btn-primary" onclick="location.href='@Url.Action("DeleteTemplate", "Admin", new { id = item.id})'" />
+                                <input type="submit" value="Edit" class="btn btn-primary" onclick="location.href='@Url.Action("EditTemplate", "Admin", new { id = item.id, game = item.game, name = item.name, minimumPlayers = item.minimumPlayers, rules = item.rules, winCondition = item.winCondition }, null)'" />
+
                             </td>
                         </tr>
                     }

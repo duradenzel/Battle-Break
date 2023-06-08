@@ -48,8 +48,46 @@ namespace BattleBreakBLL
                     Player2_Points = dto.Player2_Points
                 });
             }
-
             return matchHistoryModels;
+        }
+        public async Task<List<MatchHistoryModel>> GetIndividualMatchHistory(int currentUserID)
+        {
+            List<MatchHistoryDTO> matchHistoryDTOs = await _mainDAL.GetIndividualMatchHistory(currentUserID);
+            List<MatchHistoryModel> individualMatchHistory = new List<MatchHistoryModel>();
+
+            foreach (var dto in matchHistoryDTOs)
+            {
+                individualMatchHistory.Add(new MatchHistoryModel
+                {
+                    Game_ID = dto.Game_ID,
+                    Match_ID = dto.Match_ID,
+                    Player1 = dto.Player1,
+                    Player1_Points = dto.Player1_Points,
+                    Player2 = dto.Player2,
+                    Player2_Points = dto.Player2_Points
+                });
+            }
+            return individualMatchHistory;
+        }
+
+        public async Task<List<MatchHistoryModel>> GetIndividualMatchHistoryPerGame(int currentUserID, int selectedGameID)
+        {
+            List<MatchHistoryDTO> matchHistoryDTOs = await _mainDAL.GetIndividualMatchHistoryPerGame(currentUserID, selectedGameID);
+            List<MatchHistoryModel> individualMatchHistory = new List<MatchHistoryModel>();
+
+            foreach (var dto in matchHistoryDTOs)
+            {
+                individualMatchHistory.Add(new MatchHistoryModel
+                {
+                    Game_ID = dto.Game_ID,
+                    Match_ID = dto.Match_ID,
+                    Player1 = dto.Player1,
+                    Player1_Points = dto.Player1_Points,
+                    Player2 = dto.Player2,
+                    Player2_Points = dto.Player2_Points
+                });
+            }
+            return individualMatchHistory;
         }
     }
 }
