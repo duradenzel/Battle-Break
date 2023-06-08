@@ -29,7 +29,7 @@ namespace BattleBreakDAL
                     email = reader.GetString("email"),
                     password = reader.GetString("password"),
                     type = reader.GetString("type"),
-                    image_url = reader.GetString("image")
+                    image_url = reader.GetString("image_url")
                 };          
             }
             return null;
@@ -55,7 +55,7 @@ namespace BattleBreakDAL
                     email = reader.GetString(reader.GetOrdinal("email")),
                     password = reader.GetString(reader.GetOrdinal("password")),
                     type = reader.GetString(reader.GetOrdinal("type")),
-                    image_url = reader.GetString(reader.GetOrdinal("image"))
+                    image_url = reader.GetString(reader.GetOrdinal("image_url"))
                 };
             }
             return null;
@@ -81,7 +81,7 @@ namespace BattleBreakDAL
                     email = reader.GetString(reader.GetOrdinal("email")),
                     password = reader.GetString(reader.GetOrdinal("password")),
                     type = reader.GetString(reader.GetOrdinal("type")),
-                    image_url = reader.GetString(reader.GetOrdinal("image"))
+                    image_url = reader.GetString(reader.GetOrdinal("image_url"))
                 };
             }
             return null;
