@@ -1,13 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using TestDatabase.Models;
-using MySql.Data.MySqlClient;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.AspNetCore.Http;
 using BattleBreakBLL;
+using TestDatabase.ViewModels;
 
 namespace TestDatabase.Controllers
 {
@@ -15,13 +13,17 @@ namespace TestDatabase.Controllers
     {
         private readonly AuthService _authService = new AuthService();
 
-        public HomeController(){}
-
-
-
-        public IActionResult Index()
+        public HomeController(AuthService authService)
         {
-            return View("Login");
+            _authService = authService;
+        }
+
+
+        [HttpGet]
+
+        public IActionResult Login()
+        {
+            return View();
         }
         public IActionResult ForgotPassword()
         {
@@ -34,50 +36,104 @@ namespace TestDatabase.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(string email, string password, string remember)
+        public async Task<IActionResult> Login(LoginViewModel model)
         {
-           
-            var (authResult, userType) = _authService.Authenticate(email, password);
-
-            if (authResult)
+            if (ModelState.IsValid)
             {
-                if (userType == "Admin") {
-                    return RedirectToAction("Index", "Main");
+                var account = await _authService.GetAccountByEmailAsync(model.email);
+                if (account == null)
+                {
+                    ViewBag.ErrorMessage = "The email you entered is not associated with an account. Please register a new account.";
+                    return View();
                 }
-                return RedirectToAction("Index", "Main");
-                
+
+                if (!_authService.Authenticate(model.email, model.password))
+                {
+                    ViewBag.ErrorMessage = "Incorrect password.";
+                    return View();
+                }
+
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.NameIdentifier, account.ID.ToString()),
+                    new Claim(ClaimTypes.Name, account.username),
+                    new Claim(ClaimTypes.Email, account.email)
+                };
+
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                var authProperties = new AuthenticationProperties
+                {
+                    IsPersistent = model.RememberMe
+                };
+
+
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
+
+
+                return RedirectToAction("Index", "Home");
+
             }
-            ViewBag.ErrorMessage = "Incorrect email or password";
-            return View();
+
+            return View(model);
         }
 
-        
+
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
 
         [HttpPost]
-        public IActionResult Register(string username, string fullname, string email, string password)
+        public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            if (_authService.Register(username, fullname, email, password))
+            if (!ModelState.IsValid)
             {
-                return RedirectToAction("Index", "Main");
+                return View(model);
             }
-            return View();
+
+            var existingUser = await _authService.GetAccountByEmailAsync(model.email);
+            if (existingUser != null)
+            {
+                ViewBag.ErrorMessage = "A user with this email already exists.";
+                return View(model);
+            }
+
+            existingUser = await _authService.GetAccountByUsernameAsync(model.username);
+            if (existingUser != null)
+            {
+                ViewBag.ErrorMessage = "A user with this username already exists.";
+                return View(model);
+            }
+
+
+            await _authService.Register(model.username, model.email, model.password);
+
+            var account = await _authService.GetAccountByEmailAsync(model.email);
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, account.ID.ToString()),
+                new Claim(ClaimTypes.Name, account.username),
+                new Claim(ClaimTypes.Email, account.email)
+            };
+
+            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var authProperties = new AuthenticationProperties
+            {
+                IsPersistent = true
+            };
+
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
+
+            TempData["Message"] = "Account created successfully!";
+
+            return RedirectToAction("Index", "Home");
         }
 
-
-
-        public string GetUserType(string email)
+        public async Task<IActionResult> Logout()
         {
-            return _authService.GetUserType(email);
-        }
-
-
-
-
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Login", "Account");
         }
     }
 }

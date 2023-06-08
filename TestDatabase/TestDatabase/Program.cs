@@ -17,11 +17,12 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
 });
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-       .AddCookie(options =>
-       {
-          // options.LoginPath = "/Account/Login";
-           //options.LogoutPath = "/Account/Logout";
-       });
+    .AddCookie(options =>
+    {
+        options.Cookie.HttpOnly = true;
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+        options.SlidingExpiration = true;
+    });
 
 var app = builder.Build();
 
@@ -38,7 +39,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 app.UseCookiePolicy();
-
+app.UseAuthentication();
 app.UseSession();
 app.UseAuthorization();
 
