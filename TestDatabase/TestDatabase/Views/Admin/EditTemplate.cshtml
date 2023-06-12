@@ -18,8 +18,8 @@
                 <span asp-validation-for="id" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="game" class="control-label"></label>
-                <input asp-for="game" class="form-control" name="game"/>
+                <label asp-for="game" class="control-label">Game name</label>
+                <select asp-for="game" asp-items="ViewBag.GameNames" class="form-control"></select>
                 <span asp-validation-for="game" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -50,7 +50,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <input type="submit" value="Go Back" class="btn btn-primary" onclick="location.href='@Url.Action("Template", "Admin")'" />
 </div>
 
 @section Scripts {
