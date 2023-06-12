@@ -1,5 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Profile";
+    int totalGames = Model.MatchHistory.Count;
 }
 
 <head>
@@ -18,7 +19,6 @@
         </div>
         <h1 class="AccountName">@Model.account.full_name</h1>
     </div>    
-
 
     <div class="matchHistoryContainer">
         <select name="game-select" id="game-select" onchange="gameSelect()">
@@ -48,17 +48,15 @@
                     </span>
                     @foreach (var match in @Model.MatchHistory)
                     {
-                        <li class="MatchHistory-item">
+                        <li onclick="goToMatch(@match.Match_ID)" class="MatchHistory-item">
                             <span class="magic">
                                 @match.Player1
                             </span>
                             <span class="magic">
-
                                 @match.Player1_Points - @match.Player2_Points
                             </span>
                             <span class="magic">
                                 @match.Player2
-
                             </span>
                         </li>
                     }
@@ -67,10 +65,22 @@
             </div>
         </div>
     </div>
+
+    <div class="statistics">
+        @if(Model.ChosenGame.name == "Alle Spellen")
+        {
+            <h1>Total keer een spel gespeeld: @totalGames</h1>
+        } else {
+        <h1>Total keer @Model.ChosenGame.name.ToLower() gespeeld: @totalGames</h1>
+        }
+    </div>
 </div>
 
 <script>
     function gameSelect(){
         location.href = '/Main/Profile?ID=' + @Model.account.account_ID + '&game_ID=' + document.getElementById("game-select").value;
+    }
+    function goToMatch(match_ID){
+        location.href = '/Main/Wedstrijd?ID=' + match_ID;
     }
 </script>
