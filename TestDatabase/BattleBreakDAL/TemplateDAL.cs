@@ -121,5 +121,26 @@ namespace BattleBreakDAL
                 }
             }
         }
+
+        public void EditTemplate(TemplateDTO template)
+        {
+            string connString = "Server=studmysql01.fhict.local;Database=dbi515074;Uid=dbi515074;Pwd=AmineGPT;";
+
+            using (MySqlConnection con = new MySqlConnection(connString))
+            {
+                con.Open();
+                string query = "UPDATE template SET game = @game, name = @name, minimum_players = @minimum_players, rules = @rules, win_condition = @win_condition WHERE ID = @ID";
+                using (MySqlCommand cmd = new MySqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@ID", template.id);
+                    cmd.Parameters.AddWithValue("@game", template.game);
+                    cmd.Parameters.AddWithValue("@name", template.name);
+                    cmd.Parameters.AddWithValue("@minimum_players", template.minimumPlayers); // update parameter name to @naam
+                    cmd.Parameters.AddWithValue("@rules", template.rules);
+                    cmd.Parameters.AddWithValue("@win_condition", template.winCondition);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }

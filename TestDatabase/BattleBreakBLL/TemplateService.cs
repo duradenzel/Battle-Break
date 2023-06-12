@@ -3,9 +3,11 @@ using BattleBreakDAL;
 using BattleBreakDAL.DTOS;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace BattleBreakBLL
 {
@@ -57,9 +59,18 @@ namespace BattleBreakBLL
             templateDAL.DeleteTemplateD(templateID);
         }
 
-        public void ChangeTemplates()
+        public void ChangeTemplates(int id, string game, string name, int minimumPlayers, string winCondition, string rules)
         {
-
+            TemplateDTO template = new TemplateDTO();
+            template.id = id;
+            template.game = game;
+            template.name = name;
+            template.minimumPlayers = minimumPlayers;
+            template.winCondition = winCondition;
+            template.rules = rules;
+            
+            TemplateDAL templateDAL = new TemplateDAL();
+            templateDAL.EditTemplate(template);
         }
     }
 
