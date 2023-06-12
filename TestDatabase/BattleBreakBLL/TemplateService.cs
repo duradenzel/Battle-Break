@@ -56,6 +56,11 @@ namespace BattleBreakBLL
             TemplateDAL templateDAL = new();
             templateDAL.DeleteTemplateD(templateID);
         }
+
+        public void ChangeTemplates()
+        {
+
+        }
     }
 
 }

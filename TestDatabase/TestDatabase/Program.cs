@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using TestDatabase.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddSignalR();
 
 builder.Services.AddSession(options =>
 {
@@ -41,6 +43,8 @@ app.UseCookiePolicy();
 
 app.UseSession();
 app.UseAuthorization();
+
+app.MapHub<LobbyHub>("/lobbyHub");
 
 app.MapControllerRoute(
     name: "default",
