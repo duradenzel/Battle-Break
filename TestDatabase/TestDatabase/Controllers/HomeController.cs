@@ -110,7 +110,7 @@ namespace TestDatabase.Controllers
             }
 
 
-            await _authService.Register(model.username, model.email, model.password);
+            await _authService.Register(model.username, model.full_name, model.email, model.password);
 
             var account = await _authService.GetAccountByEmailAsync(model.email);
             var claims = new List<Claim>

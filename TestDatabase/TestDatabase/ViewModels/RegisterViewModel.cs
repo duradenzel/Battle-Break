@@ -6,6 +6,8 @@ namespace TestDatabase.ViewModels
     {
         [Required]
         public string? username { get; set; }
+        [Required]
+        public string? full_name { get; set; }
 
         [Required]
         [EmailAddress]

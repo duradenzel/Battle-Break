@@ -33,7 +33,7 @@ namespace BattleBreakBLL
             return BCrypt.Net.BCrypt.Verify(password, account.password);
         }
 
-        public async Task Register(string username, string email, string password)
+        public async Task Register(string username, string full_name, string email, string password)
         {
             var passwordHash = BCrypt.Net.BCrypt.HashPassword(password);
 
@@ -41,6 +41,7 @@ namespace BattleBreakBLL
             {
                 username = username,
                 email = email,
+                full_name = full_name,
                 password = passwordHash
             };
 

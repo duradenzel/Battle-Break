@@ -24,7 +24,13 @@
                     <i class="fa-solid fa-user" style="color: #1081c5;"></i>
                 </a>
             </li>
-            <!-- Add more sidebar items as needed -->
+            <li class="nav-item">
+                <i class="fa-solid fa-user" style="color: #1081c5;">
+                    <form class="form-inline" asp-area="" asp-controller="Home" asp-action="Logout" method="post">
+                        <button class="nav-link btn btn-link text-light" type="submit">Logout</button>
+                    </form>
+                </i>
+            </li>
         </ul>
     </aside>
 </div>
