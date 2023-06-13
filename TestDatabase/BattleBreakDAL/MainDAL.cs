@@ -41,6 +41,7 @@ namespace BattleBreakDAL
                             }
                         }
                     }
+                    connection.Close();
                 }
             }
             catch (Exception ex)
@@ -79,6 +80,7 @@ namespace BattleBreakDAL
                             }
                         }
                     }
+                    connection.Close();
                 }
             }
             catch (Exception ex)
@@ -125,6 +127,7 @@ namespace BattleBreakDAL
                             }
                         }
                     }
+                    await connection.CloseAsync();
                 }
             }
             catch (Exception ex)
@@ -173,6 +176,7 @@ namespace BattleBreakDAL
                             }
                         }
                     }
+                    await connection.CloseAsync();
                 }
             }
             catch (Exception ex)
@@ -212,6 +216,7 @@ namespace BattleBreakDAL
                             }
                         }
                     }
+                    connection.Close();
                 }
             }
             catch (Exception ex)

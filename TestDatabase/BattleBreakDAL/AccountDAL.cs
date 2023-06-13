@@ -37,6 +37,7 @@ namespace BattleBreakDAL
 
                     return accountDTO;
                 }
+                await con.CloseAsync();
             }
 
             return null; // Return null if no account found with the given ID
@@ -74,6 +75,7 @@ namespace BattleBreakDAL
                         }
                     }
                 }
+                con.Close();
             }
             return accounts;
         }
@@ -122,6 +124,7 @@ namespace BattleBreakDAL
                         }
                     }
                 }
+                con.Close();
             }
         }
 
@@ -169,6 +172,7 @@ namespace BattleBreakDAL
                         }
                     }
                 }
+                con.Close();
             }
         }
     }

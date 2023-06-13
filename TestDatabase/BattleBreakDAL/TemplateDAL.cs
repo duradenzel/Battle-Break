@@ -45,6 +45,7 @@ namespace BattleBreakDAL
                     t.winCondition = reader.GetString("win_condition");
                     templateList.Add(t);
                 }
+                con.Close();
                 return templateList;
             }
         }
@@ -63,7 +64,7 @@ namespace BattleBreakDAL
                     string gameName = reader.GetString("name");
                     gameNames.Add(gameName);
                 }
-
+                con.Close();
                 return gameNames;
             }
         }
@@ -85,6 +86,7 @@ namespace BattleBreakDAL
                     cmd.Parameters.AddWithValue("@templateWinCondition", template.winCondition);
                     cmd.ExecuteNonQuery();
                 }
+                con.Close();
             }
             LinkTemplateToGame(template);
         }
@@ -105,6 +107,7 @@ namespace BattleBreakDAL
                     cmd.Parameters.AddWithValue("@templateWinCondition", template.winCondition);
                     cmd.ExecuteNonQuery();
                 }
+                con.Close();
             }
         }
 
@@ -119,6 +122,7 @@ namespace BattleBreakDAL
                     command.Parameters.AddWithValue("@templateID", templateID);
                     command.ExecuteNonQuery();
                 }
+                connection.Close();
             }
         }
 
@@ -140,6 +144,7 @@ namespace BattleBreakDAL
                     cmd.Parameters.AddWithValue("@win_condition", template.winCondition);
                     cmd.ExecuteNonQuery();
                 }
+                con.Close();
             }
         }
     }

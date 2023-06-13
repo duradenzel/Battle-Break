@@ -87,6 +87,7 @@ namespace BattleBreakDAL
                     cmd.Parameters.AddWithValue("@win_condition", win_condition);
                     cmd.ExecuteNonQuery();
                 }
+                con.Close();
             }
         }
 
@@ -108,6 +109,7 @@ namespace BattleBreakDAL
                     cmd.Parameters.AddWithValue("@win_condition", game.win_condition);
                     cmd.ExecuteNonQuery();
                 }
+                con.Close();
             }
         }
         
@@ -123,6 +125,7 @@ namespace BattleBreakDAL
                     command.Parameters.AddWithValue("@ID", ID);
                     command.ExecuteNonQuery();
                 }
+                connection.Close();
             }
         }
 
@@ -154,6 +157,7 @@ namespace BattleBreakDAL
                             }
                         }
                     }
+                    conn.Close();
                 }
             }
             catch (Exception ex)

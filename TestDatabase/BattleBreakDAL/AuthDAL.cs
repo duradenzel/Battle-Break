@@ -42,6 +42,7 @@ namespace BattleBreakDAL
                                 }
                             }
                         }
+                        conn.Close();
                     }
                 }
             }
@@ -82,6 +83,7 @@ namespace BattleBreakDAL
                             Debug.Write("Error inserting record");
                         }
                     }
+                    conn.Close();
                 }
             }
             catch (Exception ex)
@@ -112,6 +114,7 @@ namespace BattleBreakDAL
                             return result.ToString();
                         }
                     }
+                    conn.Close();
                 }
             }
             catch (Exception ex)

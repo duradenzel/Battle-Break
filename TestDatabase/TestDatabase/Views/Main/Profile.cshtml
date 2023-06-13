@@ -7,9 +7,6 @@
     <link rel="stylesheet" href="~/css/Profile.css" asp-append-version="true" />
 </head>
 
-
-
-
 <div class="container">
     @Html.Partial("Navbar")
 
@@ -18,18 +15,25 @@
             <img src="@Model.account.image_url" alt="Profile Icon">
         </div>
         <h1 class="AccountName">@Model.account.full_name</h1>
+
+        <div class="statistics">
+            @if (Model.ChosenGame.name == "Alle Spellen")
+            {
+                <h2 style="text-shadow: 1px 1px 1px #000;">
+                    Total keer een spel gespeeld: @totalGames
+                </h2>
+            }
+            else
+            {
+                <h2 style="text-shadow: 1px 1px 1px #000;">
+                    Total keer @Model.ChosenGame.name.ToLower() gespeeld: @totalGames
+                </h2>
+            }
+        </div>
     </div>    
 
     <div class="matchHistoryContainer">
-        <select name="game-select" id="game-select" onchange="gameSelect()">
-            <option value="0">Kies Spel</option>
-            <option value="0">Alle Spellen</option>
-
-            @foreach (var game in Model.GameList)
-            {
-                <option value="@game.ID">@game.name</option>
-            }
-        </select>
+        
         <div class="MatchHistory">
 
             <div class="MatchHistory-box">
@@ -46,6 +50,19 @@
                     <span class="magicSelect">
                         @Model.ChosenGame.name <br />
                     </span>
+                    
+                        <select name="game-select" id="game-select" onchange="gameSelect()">
+                            <option value="0">Kies Spel</option>
+                            <option value="0">Alle Spellen</option>
+
+                            @foreach (var game in Model.GameList)
+                            {
+                                <option value="@game.ID">@game.name</option>
+                            }
+                        </select>
+                        <br />
+                    <br />
+
                     @foreach (var match in @Model.MatchHistory)
                     {
                         <li onclick="goToMatch(@match.Match_ID)" class="MatchHistory-item">
@@ -66,14 +83,6 @@
         </div>
     </div>
 
-    <div class="statistics">
-        @if(Model.ChosenGame.name == "Alle Spellen")
-        {
-            <h1>Total keer een spel gespeeld: @totalGames</h1>
-        } else {
-        <h1>Total keer @Model.ChosenGame.name.ToLower() gespeeld: @totalGames</h1>
-        }
-    </div>
 </div>
 
 <script>
