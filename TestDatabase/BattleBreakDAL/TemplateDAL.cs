@@ -86,27 +86,27 @@ namespace BattleBreakDAL
                     cmd.ExecuteNonQuery();
                 }
             }
-            LinkTemplateToGame(template);
+            //LinkTemplateToGame(template);
         }
 
-        public void LinkTemplateToGame(TemplateDTO template)
-        {
-            using (MySqlConnection con = new MySqlConnection(connString))
-            {
-                GameDTO game = new GameDTO();
-                con.Open();
-                string query = "INSERT INTO `game-to-template` (game_ID, template_ID) SELECT game.ID, template.ID FROM template JOIN game ON template.game = game.name WHERE template.name = 'Rond de tafel' VALUES (@GameID, @GameName, @TemplateID, @TemplateName)";
-                using (MySqlCommand cmd = new MySqlCommand(query, con))
-                {
-                    cmd.Parameters.AddWithValue("@templateGame", template.game);
-                    cmd.Parameters.AddWithValue("@templateName", template.name); // update parameter name to @naam
-                    cmd.Parameters.AddWithValue("@templateMinimumPlayers", template.minimumPlayers);
-                    cmd.Parameters.AddWithValue("@templateRules", template.rules);
-                    cmd.Parameters.AddWithValue("@templateWinCondition", template.winCondition);
-                    cmd.ExecuteNonQuery();
-                }
-            }
-        }
+        //public void LinkTemplateToGame(TemplateDTO template)
+        //{
+        //    using (MySqlConnection con = new MySqlConnection(connString))
+        //    {
+        //        GameDTO game = new GameDTO();
+        //        con.Open();
+        //        string query = "INSERT INTO `game-to-template` (game_ID, template_ID) SELECT game.ID, template.ID FROM template JOIN game ON template.game = game.name WHERE template.name = 'Rond de tafel' VALUES (@GameID, @GameName, @TemplateID, @TemplateName)";
+        //        using (MySqlCommand cmd = new MySqlCommand(query, con))
+        //        {
+        //            cmd.Parameters.AddWithValue("@templateGame", template.game);
+        //            cmd.Parameters.AddWithValue("@templateName", template.name); // update parameter name to @naam
+        //            cmd.Parameters.AddWithValue("@templateMinimumPlayers", template.minimumPlayers);
+        //            cmd.Parameters.AddWithValue("@templateRules", template.rules);
+        //            cmd.Parameters.AddWithValue("@templateWinCondition", template.winCondition);
+        //            cmd.ExecuteNonQuery();
+        //        }
+        //    }
+        //}
 
         public void DeleteTemplateD(int templateID)
         {
