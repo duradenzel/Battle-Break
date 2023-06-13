@@ -60,7 +60,7 @@ namespace BattleBreakDAL
                 using (MySqlConnection connection = new MySqlConnection(_connString))
                 {
                     connection.Open();
-                    using (MySqlCommand command = new MySqlCommand("SELECT w1.ID AS match_ID, w1.game_ID AS game_ID, a1.full_name AS Player1, w1.points AS Player1_Points,\r\na2.full_name AS Player2, w2.points AS Player2_Points\r\nFROM `match` w1\r\nJOIN  `match` w2 ON w1.ID = w2.ID AND w1.account_ID < w2.account_ID\r\nJOIN account a1 ON w1.account_ID = a1.ID\r\nJOIN account a2 ON w2.account_ID = a2.ID;", connection))
+                    using (MySqlCommand command = new MySqlCommand("SELECT w1.ID AS match_ID, w1.game_ID AS game_ID, a1.full_name AS Player1, w1.points AS Player1_Points,\r\na2.full_name AS Player2, w2.points AS Player2_Points\r\nFROM `match` w1\r\nJOIN  `match` w2 ON w1.ID = w2.ID AND w1.account_ID < w2.account_ID\r\nJOIN account a1 ON w1.account_ID = a1.ID\r\nJOIN account a2 ON w2.account_ID = a2.ID ORDER BY w1.ID DESC;", connection))
                     {
                         using (MySqlDataReader reader = command.ExecuteReader())
                         {
@@ -104,7 +104,8 @@ namespace BattleBreakDAL
                         JOIN `match` w2 ON w1.ID = w2.ID AND w1.account_ID < w2.account_ID
                         JOIN account a1 ON w1.account_ID = a1.ID
                         JOIN account a2 ON w2.account_ID = a2.ID
-                        WHERE w1.account_ID = @currentUserID OR w2.account_ID = @currentUserID;";
+                        WHERE w1.account_ID = @currentUserID OR w2.account_ID = @currentUserID
+                        ORDER BY w1.ID DESC;";
                     using (MySqlCommand command = new MySqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@currentUserID", currentUserID);
@@ -150,7 +151,8 @@ namespace BattleBreakDAL
                                     JOIN account account1 ON match1.account_ID = account1.ID
                                     JOIN account account2 ON match2.account_ID = account2.ID
                                     WHERE (account1.ID = @currentUserID OR account2.ID = @currentUserID)
-                                    AND (match1.game_ID = @selectedGameID OR match2.game_ID = @selectedGameID);";
+                                    AND (match1.game_ID = @selectedGameID OR match2.game_ID = @selectedGameID)
+                                    ORDER BY match1.ID DESC;";
                     using (MySqlCommand command = new MySqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@currentUserID", currentUserID);

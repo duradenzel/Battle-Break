@@ -167,8 +167,9 @@ namespace TestDatabase.Controllers
         public IActionResult EditTemplate(int id, string game, string name, int minimumPlayers, string winCondition, string rules)
         {
             TemplateService templateService = new TemplateService();
-            List<string> gameNames = templateService.GetGames(); 
+            List<string> gameNames = templateService.GetGames();
             ViewBag.GameNames = new SelectList(gameNames);
+            templateService.ChangeTemplates(id, game, name, minimumPlayers, winCondition, rules);
 
             Template template = new Template();
             template.id = id;

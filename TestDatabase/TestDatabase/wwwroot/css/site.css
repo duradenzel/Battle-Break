@@ -204,3 +204,14 @@ button {
     }
 
 
+
+    #connected-players{
+       
+        display: inline-flex;
+        margin-left: 3px;
+    }
+
+    .buttons-container > button{
+        width: 200px;
+        margin: 0px 10px
+    }
