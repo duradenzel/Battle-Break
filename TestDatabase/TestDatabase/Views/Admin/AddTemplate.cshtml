@@ -49,15 +49,12 @@
 
                 <div class="form-group">
                     <input type="submit" value="Create" class="btn btn-primary" />
+                    <input type="submit" value="Go Back" class="btn btn-danger" onclick="location.href='@Url.Action("Template", "Admin")'" />
                 </div>
 
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             </form>
         </div>
-    </div>
-
-    <div>
-        <input type="submit" value="Go Back" class="btn btn-primary" onclick="location.href='@Url.Action("Template", "Admin")'" />
     </div>
 </div>
 
