@@ -50,7 +50,8 @@ namespace BattleBreakDAL
                 con.Open();
 
                 // Query to retrieve data from the database
-                string query = "SELECT * FROM account"; // Replace 'YourTableName' with the actual name of your database table
+                string query = "SELECT * FROM account"; // Replace 'YourTableName'
+                                                        // with the actual name of your database table
                 using (MySqlCommand cmd = new MySqlCommand(query, con))
                 {
                     using (MySqlDataReader reader = cmd.ExecuteReader())
