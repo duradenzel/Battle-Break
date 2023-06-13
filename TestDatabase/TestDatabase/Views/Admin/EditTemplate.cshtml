@@ -43,8 +43,9 @@
                 <span asp-validation-for="winCondition" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary" onclick="location.href='@Url.Action("Template", "Admin")'" />
             </div>
+
         </form>
     </div>
 </div>
